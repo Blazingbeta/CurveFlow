@@ -5,16 +5,16 @@ using System.Text;
 
 namespace CurveFlow
 {
-	class CFLog
+	static class CFLog
 	{
-		MessageType m_allowedTypes;
-		LogCallback m_log;
-		internal void SetupLog(MessageType allowedTypeMask, LogCallback log)
+		static MessageType m_allowedTypes;
+		static LogCallback m_log;
+		static internal void SetupLog(MessageType allowedTypeMask, LogCallback log)
 		{
 			m_allowedTypes = allowedTypeMask;
 			m_log = log;
 		}
-		internal void SendMessage(string message, MessageType type)
+		static internal void SendMessage(string message, MessageType type)
 		{
 			if((type & m_allowedTypes) != 0)
 			{

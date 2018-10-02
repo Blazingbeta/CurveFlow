@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="CFLog.cs" />
     <Compile Include="CFObjects.cs" />
+    <Compile Include="CFProfile.cs" />
     <Compile Include="CurveFlowController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
