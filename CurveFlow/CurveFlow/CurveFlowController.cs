@@ -44,7 +44,6 @@ namespace CurveFlow
 			IFormatter formatter = new BinaryFormatter();
 			formatter.Serialize(outputStream, m_profile);
 		}
-		#endregion
 		public float GetCurrentValue(string valueName)
 		{
 			return m_profile.GetTrackedValue(valueName).m_currentValue;
@@ -57,6 +56,10 @@ namespace CurveFlow
 		{
 			m_profile.SetValue(valueName, newValue);
 		}
+		#endregion
+		#region OutputQuery
+
+		#endregion
 		#region DebugMethods
 		public void DebugLogConsole(MessageType type)
 		{

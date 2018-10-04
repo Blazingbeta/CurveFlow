@@ -23,8 +23,29 @@ namespace CurveFlow
 			}
 			public float CalculateDifficulty(TrackedValue[] currentValues)
 			{
-				//TODO Difficulty Calculation
-				return 0.0f;
+				StringBuilder sb = new StringBuilder();
+				sb.Append("Begining Difficulty Calculation on ");
+				sb.Append(returnString);
+				sb.Append(":\n");
+				float totalDifficulty = 0.0f;
+				for (int j = 0; j < currentValues.Length; j++)
+				{
+					TrackedValue val = currentValues[j];
+					//Get the associated queryValues key based on the currentValue[j]
+					float delta = val.m_currentValue - queryValues[val.m_name];
+					//Get this delta as a percentage based on min and max
+					float difficulty = delta / (val.m_max - val.m_min);
+					totalDifficulty += difficulty;
+					sb.Append(val.m_name);
+					sb.Append(':');
+					sb.Append(difficulty.ToString("G"));
+					sb.Append(' ');
+				}
+				float averageDifficulty = totalDifficulty / currentValues.Length;
+				sb.Append("Average: ");
+				sb.Append(averageDifficulty.ToString("G"));
+				CFLog.SendMessage(sb.ToString(), MessageType.DEBUG);
+				return averageDifficulty;
 			}
 		}
 		List<Output> m_outputList;
@@ -63,8 +84,9 @@ namespace CurveFlow
 					currentBestIndex = j;
 				}
 			}
-
-			return m_outputList[j].returnString;
+			CFLog.SendMessage("Query returning " + m_outputList[currentBestIndex].returnString 
+				+ " with difficulty delta " + currentBestDelta, MessageType.STATUS);
+			return m_outputList[currentBestIndex].returnString;
 		}
 		public string GetSavableString()
 		{

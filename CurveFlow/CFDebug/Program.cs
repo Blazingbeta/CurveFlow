@@ -41,6 +41,11 @@ namespace CFDebug
 			stream.Close();
 			Console.WriteLine("Loading Profile. Parry: " + controller.GetCurrentValue("Parry"));
 		}
+		static void CreateNewQuery()
+		{
+			//TODO test these methods with the inefficient manual creation methods
+			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(controller);
+		}
 		static void PrintToLog(string message, CurveFlow.MessageType type)
 		{
 			Console.WriteLine(type + ": " + message);
