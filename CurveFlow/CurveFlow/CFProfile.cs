@@ -22,15 +22,34 @@ namespace CurveFlow
 		}
 		internal void AppendValue(string name, float value)
 		{
+			if (!m_profile.ContainsKey(name))
+			{
+				CFLog.SendMessage(name + " is not a registered value.", MessageType.ERROR);
+				return;
+			}
 			m_profile[name].AppendValue(value);
 		}
 		internal void SetValue(string name, float value)
 		{
+			if (!m_profile.ContainsKey(name))
+			{
+				CFLog.SendMessage(name + " is not a registered value.", MessageType.ERROR);
+				return;
+			}
 			m_profile[name].SetValue(value);
 		}
 		internal TrackedValue GetTrackedValue(string name)
 		{
+			if (!m_profile.ContainsKey(name))
+			{
+				CFLog.SendMessage(name + " is not a registered value.", MessageType.ERROR);
+				return null;
+			}
 			return m_profile[name];
+		}
+		internal TrackedValue[] GetAllValues()
+		{
+			return m_profile.Values.ToArray();
 		}
 	}
 }

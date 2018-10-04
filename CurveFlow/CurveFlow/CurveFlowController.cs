@@ -14,7 +14,7 @@ namespace CurveFlow
 	/// </summary>
     public class CurveFlowController
     {
-		private CFProfile m_profile;
+		internal CFProfile m_profile;
 		public CurveFlowController()
 		{
 			//m_log = new CFLog();
@@ -55,6 +55,7 @@ namespace CurveFlow
 		}
 		public void SetTrackedValue(string valueName, float newValue)
 		{
+			m_profile.SetValue(valueName, newValue);
 		}
 		#region DebugMethods
 		public void DebugLogConsole(MessageType type)

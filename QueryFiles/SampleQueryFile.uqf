@@ -1,0 +1,8 @@
+/*this denotes a comment, can't be used in an actual file*/
+/*First lines are config settings, mostly for group selection*/
+groupselection=true
+etc
+etc
+/*next are the values, listed as ordered pairs*/
+Parry,0.51563621
+Dodge,0.15391569
