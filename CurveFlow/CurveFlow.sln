@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurveFlow", "CurveFlow\CurveFlow.csproj", "{82EC644B-CFB3-447C-B3A8-B480D1367475}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFDebug", "CFDebug\CFDebug.csproj", "{67F0D8B0-AFFB-44A2-A2E2-B79FCA381FAF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{82EC644B-CFB3-447C-B3A8-B480D1367475} = {82EC644B-CFB3-447C-B3A8-B480D1367475}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

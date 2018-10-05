@@ -16,9 +16,8 @@ namespace CFDebug
 
 			CreateProfile();
 			controller.AppendTrackedValue("Parry", 0.33f);
-			controller.AppendTrackedValue("Parry", 0.68f);
-			controller.AppendTrackedValue("Parry", 0.574f);
-			SaveProfile();
+			controller.AppendTrackedValue("Dodge", 0.5f);
+			CreateNewQuery();
 		}
 		static void CreateProfile()
 		{
@@ -45,6 +44,19 @@ namespace CFDebug
 		{
 			//TODO test these methods with the inefficient manual creation methods
 			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(controller);
+			Dictionary<string, float> sampleMap1 = new Dictionary<string, float>
+			{
+				{ "Parry", 0.8f },
+				{ "Dodge", 0.4f }
+			};
+			Dictionary<string, float> sampleMap2 = new Dictionary<string, float>
+			{
+				{ "Parry", 0.5f },
+				{ "Dodge", 0.8f }
+			};
+			query.InsertOutput(sampleMap1, "ParryChallenge");
+			query.InsertOutput(sampleMap2, "DodgeChallenge");
+			Console.WriteLine("Selection returned: " + query.CalculateOptimalSelection(0.0f));
 		}
 		static void PrintToLog(string message, CurveFlow.MessageType type)
 		{

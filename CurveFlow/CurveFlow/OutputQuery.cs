@@ -27,10 +27,13 @@ namespace CurveFlow
 				sb.Append("Begining Difficulty Calculation on ");
 				sb.Append(returnString);
 				sb.Append(":\n");
-				float totalDifficulty = 0.0f;
+				int sharedValues = 0;
+				float totalDifficulty = 0.0f; //How many shared keys are used in the average
 				for (int j = 0; j < currentValues.Length; j++)
 				{
 					TrackedValue val = currentValues[j];
+					if (!queryValues.ContainsKey(val.m_name)) continue;
+					sharedValues++;
 					//Get the associated queryValues key based on the currentValue[j]
 					float delta = val.m_currentValue - queryValues[val.m_name];
 					//Get this delta as a percentage based on min and max
@@ -41,7 +44,7 @@ namespace CurveFlow
 					sb.Append(difficulty.ToString("G"));
 					sb.Append(' ');
 				}
-				float averageDifficulty = totalDifficulty / currentValues.Length;
+				float averageDifficulty = totalDifficulty / sharedValues;
 				sb.Append("Average: ");
 				sb.Append(averageDifficulty.ToString("G"));
 				CFLog.SendMessage(sb.ToString(), MessageType.DEBUG);
