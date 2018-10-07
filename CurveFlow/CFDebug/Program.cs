@@ -15,7 +15,7 @@ namespace CFDebug
 			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)7);
 
 			CreateProfile();
-			controller.AppendTrackedValue("Parry", 0.33f);
+			controller.AppendTrackedValue("Parry", 0.5f);
 			controller.AppendTrackedValue("Dodge", 0.5f);
 			CreateNewQuery();
 		}
@@ -46,16 +46,21 @@ namespace CFDebug
 			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(controller);
 			Dictionary<string, float> sampleMap1 = new Dictionary<string, float>
 			{
-				{ "Parry", 0.8f },
-				{ "Dodge", 0.4f }
+				{ "Parry", 1.0f },
+				{ "Dodge", 0.0f }
 			};
 			Dictionary<string, float> sampleMap2 = new Dictionary<string, float>
 			{
-				{ "Parry", 0.5f },
-				{ "Dodge", 0.8f }
+				{ "Parry", 0.0f },
+				{ "Dodge", 1.0f }
 			};
-			query.InsertOutput(sampleMap1, "ParryChallenge");
-			query.InsertOutput(sampleMap2, "DodgeChallenge");
+			Dictionary<string, float> weightMap = new Dictionary<string, float>
+			{
+				{"Parry", 2.5f },
+				{"Dodge", 1.0f }
+			};
+			query.InsertOutput(sampleMap1, weightMap, "ParryChallenge");
+			query.InsertOutput(sampleMap2, weightMap, "DodgeChallenge");
 			Console.WriteLine("Selection returned: " + query.CalculateOptimalSelection(0.0f));
 		}
 		static void PrintToLog(string message, CurveFlow.MessageType type)

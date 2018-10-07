@@ -12,13 +12,18 @@ namespace CurveFlow
 	/// </summary>
 	public class OutputQuery
 	{
+		private struct Weight
+		{
+			public float value;
+			public float multiplier;
+		}
 		private class Output
 		{
-			readonly public Dictionary<string, float> queryValues;
+			readonly public Dictionary<string, Weight> queryValues;
 			readonly public string returnString;
 			public Output(string outputString)
 			{
-				queryValues = new Dictionary<string, float>();
+				queryValues = new Dictionary<string, Weight>();
 				returnString = outputString;
 			}
 			public float CalculateDifficulty(TrackedValue[] currentValues)
@@ -27,26 +32,35 @@ namespace CurveFlow
 				sb.Append("Begining Difficulty Calculation on ");
 				sb.Append(returnString);
 				sb.Append(":\n");
-				int sharedValues = 0;
+				float sharedValues = 0f;
 				float totalDifficulty = 0.0f; //How many shared keys are used in the average
 				for (int j = 0; j < currentValues.Length; j++)
 				{
 					TrackedValue val = currentValues[j];
 					if (!queryValues.ContainsKey(val.m_name)) continue;
-					sharedValues++;
+					Weight weight = queryValues[val.m_name];
+					sharedValues += weight.multiplier;
 					//Get the associated queryValues key based on the currentValue[j]
-					float delta = val.m_currentValue - queryValues[val.m_name];
+					float delta = val.m_currentValue - weight.value;
 					//Get this delta as a percentage based on min and max
 					float difficulty = delta / (val.m_max - val.m_min);
-					totalDifficulty += difficulty;
+					float weightedDifficulty = (difficulty * Math.Abs(difficulty))*weight.multiplier;
+					totalDifficulty += weightedDifficulty;
+
 					sb.Append(val.m_name);
 					sb.Append(':');
-					sb.Append(difficulty.ToString("G"));
+					sb.Append((difficulty).ToString("G"));
+					sb.Append('/');
+					sb.Append((weightedDifficulty).ToString("G"));
 					sb.Append(' ');
 				}
 				float averageDifficulty = totalDifficulty / sharedValues;
-				sb.Append("Average: ");
+
+				sb.Append("Total: ");
+				sb.Append(totalDifficulty.ToString("G"));
+				sb.Append(" Average: ");
 				sb.Append(averageDifficulty.ToString("G"));
+
 				CFLog.SendMessage(sb.ToString(), MessageType.DEBUG);
 				return averageDifficulty;
 			}
@@ -63,7 +77,26 @@ namespace CurveFlow
 			Output newOutput = new Output(returnString);
 			foreach(string key in estimatedValues.Keys)
 			{
-				newOutput.queryValues.Add(key, estimatedValues[key]);
+				Weight weight = new Weight()
+				{
+					value = estimatedValues[key],
+					multiplier = 1.0f
+				};
+				newOutput.queryValues.Add(key, weight);
+			}
+			m_outputList.Add(newOutput);
+		}
+		public void InsertOutput(Dictionary<string, float> estimatedValues, Dictionary<string, float> weights, string returnString)
+		{
+			Output newOutput = new Output(returnString);
+			foreach (string key in estimatedValues.Keys)
+			{
+				Weight weight = new Weight()
+				{
+					value = estimatedValues[key],
+					multiplier = weights[key]
+				};
+				newOutput.queryValues.Add(key, weight);
 			}
 			m_outputList.Add(newOutput);
 		}
