@@ -58,7 +58,10 @@ namespace CurveFlow
 		}
 		#endregion
 		#region OutputQuery
-
+		public string Evaluate(OutputQuery query, float desiredDifficulty)
+		{
+			return query.CalculateOptimalSelection(desiredDifficulty, m_profile.GetAllValues());
+		}
 		#endregion
 		#region DebugMethods
 		public void DebugLogConsole(MessageType type)

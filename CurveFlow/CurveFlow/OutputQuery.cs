@@ -65,12 +65,12 @@ namespace CurveFlow
 				return averageDifficulty;
 			}
 		}
+
+
 		List<Output> m_outputList;
-		private CurveFlowController m_controller;
 		public OutputQuery(CurveFlowController controller)
 		{
 			m_outputList = new List<Output>();
-			m_controller = controller;
 		}
 		public void InsertOutput(Dictionary<string, float> estimatedValues, string returnString)
 		{
@@ -104,12 +104,11 @@ namespace CurveFlow
 		{
 			//Parses the file back into an object
 		}
-		public string CalculateOptimalSelection(float intendedDifficulty)
+		internal string CalculateOptimalSelection(float intendedDifficulty, TrackedValue[] currentValues)
 		{
 			//Does not use the Micro/Macro curves yet, just based on the difficulty number
 			float currentBestDelta = float.MaxValue;
 			int currentBestIndex = -1;
-			TrackedValue[] currentValues = m_controller.m_profile.GetAllValues();
 			for(int j = 0; j < m_outputList.Count; j++)
 			{
 				float difficulty = m_outputList[j].CalculateDifficulty(currentValues);
@@ -126,7 +125,24 @@ namespace CurveFlow
 		}
 		public string GetSavableString()
 		{
-			return "";
+			StringBuilder sb = new StringBuilder();
+			//TODO settings here
+			foreach(Output output in m_outputList)
+			{
+				sb.Append(output.returnString);
+				sb.Append("\n{\n");
+				foreach(string key in output.queryValues.Keys)
+				{
+					sb.Append(key);
+					sb.Append(',');
+					sb.Append(output.queryValues[key].value.ToString("G"));
+					sb.Append(',');
+					sb.Append(output.queryValues[key].multiplier.ToString("G"));
+					sb.Append('\n');
+				}
+				sb.Append("}\n");
+			}
+			return sb.ToString();
 		}
 		public override string ToString()
 		{

@@ -17,7 +17,7 @@ namespace CFDebug
 			CreateProfile();
 			controller.AppendTrackedValue("Parry", 0.5f);
 			controller.AppendTrackedValue("Dodge", 0.5f);
-			CreateNewQuery();
+			WriteQueryToFile();
 		}
 		static void CreateProfile()
 		{
@@ -42,26 +42,49 @@ namespace CFDebug
 		}
 		static void CreateNewQuery()
 		{
-			//TODO test these methods with the inefficient manual creation methods
 			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(controller);
 			Dictionary<string, float> sampleMap1 = new Dictionary<string, float>
 			{
-				{ "Parry", 1.0f },
-				{ "Dodge", 0.0f }
+				{ "Parry", 0.95f },
+				{ "Dodge", 0.075f }
 			};
 			Dictionary<string, float> sampleMap2 = new Dictionary<string, float>
 			{
-				{ "Parry", 0.0f },
-				{ "Dodge", 1.0f }
+				{ "Parry", 0.152f },
+				{ "Dodge", 0.9124f }
 			};
 			Dictionary<string, float> weightMap = new Dictionary<string, float>
 			{
-				{"Parry", 2.5f },
-				{"Dodge", 1.0f }
+				{"Parry", 2.3f },
+				{"Dodge", 1.2f }
 			};
 			query.InsertOutput(sampleMap1, weightMap, "ParryChallenge");
 			query.InsertOutput(sampleMap2, weightMap, "DodgeChallenge");
-			Console.WriteLine("Selection returned: " + query.CalculateOptimalSelection(0.0f));
+			Console.WriteLine("Selection returned: " + controller.Evaluate(query, 0.0f));
+		}
+		static void WriteQueryToFile()
+		{
+			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(controller);
+			Dictionary<string, float> sampleMap1 = new Dictionary<string, float>
+			{
+				{ "Parry", 0.95f },
+				{ "Dodge", 0.075f }
+			};
+			Dictionary<string, float> sampleMap2 = new Dictionary<string, float>
+			{
+				{ "Parry", 0.152f },
+				{ "Dodge", 0.9124f }
+			};
+			Dictionary<string, float> weightMap = new Dictionary<string, float>
+			{
+				{"Parry", 2.3f },
+				{"Dodge", 1.2f }
+			};
+			query.InsertOutput(sampleMap1, weightMap, "ParryChallenge");
+			query.InsertOutput(sampleMap2, weightMap, "DodgeChallenge");
+			string output = query.GetSavableString();
+			Console.WriteLine(output);
+			System.IO.File.WriteAllText("TestFile.qf", output);
 		}
 		static void PrintToLog(string message, CurveFlow.MessageType type)
 		{

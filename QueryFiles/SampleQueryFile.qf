@@ -4,5 +4,13 @@ groupselection=true
 etc
 etc
 /*next are the values, listed as ordered pairs*/
-Parry,0.51563621
-Dodge,0.15391569
+ParryChallenge
+{
+Parry,0.51563621,1.0
+Dodge,0.15391569,1.0
+}
+DodgeChallenge
+{
+Parry,0.13314
+Dodge,0.51024
+}
