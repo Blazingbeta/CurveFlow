@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Query>
+	<Output>
+		<Name>ParryChallenge</Name>
+		<Skill>
+			<Name>Parry</Name>
+			<Value>0.95</Value>
+			<Weight>2.3</Weight>
+		</Skill>
+		<Skill>
+			<Name>Dodge</Name>
+			<Value>0.075</Value>
+			<Weight>1.2</Weight>
+		</Skill>
+	</Output>
+	<Output>
+		<Name>DodgeChallenge</Name>
+		<Skill>
+			<Name>Parry</Name>
+			<Value>0.152</Value>
+			<Weight>2.3</Weight>
+		</Skill>
+		<Skill>
+			<Name>Dodge</Name>
+			<Value>0.9124</Value>
+			<Weight>1.2</Weight>
+		</Skill>
+	</Output>
+</Query>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace CFDebug
 {
@@ -14,10 +15,17 @@ namespace CFDebug
 			controller = new CurveFlow.CurveFlowController();
 			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)7);
 
-			CreateProfile();
-			controller.AppendTrackedValue("Parry", 0.5f);
-			controller.AppendTrackedValue("Dodge", 0.5f);
-			WriteQueryToFile();
+			//CreateProfile();
+			//controller.AppendTrackedValue("Parry", 0.5f);
+			//controller.AppendTrackedValue("Dodge", 0.5f);
+
+			//WriteQueryToFile();
+			CreateXMLQuery();
+		}
+		static void CreateXMLQuery()
+		{
+			string xml = File.ReadAllText("TestFile.qf");
+			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
 		}
 		static void CreateProfile()
 		{
@@ -42,7 +50,7 @@ namespace CFDebug
 		}
 		static void CreateNewQuery()
 		{
-			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(controller);
+			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery();
 			Dictionary<string, float> sampleMap1 = new Dictionary<string, float>
 			{
 				{ "Parry", 0.95f },
@@ -64,10 +72,10 @@ namespace CFDebug
 		}
 		static void WriteQueryToFile()
 		{
-			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(controller);
+			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery();
 			Dictionary<string, float> sampleMap1 = new Dictionary<string, float>
 			{
-				{ "Parry", 0.95f },
+				{ "Parry", 0.715f },
 				{ "Dodge", 0.075f }
 			};
 			Dictionary<string, float> sampleMap2 = new Dictionary<string, float>
@@ -82,7 +90,7 @@ namespace CFDebug
 			};
 			query.InsertOutput(sampleMap1, weightMap, "ParryChallenge");
 			query.InsertOutput(sampleMap2, weightMap, "DodgeChallenge");
-			string output = query.GetSavableString();
+			string output = query.GetXmlString();
 			Console.WriteLine(output);
 			System.IO.File.WriteAllText("TestFile.qf", output);
 		}

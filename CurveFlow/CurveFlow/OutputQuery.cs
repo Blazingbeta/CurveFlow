@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace CurveFlow
 {
@@ -68,9 +69,35 @@ namespace CurveFlow
 
 
 		List<Output> m_outputList;
-		public OutputQuery(CurveFlowController controller)
+		public OutputQuery()
 		{
 			m_outputList = new List<Output>();
+		}
+		public OutputQuery(string xmlString)
+		{
+			m_outputList = new List<Output>();
+			//Parses the file back into an object
+			XmlDocument doc = new XmlDocument();
+			doc.LoadXml(xmlString);
+			//Do things on the settings node here
+			//Load the outputs
+			var outputNodes = doc.SelectNodes("/Query/Output");
+			foreach (XmlNode node in outputNodes)
+			{
+				Output outputObject = new Output(node["Name"].InnerText);
+				var skillNodes = node.SelectNodes("Skill");
+				foreach (XmlNode skillNode in skillNodes)
+				{
+					Weight weight = new Weight
+					{
+						value = float.Parse(skillNode["Value"].InnerText),
+						multiplier = float.Parse(skillNode["Weight"].InnerText)
+					};
+					outputObject.queryValues.Add(skillNode["Name"].InnerText, weight);
+				}
+				m_outputList.Add(outputObject);
+			}
+			CFLog.SendMessage("XML Successfully Loaded.", MessageType.STATUS);
 		}
 		public void InsertOutput(Dictionary<string, float> estimatedValues, string returnString)
 		{
@@ -100,10 +127,6 @@ namespace CurveFlow
 			}
 			m_outputList.Add(newOutput);
 		}
-		public OutputQuery(string queryFile)
-		{
-			//Parses the file back into an object
-		}
 		internal string CalculateOptimalSelection(float intendedDifficulty, TrackedValue[] currentValues)
 		{
 			//Does not use the Micro/Macro curves yet, just based on the difficulty number
@@ -123,30 +146,41 @@ namespace CurveFlow
 				+ " with difficulty delta " + currentBestDelta, MessageType.STATUS);
 			return m_outputList[currentBestIndex].returnString;
 		}
-		public string GetSavableString()
+		public string GetXmlString()
 		{
 			StringBuilder sb = new StringBuilder();
-			//TODO settings here
-			foreach(Output output in m_outputList)
+			XmlWriterSettings settings = new XmlWriterSettings()
 			{
-				sb.Append(output.returnString);
-				sb.Append("\n{\n");
-				foreach(string key in output.queryValues.Keys)
+				Indent = true,
+				IndentChars = "\t",
+				NewLineOnAttributes = true
+			};
+			using (XmlWriter writer = XmlWriter.Create(sb, settings))
+			{
+				writer.WriteStartDocument();
+				writer.WriteStartElement("Query");
+				foreach(Output output in m_outputList)
 				{
-					sb.Append(key);
-					sb.Append(',');
-					sb.Append(output.queryValues[key].value.ToString("G"));
-					sb.Append(',');
-					sb.Append(output.queryValues[key].multiplier.ToString("G"));
-					sb.Append('\n');
+					writer.WriteStartElement("Output");
+					writer.WriteElementString("Name", output.returnString);
+					foreach(string key in output.queryValues.Keys)
+					{
+						writer.WriteStartElement("Skill");
+						writer.WriteElementString("Name", key);
+						writer.WriteElementString("Value", output.queryValues[key].value.ToString("G"));
+						writer.WriteElementString("Weight", output.queryValues[key].multiplier.ToString("G"));
+						writer.WriteEndElement();
+					}
+					writer.WriteEndElement();
 				}
-				sb.Append("}\n");
+				writer.WriteEndElement();
+				writer.WriteEndDocument();
 			}
 			return sb.ToString();
 		}
 		public override string ToString()
 		{
-			return GetSavableString();
+			return GetXmlString();
 		}
 	}
 }
