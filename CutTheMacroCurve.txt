@@ -1,0 +1,4 @@
+Issue: Macro Curve Tops out, if all skills are maxed can only return 0
+As it is currently designed, the macro curve can only provide difficulty up to a certain point. 
+Do we even need a macro curve? Should the overall rise in difficulty be managed by the creator instead?
+Micro Curve still has a use since it can fluctuate difficulty regardless of final difficulty

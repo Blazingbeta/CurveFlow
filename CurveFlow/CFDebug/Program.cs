@@ -12,20 +12,21 @@ namespace CFDebug
 		static CurveFlow.CurveFlowController controller;
 		static void Main(string[] args)
 		{
-			controller = new CurveFlow.CurveFlowController();
+			controller = new CurveFlow.CurveFlowController(CurveFlow.CurveFlowController.GenerateSettings());
 			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)7);
 
-			//CreateProfile();
-			//controller.AppendTrackedValue("Parry", 0.5f);
-			//controller.AppendTrackedValue("Dodge", 0.5f);
-
-			//WriteQueryToFile();
-			CreateXMLQuery();
+			CreateProfile();
+			Console.WriteLine(CurveFlow.CurveFlowController.GenerateSettings());
+			LoadXmlQuery();
+			WriteQueryToFile();
+			Console.WriteLine(controller.DebugTestMicroCurve(1.0f, 3.14159f));
+			Console.WriteLine(controller.DebugTestMicroCurve(1.0f, 0.0f));
 		}
-		static void CreateXMLQuery()
+		static void LoadXmlQuery()
 		{
-			string xml = File.ReadAllText("TestFile.qf");
+			string xml = File.ReadAllText("TestQueryFile.qf");
 			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
+			controller.Evaluate(xmlLoadTest, 0.0f);
 		}
 		static void CreateProfile()
 		{
@@ -92,7 +93,7 @@ namespace CFDebug
 			query.InsertOutput(sampleMap2, weightMap, "DodgeChallenge");
 			string output = query.GetXmlString();
 			Console.WriteLine(output);
-			System.IO.File.WriteAllText("TestFile.qf", output);
+			System.IO.File.WriteAllText("TestQueryFile.qf", output);
 		}
 		static void PrintToLog(string message, CurveFlow.MessageType type)
 		{

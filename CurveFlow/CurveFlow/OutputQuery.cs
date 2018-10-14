@@ -48,16 +48,17 @@ namespace CurveFlow
 					float weightedDifficulty = (difficulty * Math.Abs(difficulty))*weight.multiplier;
 					totalDifficulty += weightedDifficulty;
 
+					sb.Append('\t');
 					sb.Append(val.m_name);
 					sb.Append(':');
 					sb.Append((difficulty).ToString("G"));
 					sb.Append('/');
 					sb.Append((weightedDifficulty).ToString("G"));
-					sb.Append(' ');
+					sb.Append('\n');
 				}
 				float averageDifficulty = totalDifficulty / sharedValues;
 
-				sb.Append("Total: ");
+				sb.Append("\tTotal: ");
 				sb.Append(totalDifficulty.ToString("G"));
 				sb.Append(" Average: ");
 				sb.Append(averageDifficulty.ToString("G"));

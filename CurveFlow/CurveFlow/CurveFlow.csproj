@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NCalc">
+      <HintPath>..\..\ncalc\Evaluant.Calculator\bin\Release\NCalc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,6 +46,7 @@
     <Compile Include="CFObjects.cs" />
     <Compile Include="CFProfile.cs" />
     <Compile Include="CurveFlowController.cs" />
+    <Compile Include="MicroCurve.cs" />
     <Compile Include="OutputQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

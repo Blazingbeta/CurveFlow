@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Xml;
 
 namespace CurveFlow
 {
@@ -15,9 +17,15 @@ namespace CurveFlow
     public class CurveFlowController
     {
 		internal CFProfile m_profile;
-		public CurveFlowController()
+		internal MicroCurve m_curve;
+		public CurveFlowController(string settingsXML)
 		{
-			//m_log = new CFLog();
+			//Parses the settings file
+			XmlDocument doc = new XmlDocument();
+			doc.LoadXml(settingsXML);
+			//Do things on the settings node here
+
+			m_curve = new MicroCurve(doc);
 		}
 		/// <summary>
 		/// Sets up CurveFlow's logging system to a custom callback function
@@ -27,6 +35,34 @@ namespace CurveFlow
 		public void InitializeLog(LogCallback log, MessageType messageTypeMask)
 		{
 			CFLog.SetupLog(messageTypeMask, log);
+		}
+		/// <summary>
+		/// Creates an XML string of the default settings
+		/// </summary>
+		/// <returns>Settings in a string format</returns>
+		public static string GenerateSettings()
+		{
+			StringBuilder sb = new StringBuilder();
+			XmlWriterSettings settings = new XmlWriterSettings()
+			{
+				Indent = true,
+				IndentChars = "\t",
+				NewLineOnAttributes = true
+			};
+			using (XmlWriter writer = XmlWriter.Create(sb, settings))
+			{
+				writer.WriteStartDocument();
+				writer.WriteStartElement("Settings");
+
+				writer.WriteStartElement("MicroCurve");
+					writer.WriteElementString("Algorithm", "[x] * Sin([t])");
+					writer.WriteElementString("PrecompileExpression", "true");
+				writer.WriteEndElement();
+
+				writer.WriteEndElement();
+				writer.WriteEndDocument();
+			}
+			return sb.ToString();
 		}
 		#region Profile
 		public void CreateNewProfile(TrackedValue[] trackedValues)
@@ -62,6 +98,11 @@ namespace CurveFlow
 		{
 			return query.CalculateOptimalSelection(desiredDifficulty, m_profile.GetAllValues());
 		}
+		public string EvaluateOnCurve(OutputQuery query, float desiredDifficulty, float time)
+		{
+			float difficulty = m_curve.EvaluateExpression(desiredDifficulty, time);
+			return query.CalculateOptimalSelection(difficulty, m_profile.GetAllValues());
+		}
 		#endregion
 		#region DebugMethods
 		public void DebugLogConsole(MessageType type)
@@ -72,6 +113,16 @@ namespace CurveFlow
 		{
 			m_profile.AppendValue("Parry", 0.66f);
 			m_profile.AppendValue("Health", 1.0f);
+		}
+		public float DebugTestMicroCurve(float x, float t)
+		{
+
+			Stopwatch sw = new Stopwatch();
+			sw.Start();
+			float output = m_curve.EvaluateExpression(x,t);
+			sw.Stop();
+			CFLog.SendMessage(sw.Elapsed.ToString(), MessageType.STATUS);
+			return output;
 		}
 		#endregion
 	}
