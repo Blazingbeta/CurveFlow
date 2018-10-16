@@ -232,12 +232,25 @@ namespace CurveFlow
 			}
 			else
 			{
-				for(int j = listIndex; j < m_outputList.Count-remainingSelections; j++)
+				if (m_allowGroupDuplicates)
 				{
-					//Recurses for every possible case this number can be
-					//IE with an output count of 5 and a selection of 3, top number can never be 3 or 4
-					current[arrIndex] = j;
-					GetBestGroupBinding(j + 1, arrIndex + 1, remainingSelections, current, diff);
+					for (int j = listIndex; j < m_outputList.Count; j++)
+					{
+						//Recurses for every possible case this number can be
+						//Since in a list of 5, 444 is valid output, top number *can* be 3 or 4
+						current[arrIndex] = j;
+						GetBestGroupBinding(j, arrIndex + 1, remainingSelections, current, diff);
+					}
+				}
+				else
+				{
+					for (int j = listIndex; j < m_outputList.Count - remainingSelections; j++)
+					{
+						//Recurses for every possible case this number can be
+						//IE with an output count of 5 and a selection of 3, top number can never be 3 or 4
+						current[arrIndex] = j;
+						GetBestGroupBinding(j + 1, arrIndex + 1, remainingSelections, current, diff);
+					}
 				}
 			}
 		}

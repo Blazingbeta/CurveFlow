@@ -1,3 +1,7 @@
 No Warning Message for lack of Profile
 No Warning Message for empty Query
 need a TryCatch for bad XML
+
+Group Selection:
+Last value does not recurse, so will always be the same as the one before it or +1 if repeats are disabled
+Must make this value iterate itself too

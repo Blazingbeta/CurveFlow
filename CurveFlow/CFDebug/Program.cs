@@ -20,9 +20,9 @@ namespace CFDebug
 		}
 		static void TestGroupSelection()
 		{
-			string xml = File.ReadAllText("GroupQuery.qf");
+			string xml = File.ReadAllText("..\\..\\..\\..\\QueryFiles\\GroupQuery.qf");
 			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
-			controller.EvaluateGroupSelection(xmlLoadTest, 0.0f, 3);
+			controller.EvaluateGroupSelection(xmlLoadTest, 0.0f, 2);
 		}
 		static void TestRepeatSelection()
 		{
@@ -46,6 +46,8 @@ namespace CFDebug
 				new CurveFlow.TrackedValue(0f, 1f, "Dodge", CurveFlow.ValueType.AVERAGE),
 				new CurveFlow.TrackedValue(0f, 1f, "Health", CurveFlow.ValueType.SET)
 			});
+			controller.AppendTrackedValue("Parry", 0.5f);
+			controller.AppendTrackedValue("Dodge", 0.6f);
 		}
 		static void SaveProfile()
 		{
