@@ -103,6 +103,10 @@ namespace CurveFlow
 			float difficulty = m_curve.EvaluateExpression(desiredDifficulty, time);
 			return query.CalculateOptimalSelection(difficulty, m_profile.GetAllValues());
 		}
+		public string[] EvaluateGroupSelection(OutputQuery query, float desiredDifficulty, int count)
+		{
+			return query.GetGroupBinding(desiredDifficulty, m_profile.GetAllValues(), count);
+		}
 		#endregion
 		#region DebugMethods
 		public void DebugLogConsole(MessageType type)

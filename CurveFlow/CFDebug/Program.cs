@@ -16,15 +16,26 @@ namespace CFDebug
 			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)7);
 
 			CreateProfile();
-			Console.WriteLine(CurveFlow.CurveFlowController.GenerateSettings());
-			LoadXmlQuery();
-			WriteQueryToFile();
-			Console.WriteLine(controller.DebugTestMicroCurve(1.0f, 3.14159f));
-			Console.WriteLine(controller.DebugTestMicroCurve(1.0f, 0.0f));
+			TestGroupSelection();
+		}
+		static void TestGroupSelection()
+		{
+			string xml = File.ReadAllText("GroupQuery.qf");
+			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
+			controller.EvaluateGroupSelection(xmlLoadTest, 0.0f, 3);
+		}
+		static void TestRepeatSelection()
+		{
+			string xml = File.ReadAllText("GroupQuery.qf");
+			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
+			controller.Evaluate(xmlLoadTest, 0.0f);
+			controller.Evaluate(xmlLoadTest, 0.0f);
+			controller.Evaluate(xmlLoadTest, 0.0f);
+			controller.Evaluate(xmlLoadTest, 0.0f);
 		}
 		static void LoadXmlQuery()
 		{
-			string xml = File.ReadAllText("TestQueryFile.qf");
+			string xml = File.ReadAllText("GroupQuery.qf");
 			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
 			controller.Evaluate(xmlLoadTest, 0.0f);
 		}
@@ -51,7 +62,7 @@ namespace CFDebug
 		}
 		static void CreateNewQuery()
 		{
-			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery();
+			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(false);
 			Dictionary<string, float> sampleMap1 = new Dictionary<string, float>
 			{
 				{ "Parry", 0.95f },
@@ -73,7 +84,7 @@ namespace CFDebug
 		}
 		static void WriteQueryToFile()
 		{
-			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery();
+			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(false);
 			Dictionary<string, float> sampleMap1 = new Dictionary<string, float>
 			{
 				{ "Parry", 0.715f },
