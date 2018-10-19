@@ -1,4 +1,4 @@
-#Curve Flow
+Curve Flow
 ===========
 
 CurveFlow aims to reduce unintentional difficulty spikes in games by restructuring the content of a game to better suit a specific player's needs. It doesn't aim to just reduce the difficulty for less skilled players, rather it will move things around to better accomodate their strengths and weaknessess. 
