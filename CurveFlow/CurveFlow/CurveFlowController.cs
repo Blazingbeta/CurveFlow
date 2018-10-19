@@ -107,26 +107,10 @@ namespace CurveFlow
 		{
 			return query.GetGroupBinding(desiredDifficulty, m_profile.GetAllValues(), count);
 		}
-		#endregion
-		#region DebugMethods
-		public void DebugLogConsole(MessageType type)
+		public string[] EvaluateGroupSelectionOnCurve(OutputQuery query, float desiredDifficulty, int count, float time)
 		{
-			CFLog.SendMessage("This is a message!", type);
-		}
-		public void DebugChangeValues()
-		{
-			m_profile.AppendValue("Parry", 0.66f);
-			m_profile.AppendValue("Health", 1.0f);
-		}
-		public float DebugTestMicroCurve(float x, float t)
-		{
-
-			Stopwatch sw = new Stopwatch();
-			sw.Start();
-			float output = m_curve.EvaluateExpression(x,t);
-			sw.Stop();
-			CFLog.SendMessage(sw.Elapsed.ToString(), MessageType.STATUS);
-			return output;
+			float difficulty = m_curve.EvaluateExpression(desiredDifficulty, time);
+			return query.GetGroupBinding(difficulty, m_profile.GetAllValues(), count);
 		}
 		#endregion
 	}

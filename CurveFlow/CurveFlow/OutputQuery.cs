@@ -41,7 +41,7 @@ namespace CurveFlow
 			doc.LoadXml(xmlString);
 			//Do things on the settings node here
 			var repeatNodes = doc.SelectSingleNode("/Query/Settings/RepeatSelection");
-			m_discourageRepeatSelection = repeatNodes["DiscourageRepeatSelection"].InnerText == "True";
+			m_discourageRepeatSelection = repeatNodes.Attributes["Enabled"].InnerText == "True";
 			if (m_discourageRepeatSelection)
 			{
 				m_repeatSelectionWeight = float.Parse(repeatNodes["RepeatSelectionWeight"].InnerText);
@@ -50,7 +50,7 @@ namespace CurveFlow
 			}
 
 			var groupNodes = doc.SelectSingleNode("/Query/Settings/GroupBinding");
-			m_isGroupBinding = groupNodes["IsGroupSelection"].InnerText == "True";
+			m_isGroupBinding = groupNodes.Attributes["Enabled"].InnerText == "True";
 			if (m_isGroupBinding)
 			{
 				string stackingType = groupNodes["StackingType"].InnerText;
@@ -74,6 +74,16 @@ namespace CurveFlow
 					outputObject.queryValues.Add(skillNode["Name"].InnerText, weight);
 				}
 				m_outputList.Add(outputObject);
+			}
+			var lockNodes = doc.SelectSingleNode("/Query/Settings/SelectionLock");
+			m_enableSelectionLock = lockNodes.Attributes["Enabled"].InnerText == "True";
+			if (m_enableSelectionLock)
+			{
+				foreach(XmlNode node in lockNodes.SelectNodes("Lock"))
+				{
+					Output lockedOutput = m_outputList.Find(o => o.returnString == node.InnerText);
+					m_lockedOutputIDs.Add(lockedOutput.id);
+				}
 			}
 			CFLog.SendMessage("XML Successfully Loaded.", MessageType.STATUS);
 		}
@@ -119,6 +129,10 @@ namespace CurveFlow
 			int currentBestIndex = -1;
 			for(int j = 0; j < m_outputList.Count; j++)
 			{
+				if(m_enableSelectionLock && m_lockedOutputIDs.Contains(m_outputList[j].id))
+				{
+					continue;
+				}
 				float difficulty = m_outputList[j].CalculateDifficulty(currentValues, sb);
 				if (m_discourageRepeatSelection)
 				{
@@ -166,6 +180,10 @@ namespace CurveFlow
 			sb.Append(" with difficulty delta ");
 			sb.Append(currentBestDelta);
 			CFLog.SendMessage(sb.ToString(), MessageType.STATUS);
+			if (m_enableSelectionLock)
+			{
+				m_lockedOutputIDs.Add(m_outputList[currentBestIndex].id);
+			}
 			return m_outputList[currentBestIndex].returnString;
 		}
 		internal string[] GetGroupBinding(float intendedDifficulty, TrackedValue[] currentValues, int totalSelections)
@@ -212,7 +230,6 @@ namespace CurveFlow
 				float total = 0.0f;
 				for(int j = 0; j < current.Length; j++)
 				{
-					//TODO multiplicitve/additive modifier here
 					total += m_outputList[current[j]].lastDifficulty;
 				}
 				float delta = Math.Abs(diff - total);

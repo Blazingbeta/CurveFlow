@@ -12,16 +12,22 @@ namespace CFDebug
 		static CurveFlow.CurveFlowController controller;
 		static void Main(string[] args)
 		{
-			File.WriteAllText("..\\..\\..\\..\\QueryFiles\\Default.txt", CurveFlow.OutputQuery.GetDefaultXML());
+			//File.WriteAllText("..\\..\\..\\..\\QueryFiles\\LoadAndSave.qf", CurveFlow.OutputQuery.GetDefaultXML());
 			controller = new CurveFlow.CurveFlowController(CurveFlow.CurveFlowController.GenerateSettings());
 			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)7);
 
 			CreateProfile();
-			TestGroupSelection();
+			LoadAndPrintXML();
+		}
+		static void LoadAndPrintXML()
+		{
+			string xml = File.ReadAllText("..\\..\\..\\..\\QueryFiles\\LoadAndSave.qf");
+			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
+			Console.WriteLine(xmlLoadTest.GetXmlString());
 		}
 		static void TestGroupSelection()
 		{
-			string xml = File.ReadAllText("..\\..\\..\\..\\QueryFiles\\GroupRepeatTest.qf");
+			string xml = File.ReadAllText("..\\..\\..\\..\\QueryFiles\\Default.qf");
 			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
 			controller.EvaluateGroupSelection(xmlLoadTest, 0.0f, 2);
 		}

@@ -7,7 +7,6 @@ namespace CurveFlow
 {
 	public enum MessageType { STATUS = 1, DEBUG = 2, ERROR = 4}
 	public enum ValueType { ADDITIVE, AVERAGE, SET}
-	public enum StackingType { ADDITIVE, MULTIPLICATIVE }
 	public delegate void LogCallback(string logMessage, MessageType type);
 	[Serializable] public class TrackedValue
 	{

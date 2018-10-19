@@ -49,7 +49,6 @@
     <Compile Include="MicroCurve.cs" />
     <Compile Include="OutputQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RemoveableQueue.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
