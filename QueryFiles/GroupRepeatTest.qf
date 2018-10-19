@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Query>
+	<Settings>
+		<RepeatSelection>
+			<DiscourageRepeatSelection>False</DiscourageRepeatSelection>
+		</RepeatSelection>
+		<GroupBinding>
+			<IsGroupSelection>True</IsGroupSelection>
+			<StackingType>ADDITIVE</StackingType>
+			<AllowDuplicates>True</AllowDuplicates>
+		</GroupBinding>
+	</Settings>
+	<Output>
+		<Name>CloseOne</Name>
+			<Skill>
+				<Name>Parry</Name>
+				<Value>.55</Value>
+				<Weight>1.0</Weight>
+			</Skill>
+			<Skill>
+				<Name>Dodge</Name>
+				<Value>0.55</Value>
+				<Weight>1.0</Weight>
+			</Skill>
+	</Output>
+	<Output>
+		<Name>FurtherOne</Name>
+			<Skill>
+				<Name>Parry</Name>
+				<Value>0.56</Value>
+				<Weight>1.0</Weight>
+			</Skill>
+			<Skill>
+				<Name>Dodge</Name>
+				<Value>0.56</Value>
+				<Weight>1.0</Weight>
+			</Skill>
+	</Output>
+</Query>

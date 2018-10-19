@@ -12,6 +12,7 @@ namespace CFDebug
 		static CurveFlow.CurveFlowController controller;
 		static void Main(string[] args)
 		{
+			File.WriteAllText("..\\..\\..\\..\\QueryFiles\\Default.txt", CurveFlow.OutputQuery.GetDefaultXML());
 			controller = new CurveFlow.CurveFlowController(CurveFlow.CurveFlowController.GenerateSettings());
 			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)7);
 
@@ -20,7 +21,7 @@ namespace CFDebug
 		}
 		static void TestGroupSelection()
 		{
-			string xml = File.ReadAllText("..\\..\\..\\..\\QueryFiles\\GroupQuery.qf");
+			string xml = File.ReadAllText("..\\..\\..\\..\\QueryFiles\\GroupRepeatTest.qf");
 			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
 			controller.EvaluateGroupSelection(xmlLoadTest, 0.0f, 2);
 		}
@@ -47,7 +48,7 @@ namespace CFDebug
 				new CurveFlow.TrackedValue(0f, 1f, "Health", CurveFlow.ValueType.SET)
 			});
 			controller.AppendTrackedValue("Parry", 0.5f);
-			controller.AppendTrackedValue("Dodge", 0.6f);
+			controller.AppendTrackedValue("Dodge", 0.5f);
 		}
 		static void SaveProfile()
 		{
@@ -64,7 +65,7 @@ namespace CFDebug
 		}
 		static void CreateNewQuery()
 		{
-			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(false);
+			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(CurveFlow.OutputQuery.GetDefaultXML());
 			Dictionary<string, float> sampleMap1 = new Dictionary<string, float>
 			{
 				{ "Parry", 0.95f },
@@ -86,7 +87,7 @@ namespace CFDebug
 		}
 		static void WriteQueryToFile()
 		{
-			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(false);
+			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(CurveFlow.OutputQuery.GetDefaultXML());
 			Dictionary<string, float> sampleMap1 = new Dictionary<string, float>
 			{
 				{ "Parry", 0.715f },

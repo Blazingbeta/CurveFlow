@@ -25,19 +25,13 @@ namespace CurveFlow
 
 		//Group binding
 		bool m_isGroupBinding = false;
-		StackingType m_stackingType = StackingType.ADDITIVE;
 		bool m_allowGroupDuplicates = false;
+		float m_groupRepeatMultiplier = 1.5f;
 
-		/// <summary>
-		/// Default constructor for use without an existing XML string.
-		/// <para>This should only be used for creating your XML files as not everything can be setup here</para>
-		/// </summary>
-		/// <param name="isGroupBinding"></param>
-		public OutputQuery(bool isGroupBinding)
-		{
-			m_outputList = new List<Output>();
-			m_isGroupBinding = isGroupBinding;
-		}
+		//Selection Lock
+		bool m_enableSelectionLock = false;
+		List<int> m_lockedOutputIDs = new List<int>();
+
 		public OutputQuery(string xmlString)
 		{
 			m_outputList = new List<Output>();
@@ -60,7 +54,6 @@ namespace CurveFlow
 			if (m_isGroupBinding)
 			{
 				string stackingType = groupNodes["StackingType"].InnerText;
-				m_stackingType = (stackingType == "ADDITIVE") ? StackingType.ADDITIVE : StackingType.MULTIPLICATIVE;
 				m_allowGroupDuplicates = bool.Parse(groupNodes["AllowDuplicates"].InnerText);
 			}
 
@@ -212,10 +205,9 @@ namespace CurveFlow
 		private void GetBestGroupBinding(int listIndex, int arrIndex, int remainingSelections, int[] current, float diff)
 		{
 			remainingSelections--;
-			if (remainingSelections == 0)
+			if (remainingSelections == -1)
 			{
-				//Has reached the bottom (this index still needs to be added however)
-				current[arrIndex] = listIndex;
+				//Has reached the bottom (and current is filled with all values)
 				//Sum the values
 				float total = 0.0f;
 				for(int j = 0; j < current.Length; j++)
@@ -224,8 +216,18 @@ namespace CurveFlow
 					total += m_outputList[current[j]].lastDifficulty;
 				}
 				float delta = Math.Abs(diff - total);
+				CFLog.SendMessage(delta.ToString("G"), MessageType.DEBUG);
 				if(delta < m_recursiveBestValue)
 				{
+					//Don't do the repeat checking math if the number is already too high
+					//Technically this means that repeat mods of less than 1 won't work
+					if(m_allowGroupDuplicates)
+					{
+						int dupeCount = current.Length - current.Distinct().Count();
+						if(dupeCount != 0)
+							delta *= (dupeCount * m_groupRepeatMultiplier);
+						if (delta > m_recursiveBestValue) return;
+					}
 					m_recursiveBestValue = delta;
 					current.CopyTo(m_recursiveBestArray, 0);
 				}
@@ -270,15 +272,23 @@ namespace CurveFlow
 				//Settings
 				writer.WriteStartElement("Settings");
 				writer.WriteStartElement("RepeatSelection");
-					writer.WriteElementString("DiscourageRepeatSelection", m_discourageRepeatSelection.ToString());
+					writer.WriteAttributeString("Enabled", m_discourageRepeatSelection.ToString());
 					writer.WriteElementString("RepeatSelectionWeight", m_repeatSelectionWeight.ToString("G"));
 					writer.WriteElementString("PreviousValuesTracked", m_previousTrackedValues.ToString());
 					writer.WriteElementString("DiminishingWeight", m_diminishingWeight.ToString());
 				writer.WriteEndElement();
 				writer.WriteStartElement("GroupBinding");
-					writer.WriteElementString("IsGroupSelection", m_isGroupBinding.ToString());
-					writer.WriteElementString("StackingType", m_stackingType.ToString());
+					writer.WriteAttributeString("Enabled", m_isGroupBinding.ToString());
 					writer.WriteElementString("AllowDuplicates", m_allowGroupDuplicates.ToString());
+					writer.WriteElementString("GroupRepeatMultiplier", m_groupRepeatMultiplier.ToString("G"));
+				writer.WriteEndElement();
+				writer.WriteStartElement("SelectionLock");
+					writer.WriteAttributeString("Enabled", m_enableSelectionLock.ToString());
+					foreach(int j in m_lockedOutputIDs)
+					{
+						writer.WriteElementString("Lock", m_outputList[j].returnString);
+					}
+				writer.WriteEndElement();
 				writer.WriteEndElement();
 				//Outputs
 				foreach(Output output in m_outputList)
@@ -303,6 +313,58 @@ namespace CurveFlow
 		public override string ToString()
 		{
 			return GetXmlString();
+		}
+		public static string GetDefaultXML()
+		{
+			StringBuilder sb = new StringBuilder();
+			XmlWriterSettings settings = new XmlWriterSettings()
+			{
+				Indent = true,
+				IndentChars = "\t",
+				NewLineOnAttributes = true
+			};
+			using (XmlWriter writer = XmlWriter.Create(sb, settings))
+			{
+				writer.WriteStartDocument();
+				writer.WriteStartElement("Query");
+				//Settings
+				writer.WriteStartElement("Settings");
+					writer.WriteStartElement("RepeatSelection");
+						writer.WriteAttributeString("Enabled", "True");
+						writer.WriteElementString("RepeatSelectionWeight", "3.0");
+						writer.WriteElementString("PreviousValuesTracked", "2");
+						writer.WriteElementString("DiminishingWeight", "True");
+					writer.WriteEndElement();
+					writer.WriteStartElement("GroupBinding");
+						writer.WriteAttributeString("Enabled", "False");
+						writer.WriteElementString("AllowDuplicates", "False");
+						writer.WriteElementString("GroupRepeatMultiplier", "2.0");
+					writer.WriteEndElement();
+				writer.WriteStartElement("SelectionLock");
+					writer.WriteAttributeString("Enabled", "False");
+					writer.WriteElementString("Lock", "OutputName2");
+				writer.WriteEndElement();
+				writer.WriteEndElement();
+				//Outputs
+				for (int j = 1; j < 4; j++)
+				{
+					writer.WriteStartElement("Output");
+						writer.WriteElementString("Name", "OutputName" + j);
+						writer.WriteStartElement("Skill");
+							writer.WriteElementString("Name", "Parry");
+							writer.WriteElementString("Value", "0.5145");
+							writer.WriteElementString("Weight", "1.0");
+						writer.WriteEndElement();
+						writer.WriteStartElement("Skill");
+							writer.WriteElementString("Name", "Dodge");
+							writer.WriteElementString("Value", "0.1521");
+							writer.WriteElementString("Weight", "1.0");
+						writer.WriteEndElement();
+					writer.WriteEndElement();
+				}
+				writer.WriteEndDocument();
+			}
+			return sb.ToString();
 		}
 		private struct Weight
 		{
