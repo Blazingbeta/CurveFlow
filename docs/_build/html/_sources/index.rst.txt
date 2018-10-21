@@ -1,16 +1,12 @@
-.. CurveFlow documentation master file, created by
-   sphinx-quickstart on Fri Oct 19 11:03:54 2018.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to CurveFlow's documentation!
-=====================================
+CurveFlow Documentation
+=======================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
-
-
+   :caption: Information
+   
+   gettingstarted
+   controller
 
 Indices and tables
 ==================
