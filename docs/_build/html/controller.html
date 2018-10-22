@@ -16,6 +16,7 @@
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Output Query" href="outputquery.html" />
     <link rel="prev" title="Getting Started" href="gettingstarted.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -38,17 +39,83 @@
 <p>Description</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="8%" />
-<col width="92%" />
+<col width="6%" />
+<col width="94%" />
 </colgroup>
 <tbody valign="top">
+<tr class="row-odd"><td>ctor</td>
+<td><a class="reference internal" href="#class-controller-constructor"><span class="std std-ref">CurveflowController</span></a> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> settingsXML <strong>)</strong></td>
+</tr>
+<tr class="row-even"><td>void</td>
+<td><a class="reference internal" href="#class-controller-initialize-log"><span class="std std-ref">InitializeLog</span></a> <strong>(</strong> <a class="reference internal" href="objects.html#class-objects-logcallback"><span class="std std-ref">LogCallback</span></a> log, <a class="reference internal" href="objects.html#class-objects-messagetype"><span class="std std-ref">MessageType</span></a> typeMask <strong>)</strong></td>
+</tr>
 <tr class="row-odd"><td>void</td>
-<td><a class="reference internal" href="#class-controller-initialize-log"><span class="std std-ref">InitializeLog</span></a> <strong>(</strong>  <strong>)</strong></td>
+<td><a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">CreateNewProfile</span></a> <strong>(</strong> <a class="reference internal" href="objects.html#class-objects-trackedvalue"><span class="std std-ref">TrackedValue</span></a> [] trackedValues <strong>)</strong></td>
+</tr>
+<tr class="row-even"><td>void</td>
+<td><a class="reference internal" href="#class-controller-load-profile"><span class="std std-ref">LoadProfile</span></a> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream?view=netframework-4.7.2">Stream</a> profileStream <strong>)</strong></td>
+</tr>
+<tr class="row-odd"><td>void</td>
+<td><a class="reference internal" href="#class-controller-save-profile"><span class="std std-ref">SaveProfile</span></a> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream?view=netframework-4.7.2">Stream</a> outputStream <strong>)</strong></td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a></td>
+<td><a class="reference internal" href="#class-controller-get-current-value"><span class="std std-ref">GetCurrentValue</span></a> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> valueName <strong>)</strong></td>
+</tr>
+<tr class="row-odd"><td>void</td>
+<td><a class="reference internal" href="#class-controller-append-tracked-value"><span class="std std-ref">AppendTrackedValue</span></a> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> valueName, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> nextValue <strong>)</strong></td>
+</tr>
+<tr class="row-even"><td>void</td>
+<td><a class="reference internal" href="#class-controller-set-tracked-value"><span class="std std-ref">SetTrackedValue</span></a> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> valueName, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> newValue <strong>)</strong></td>
+</tr>
+<tr class="row-odd"><td>string</td>
+<td><a class="reference internal" href="#class-controller-evaluate"><span class="std std-ref">Evaluate</span></a> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty <strong>)</strong></td>
+</tr>
+<tr class="row-even"><td>string</td>
+<td><a class="reference internal" href="#class-controller-evaluate-on-curve"><span class="std std-ref">EvaluateOnCurve</span></a> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> []</td>
+<td><a class="reference internal" href="#class-controller-eval-group"><span class="std std-ref">EvaluateGroupSelection</span></a> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count <strong>)</strong></td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> []</td>
+<td><a class="reference internal" href="#class-controller-eval-group-on-curve"><span class="std std-ref">EvaluateGroupSelectionOnCurve</span></a> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></td>
 </tr>
 </tbody>
 </table>
+<ul class="simple" id="class-controller-constructor">
+<li><strong>CurveFlowController</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> xmlString <strong>)</strong></li>
+</ul>
 <ul class="simple" id="class-controller-initialize-log">
-<li>void <strong>InitializeLog</strong> <strong>(</strong> <span class="xref std std-ref">LogCallback</span> log, <span class="xref std std-ref">MessageType</span> TypeMask <strong>)</strong></li>
+<li>void <strong>InitializeLog</strong> <strong>(</strong> <a class="reference internal" href="objects.html#class-objects-logcallback"><span class="std std-ref">LogCallback</span></a> log, <a class="reference internal" href="objects.html#class-objects-messagetype"><span class="std std-ref">MessageType</span></a> typeMask <strong>)</strong></li>
+</ul>
+<ul class="simple" id="class-controller-create-profile">
+<li>void <strong>CreateProfile</strong> <strong>(</strong> <a class="reference internal" href="objects.html#class-objects-trackedvalue"><span class="std std-ref">TrackedValue</span></a> [] trackedValues <strong>)</strong></li>
+</ul>
+<ul class="simple" id="class-controller-load-profile">
+<li>void <strong>LoadProfile</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream?view=netframework-4.7.2">Stream</a> profileStream <strong>)</strong></li>
+</ul>
+<ul class="simple" id="class-controller-save-profile">
+<li>void <strong>SaveProfile</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream?view=netframework-4.7.2">Stream</a> outputStream <strong>)</strong></li>
+</ul>
+<ul class="simple" id="class-controller-get-current-value">
+<li>float <strong>GetCurrentValue</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> valueName <strong>)</strong></li>
+</ul>
+<ul class="simple" id="class-controller-append-tracked-value">
+<li>void <strong>AppendTrackedValue</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> valueName, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> nextValue <strong>)</strong></li>
+</ul>
+<ul class="simple" id="class-controller-set-tracked-value">
+<li>void <strong>SetTrackedValue</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> valueName, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> newValue <strong>)</strong></li>
+</ul>
+<ul class="simple" id="class-controller-evaluate">
+<li>string <strong>Evaluate</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty <strong>)</strong></li>
+</ul>
+<ul class="simple" id="class-controller-evaluate-on-curve">
+<li>string <strong>EvaluateOnCurve</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></li>
+</ul>
+<ul class="simple" id="class-controller-eval-group">
+<li>string[] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count <strong>)</strong></li>
+</ul>
+<ul class="simple" id="class-controller-eval-group-on-curve">
+<li>string[] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></li>
 </ul>
 </div>
 
@@ -73,6 +140,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Curve Flow Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputquery.html">Output Query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objects.html">CFObjects</a></li>
 </ul>
 
 <div class="relations">
@@ -80,6 +149,7 @@
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="gettingstarted.html" title="previous chapter">Getting Started</a></li>
+      <li>Next: <a href="outputquery.html" title="next chapter">Output Query</a></li>
   </ul></li>
 </ul>
 </div>

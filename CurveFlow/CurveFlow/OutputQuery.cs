@@ -87,7 +87,7 @@ namespace CurveFlow
 			}
 			CFLog.SendMessage("XML Successfully Loaded.", MessageType.STATUS);
 		}
-		public void InsertOutput(Dictionary<string, float> estimatedValues, string returnString)
+		internal void InsertOutput(Dictionary<string, float> estimatedValues, string returnString)
 		{
 			Output newOutput = new Output(m_nextID, returnString);
 			m_nextID++;
@@ -102,7 +102,7 @@ namespace CurveFlow
 			}
 			m_outputList.Add(newOutput);
 		}
-		public void InsertOutput(Dictionary<string, float> estimatedValues, Dictionary<string, float> weights, string returnString)
+		internal void InsertOutput(Dictionary<string, float> estimatedValues, Dictionary<string, float> weights, string returnString)
 		{
 			Output newOutput = new Output(m_nextID, returnString);
 			m_nextID++;

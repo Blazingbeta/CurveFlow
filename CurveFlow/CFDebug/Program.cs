@@ -87,8 +87,8 @@ namespace CFDebug
 				{"Parry", 2.3f },
 				{"Dodge", 1.2f }
 			};
-			query.InsertOutput(sampleMap1, weightMap, "ParryChallenge");
-			query.InsertOutput(sampleMap2, weightMap, "DodgeChallenge");
+			//query.InsertOutput(sampleMap1, weightMap, "ParryChallenge");
+			//query.InsertOutput(sampleMap2, weightMap, "DodgeChallenge");
 			Console.WriteLine("Selection returned: " + controller.Evaluate(query, 0.0f));
 		}
 		static void WriteQueryToFile()
@@ -109,8 +109,8 @@ namespace CFDebug
 				{"Parry", 2.3f },
 				{"Dodge", 1.2f }
 			};
-			query.InsertOutput(sampleMap1, weightMap, "ParryChallenge");
-			query.InsertOutput(sampleMap2, weightMap, "DodgeChallenge");
+			//query.InsertOutput(sampleMap1, weightMap, "ParryChallenge");
+			//query.InsertOutput(sampleMap2, weightMap, "DodgeChallenge");
 			string output = query.GetXmlString();
 			Console.WriteLine(output);
 			System.IO.File.WriteAllText("TestQueryFile.qf", output);

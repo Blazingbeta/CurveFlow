@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>CFObjects &#8212; CurveFlow  documentation</title>
+    <title>Misc Objects &#8212; CurveFlow  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,6 +16,7 @@
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Micro Curve" href="microcurve.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -32,15 +33,39 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="cfobjects">
-<span id="class-objects"></span><h1>CFObjects<a class="headerlink" href="#cfobjects" title="Permalink to this headline">¶</a></h1>
-<p>Description</p>
-<ul class="simple" id="class-objects-logcallback">
-<li>LOG CALLBACK DESCRIPTION</li>
+  <div class="section" id="misc-objects">
+<span id="class-objects"></span><h1>Misc Objects<a class="headerlink" href="#misc-objects" title="Permalink to this headline">¶</a></h1>
+<p>Some of the smaller objects created by CurveFlow</p>
+<div class="section" id="trackedvalue">
+<span id="class-objects-trackedvalue"></span><h2><strong>TrackedValue</strong><a class="headerlink" href="#trackedvalue" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>TrackedValue</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> min, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> max, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> name, <a class="reference internal" href="#class-value-type"><span class="std std-ref">ValueType</span></a> type <strong>)</strong></li>
+<li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> min , the lowest possible value this object can reach</li>
+<li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> max , the highest possible value this object can reach</li>
+<li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> name , the name of the skill to be tracked</li>
+<li><a class="reference internal" href="#class-value-type"><span class="std std-ref">ValueType</span></a> , the method used to append new values into this object</li>
 </ul>
-<ul class="simple" id="class-objects-messagetype">
-<li>MESSAGE TYPE DESCRIPTION</li>
+</div>
+<div class="section" id="logcallback">
+<span id="class-objects-logcallback"></span><h2><strong>LogCallback</strong><a class="headerlink" href="#logcallback" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>delegate void <strong>LogCallback</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> logMessage, <a class="reference internal" href="#class-objects-messagetype"><span class="std std-ref">MessageType</span></a> type <strong>)</strong></li>
 </ul>
+<p>The delegate used to bind CurveFlow’s logging to your engine. Doesn’t need to be explicity created, just pass a function with the same parameters
+to <a class="reference internal" href="controller.html#class-controller-initialize-log"><span class="std std-ref">Controller.InitializeLog</span></a></p>
+</div>
+<div class="section" id="valuetype">
+<span id="class-value-type"></span><h2><strong>ValueType</strong><a class="headerlink" href="#valuetype" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>enum ValueType { <strong>ADDITIVE</strong>, <strong>AVERAGE</strong>, <strong>SET</strong>}</li>
+</ul>
+</div>
+<div class="section" id="messagetype">
+<span id="class-objects-messagetype"></span><h2><strong>MessageType</strong><a class="headerlink" href="#messagetype" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>enum MessageType {<strong>STATUS</strong> = 1, <strong>DEBUG</strong> = 2, <strong>ERROR</strong> = 4}</li>
+</ul>
+</div>
 </div>
 
 
@@ -60,16 +85,26 @@
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Information</span></p>
-<ul>
+<p class="caption"><span class="caption-text">Navigation</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="controller.html">Curve Flow Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputquery.html">Output Query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="microcurve.html">Micro Curve</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Misc Objects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#trackedvalue"><strong>TrackedValue</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logcallback"><strong>LogCallback</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#valuetype"><strong>ValueType</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#messagetype"><strong>MessageType</strong></a></li>
+</ul>
+</li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="microcurve.html" title="previous chapter">Micro Curve</a></li>
   </ul></li>
 </ul>
 </div>
