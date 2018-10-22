@@ -7,6 +7,7 @@ CurveFlow Documentation
    
    gettingstarted
    controller
+   objects
 
 Indices and tables
 ==================
