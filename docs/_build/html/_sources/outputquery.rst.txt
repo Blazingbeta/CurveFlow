@@ -13,16 +13,21 @@ Description
 
 .. _string: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/
 
-
-
 .. _class_output_query_constructor:
 
 - **OutputQuery** **(** string_ settingsXML **)**
 
-description
+Creates a new query, based on the passed in :ref:`XML String<class_output_query_xml_tutorial>`.
 
 .. _class_output_query_getxml:
 
 - **GetXmlString** **(** **)**
 
-description
+Returns the current :ref:`XML String<class_output_query_xml_tutorial>` with any modifications made, such as PREVIOUSSELECTIONLOCK
+
+.. _class_output_query_xml_tutorial:
+
+Output Query XML Settings
+=========================
+
+TODO
