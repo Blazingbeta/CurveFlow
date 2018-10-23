@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\CreateAndLinkDLLProj.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{1F6ADCC2-CB27-42C0-87DE-D9FB885C98C9}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CreateAndLinkDLLProj.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\CreateAndLinkDLLProjEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{90E41728-8122-42A7-8236-71A4809C841C}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\CreateAndLinkDLLProj">
+      <UniqueIdentifier>{05130E65-86E0-428B-99D5-7996FEAB16B6}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CreateAndLinkDLLProj\CreateAndLinkDLLProj.Build.cs">
+      <Filter>Source\CreateAndLinkDLLProj</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\CreateAndLinkDLLProj\CreateAndLinkDLLProj.cpp">
+      <Filter>Source\CreateAndLinkDLLProj</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CreateAndLinkDLLProj\CreateAndLinkDLLProj.h">
+      <Filter>Source\CreateAndLinkDLLProj</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CreateAndLinkDLLProj\CreateAndLinkDLLProjGameModeBase.cpp">
+      <Filter>Source\CreateAndLinkDLLProj</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CreateAndLinkDLLProj\CreateAndLinkDLLProjGameModeBase.h">
+      <Filter>Source\CreateAndLinkDLLProj</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\CreateAndLinkDLLProj\CreateAndLinkDLLTutBFL.h">
+      <Filter>Source\CreateAndLinkDLLProj</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\CreateAndLinkDLLProj\CreateAndLinkDLLTutBFL.cpp">
+      <Filter>Source\CreateAndLinkDLLProj</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -94,22 +94,22 @@ namespace CurveFlow
 		}
 		#endregion
 		#region OutputQuery
-		public string Evaluate(OutputQuery query, float desiredDifficulty)
+		public string Evaluate(OutputQuery query, float desiredChallenge)
 		{
-			return query.CalculateOptimalSelection(desiredDifficulty, m_profile.GetAllValues());
+			return query.CalculateOptimalSelection(desiredChallenge, m_profile.GetAllValues());
 		}
-		public string EvaluateOnCurve(OutputQuery query, float desiredDifficulty, float time)
+		public string EvaluateOnCurve(OutputQuery query, float desiredChallenge, float time)
 		{
-			float difficulty = m_curve.EvaluateExpression(desiredDifficulty, time);
+			float difficulty = m_curve.EvaluateExpression(desiredChallenge, time);
 			return query.CalculateOptimalSelection(difficulty, m_profile.GetAllValues());
 		}
-		public string[] EvaluateGroupSelection(OutputQuery query, float desiredDifficulty, int count)
+		public string[] EvaluateGroupSelection(OutputQuery query, float desiredChallenge, int count)
 		{
-			return query.GetGroupBinding(desiredDifficulty, m_profile.GetAllValues(), count);
+			return query.GetGroupBinding(desiredChallenge, m_profile.GetAllValues(), count);
 		}
-		public string[] EvaluateGroupSelectionOnCurve(OutputQuery query, float desiredDifficulty, int count, float time)
+		public string[] EvaluateGroupSelectionOnCurve(OutputQuery query, float desiredChallenge, int count, float time)
 		{
-			float difficulty = m_curve.EvaluateExpression(desiredDifficulty, time);
+			float difficulty = m_curve.EvaluateExpression(desiredChallenge, time);
 			return query.GetGroupBinding(difficulty, m_profile.GetAllValues(), count);
 		}
 		#endregion

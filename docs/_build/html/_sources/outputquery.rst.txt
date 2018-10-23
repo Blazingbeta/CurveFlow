@@ -28,6 +28,6 @@ Returns the current :ref:`XML String<class_output_query_xml_tutorial>` with any 
 .. _class_output_query_xml_tutorial:
 
 Output Query XML Settings
-=========================
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 TODO

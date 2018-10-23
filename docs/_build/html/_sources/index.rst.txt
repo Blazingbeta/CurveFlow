@@ -12,10 +12,3 @@ Player Skill Tracking and Content Restructerization
    outputquery
    microcurve
    objects
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

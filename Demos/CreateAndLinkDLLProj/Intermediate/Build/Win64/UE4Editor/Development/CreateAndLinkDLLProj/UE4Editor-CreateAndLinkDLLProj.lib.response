@@ -1,0 +1,15 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-CreateAndLinkDLLProj.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\Beta\Desktop\NUWork\Files\Capstone\Demos\CreateAndLinkDLLProj\Intermediate\Build\Win64\CreateAndLinkDLLProjEditor\Development\Engine\SharedPCH.Engine.h.obj"
+"C:\Users\Beta\Desktop\NUWork\Files\Capstone\Demos\CreateAndLinkDLLProj\Intermediate\Build\Win64\UE4Editor\Development\CreateAndLinkDLLProj\CreateAndLinkDLLProj.cpp.obj"
+"C:\Users\Beta\Desktop\NUWork\Files\Capstone\Demos\CreateAndLinkDLLProj\Intermediate\Build\Win64\UE4Editor\Development\CreateAndLinkDLLProj\CreateAndLinkDLLProjGameModeBase.cpp.obj"
+"C:\Users\Beta\Desktop\NUWork\Files\Capstone\Demos\CreateAndLinkDLLProj\Intermediate\Build\Win64\UE4Editor\Development\CreateAndLinkDLLProj\CreateAndLinkDLLProj.init.gen.cpp.obj"
+"C:\Users\Beta\Desktop\NUWork\Files\Capstone\Demos\CreateAndLinkDLLProj\Intermediate\Build\Win64\UE4Editor\Development\CreateAndLinkDLLProj\CreateAndLinkDLLProjGameModeBase.gen.cpp.obj"
+"C:\Users\Beta\Desktop\NUWork\Files\Capstone\Demos\CreateAndLinkDLLProj\Intermediate\Build\Win64\UE4Editor\Development\CreateAndLinkDLLProj\PCLaunch.rc.res"
+/OUT:"C:\Users\Beta\Desktop\NUWork\Files\Capstone\Demos\CreateAndLinkDLLProj\Intermediate\Build\Win64\UE4Editor\Development\CreateAndLinkDLLProj\UE4Editor-CreateAndLinkDLLProj.lib"

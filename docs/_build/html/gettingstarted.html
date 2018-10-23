@@ -36,14 +36,103 @@
             
   <div class="section" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<p>Hello i am still here</p>
+<p>Welcome to CurveFlow!</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This software is probably bad lol</p>
+<p class="last">Some things are still unfinished</p>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>Here is how you install</p>
+<p>Installation is entirely engine specific. Here is the process in some major game engines.</p>
+<ul class="simple">
+<li>Unity: Simply drag the DLL into the project explorer and it should be usable by default</li>
+<li>Godot: Only compatible with a Mono project. Open the project and add the CurveFlow DLL as a reference in the project settings.</li>
+<li>Unreal: ???</li>
+</ul>
+</div>
+<div class="section" id="initial-setup">
+<h2>Initial Setup<a class="headerlink" href="#initial-setup" title="Permalink to this headline">¶</a></h2>
+<p>To get started, first you will want to probably create a seperate object for storing Curve Flow related things, as you will need to persist the data yourself.</p>
+<p>To create the controller, you will need to give it an XML file in the form of a string. This settings file is fairly small, currently only containing the settings for
+the internal curve which handles difficulty flow. You can get the default settings file by calling the static function <a class="reference internal" href="controller.html#class-controller-settings"><span class="std std-ref">CurveFlowController.GenerateSettings()</span></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">System</span><span class="o">.</span><span class="n">IO</span><span class="o">.</span><span class="n">File</span><span class="o">.</span><span class="n">WriteAllText</span><span class="p">(</span><span class="s2">&quot;ControllerSettings.xml&quot;</span><span class="p">,</span> <span class="n">CurveFlowController</span><span class="o">.</span><span class="n">GenerateSettings</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>Persist that string however works for your engine, and then pass it into the controller to create it.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">using</span> <span class="n">CurveFlow</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">CurveFlowInterface</span>
+<span class="p">{</span>
+        <span class="n">CurveFlowController</span> <span class="n">controller</span><span class="p">;</span>
+        <span class="n">void</span> <span class="n">Start</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="n">string</span> <span class="n">controllerSettings</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="n">IO</span><span class="o">.</span><span class="n">File</span><span class="o">.</span><span class="n">ReadAllText</span><span class="p">(</span><span class="s2">&quot;ControllerSettings.xml&quot;</span><span class="p">);</span>
+                <span class="n">controller</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CurveFlowController</span><span class="p">(</span><span class="n">controllerSettings</span><span class="p">);</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The next step is to hook up the logging system. This will help you debug CurveFlow when things go wrong.
+The logging system uses a Bitmask to determine which types of messages to allow through. You can either just pass in an enum, or do a combination of them.
+Add up the following numbers you want to allow through the log and cast it as a <a class="reference internal" href="objects.html#class-objects-messagetype"><span class="std std-ref">MessageType</span></a> .</p>
+<ul class="simple">
+<li><strong>STATUS</strong> : 1</li>
+<li><strong>DEBUG</strong> : 2</li>
+<li><strong>ERROR</strong> : 4</li>
+</ul>
+<p>Then call <a class="reference internal" href="controller.html#class-controller-initialize-log"><span class="std std-ref">InitializeLog</span></a> with your bitmask and a <a class="reference internal" href="objects.html#class-objects-logcallback"><span class="std std-ref">callback function</span></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">HookLog</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="o">//</span><span class="n">Message</span> <span class="nb">type</span> <span class="n">of</span> <span class="mi">7</span> <span class="n">allows</span> <span class="nb">all</span> <span class="n">messages</span>
+        <span class="n">controller</span><span class="o">.</span><span class="n">InitializeLog</span><span class="p">(</span><span class="n">PrintToLog</span><span class="p">,</span> <span class="p">(</span><span class="n">MessageType</span><span class="p">)</span><span class="mi">7</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">void</span> <span class="n">PrintToLog</span><span class="p">(</span><span class="n">string</span> <span class="n">message</span><span class="p">,</span> <span class="n">MessageType</span> <span class="nb">type</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">Console</span><span class="o">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="nb">type</span> <span class="o">+</span> <span class="n">message</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Next, you will need to initialize the values that CurveFlow will track. These are the numbers that your Queries will be matched against, and you will need to define all of the trackable values.
+See <a class="reference internal" href="objects.html#class-objects-value-type"><span class="std std-ref">Value Type</span></a> for the specifics of each type.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">CreateProfile</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="n">controller</span><span class="o">.</span><span class="n">CreateNewProfile</span><span class="p">(</span><span class="n">new</span> <span class="n">CurveFlow</span><span class="o">.</span><span class="n">TrackedValue</span><span class="p">[]</span> <span class="p">{</span>
+        <span class="n">new</span> <span class="n">TrackedValue</span><span class="p">(</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">1</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;Parry&quot;</span><span class="p">,</span> <span class="n">CurveFlow</span><span class="o">.</span><span class="n">ValueType</span><span class="o">.</span><span class="n">AVERAGE</span><span class="p">),</span>
+        <span class="n">new</span> <span class="n">TrackedValue</span><span class="p">(</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">1</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;Dodge&quot;</span><span class="p">,</span> <span class="n">CurveFlow</span><span class="o">.</span><span class="n">ValueType</span><span class="o">.</span><span class="n">AVERAGE</span><span class="p">),</span>
+        <span class="n">new</span> <span class="n">TrackedValue</span><span class="p">(</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="mi">1</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;Health&quot;</span><span class="p">,</span> <span class="n">CurveFlow</span><span class="o">.</span><span class="n">ValueType</span><span class="o">.</span><span class="n">SET</span><span class="p">),</span>
+        <span class="n">new</span> <span class="n">TrackedValue</span><span class="p">(</span><span class="mi">0</span><span class="n">f</span><span class="p">,</span> <span class="nb">float</span><span class="o">.</span><span class="n">MaxValue</span><span class="p">,</span> <span class="s2">&quot;Money&quot;</span><span class="p">,</span> <span class="n">CurveFlow</span><span class="o">.</span><span class="n">ValueType</span><span class="o">.</span><span class="n">ADDITIVE</span><span class="p">)</span>
+<span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="your-first-query">
+<h2>Your First Query<a class="headerlink" href="#your-first-query" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Query files</span></a> contain all of the information for how Curve Flow evaluates the best output. They are managed through XML, and you can get the default like so</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">System</span><span class="o">.</span><span class="n">IO</span><span class="o">.</span><span class="n">File</span><span class="o">.</span><span class="n">WriteAllText</span><span class="p">(</span><span class="s2">&quot;QuerySettings.xml&quot;</span><span class="p">,</span> <span class="n">OutputQuery</span><span class="o">.</span><span class="n">GetDefaultXML</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>For specific setup information, see <a class="reference internal" href="outputquery.html#class-output-query-xml-tutorial"><span class="std std-ref">OutputQuery XML</span></a> .</p>
+<p>If you are just following along, use the following XML</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">XML</span> <span class="n">HERE</span> <span class="n">XD</span>
+</pre></div>
+</div>
+<p>Finally, you can get the optimal output from your query by passing it into the <a class="reference internal" href="controller.html#class-controller"><span class="std std-ref">controller</span></a>
+along with the desired challenge, which is the change in difficulty from the players current estimated skill level.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">Evaluate</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="n">string</span> <span class="n">queryxml</span> <span class="o">=</span> <span class="s2">&quot;load xml here&quot;</span><span class="p">;</span>
+        <span class="n">OutputQuery</span> <span class="n">query</span> <span class="o">=</span> <span class="n">new</span> <span class="n">OutputQuery</span><span class="p">(</span><span class="n">queryxml</span><span class="p">);</span>
+        <span class="nb">float</span> <span class="n">desiredDifficulty</span> <span class="o">=</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">;</span>
+        <span class="n">string</span> <span class="n">output</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">Evaluate</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">desiredDifficulty</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p>If you haven’t already, now is the time to hook up the specific values you want to track.
+See <a class="reference internal" href="controller.html#class-controller-settings"><span class="std std-ref">Controller Settings</span></a> and <a class="reference internal" href="outputquery.html#class-output-query-xml-tutorial"><span class="std std-ref">Query Settings</span></a> for more information on how to customize CurveFlow to do what you need.</p>
 </div>
 </div>
 
@@ -64,13 +153,19 @@
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Information</span></p>
+<p class="caption"><span class="caption-text">Navigation</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#initial-setup">Initial Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#your-first-query">Your First Query</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="controller.html">Curve Flow Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputquery.html">Output Query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="microcurve.html">Micro Curve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objects.html">Misc Objects</a></li>
 </ul>
 
 <div class="relations">

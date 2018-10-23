@@ -18,7 +18,7 @@ namespace CurveFlow
 		{
 			if((type & m_allowedTypes) != 0)
 			{
-				m_log(message, type);
+				m_log?.Invoke(message, type);
 			}
 		}
 	}

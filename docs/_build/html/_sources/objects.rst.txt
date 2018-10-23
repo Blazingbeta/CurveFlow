@@ -11,11 +11,11 @@ Some of the smaller objects created by CurveFlow
 **TrackedValue**
 ----------------
 
-- **TrackedValue** **(** float_ min, float_ max, string_ name, :ref:`ValueType<class_value_type>` type **)**
+- **TrackedValue** **(** float_ min, float_ max, string_ name, :ref:`ValueType<class_objects_value_type>` type **)**
 - float_ min , the lowest possible value this object can reach
 - float_ max , the highest possible value this object can reach
 - string_ name , the name of the skill to be tracked
-- :ref:`ValueType<class_value_type>` , the method used to append new values into this object
+- :ref:`ValueType<class_objects_value_type>` , the method used to append new values into this object
 
 .. _class_objects_logcallback:
 
@@ -27,12 +27,15 @@ Some of the smaller objects created by CurveFlow
 The delegate used to bind CurveFlow's logging to your engine. Doesn't need to be explicity created, just pass a function with the same parameters 
 to :ref:`Controller.InitializeLog<class_controller_initialize_log>`
 
-.. _class_value_type:
+.. _class_objects_value_type:
 
 **ValueType**
 -------------
 
 - enum ValueType { **ADDITIVE**, **AVERAGE**, **SET**}
+- ADDITIVE: New values are added/subtracted to the total
+- AVERAGE: New values are averaged based on previous numbers entered.
+- SET: New values can only be set using :ref:`Controller.SetTrackedValue<class_controller_set_tracked_value>`
 
 .. _class_objects_messagetype:
 

@@ -39,11 +39,11 @@
 <div class="section" id="trackedvalue">
 <span id="class-objects-trackedvalue"></span><h2><strong>TrackedValue</strong><a class="headerlink" href="#trackedvalue" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><strong>TrackedValue</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> min, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> max, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> name, <a class="reference internal" href="#class-value-type"><span class="std std-ref">ValueType</span></a> type <strong>)</strong></li>
+<li><strong>TrackedValue</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> min, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> max, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> name, <a class="reference internal" href="#class-objects-value-type"><span class="std std-ref">ValueType</span></a> type <strong>)</strong></li>
 <li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> min , the lowest possible value this object can reach</li>
 <li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> max , the highest possible value this object can reach</li>
 <li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> name , the name of the skill to be tracked</li>
-<li><a class="reference internal" href="#class-value-type"><span class="std std-ref">ValueType</span></a> , the method used to append new values into this object</li>
+<li><a class="reference internal" href="#class-objects-value-type"><span class="std std-ref">ValueType</span></a> , the method used to append new values into this object</li>
 </ul>
 </div>
 <div class="section" id="logcallback">
@@ -55,9 +55,12 @@
 to <a class="reference internal" href="controller.html#class-controller-initialize-log"><span class="std std-ref">Controller.InitializeLog</span></a></p>
 </div>
 <div class="section" id="valuetype">
-<span id="class-value-type"></span><h2><strong>ValueType</strong><a class="headerlink" href="#valuetype" title="Permalink to this headline">¶</a></h2>
+<span id="class-objects-value-type"></span><h2><strong>ValueType</strong><a class="headerlink" href="#valuetype" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>enum ValueType { <strong>ADDITIVE</strong>, <strong>AVERAGE</strong>, <strong>SET</strong>}</li>
+<li>ADDITIVE: New values are added/subtracted to the total</li>
+<li>AVERAGE: New values are averaged based on previous numbers entered.</li>
+<li>SET: New values can only be set using <a class="reference internal" href="controller.html#class-controller-set-tracked-value"><span class="std std-ref">Controller.SetTrackedValue</span></a></li>
 </ul>
 </div>
 <div class="section" id="messagetype">
@@ -90,6 +93,7 @@ to <a class="reference internal" href="controller.html#class-controller-initiali
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="controller.html">Curve Flow Controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="outputquery.html">Output Query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputquery.html#output-query-xml-settings">Output Query XML Settings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="microcurve.html">Micro Curve</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Misc Objects</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#trackedvalue"><strong>TrackedValue</strong></a></li>

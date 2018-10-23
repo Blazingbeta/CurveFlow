@@ -36,7 +36,7 @@
             
   <div class="section" id="curve-flow-controller">
 <span id="class-controller"></span><h1>Curve Flow Controller<a class="headerlink" href="#curve-flow-controller" title="Permalink to this headline">¶</a></h1>
-<p>Description</p>
+<p>The main controller that drives CurveFlow. All of the processing is handled through this object.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="6%" />
@@ -68,16 +68,16 @@
 <td><a class="reference internal" href="#class-controller-set-tracked-value"><span class="std std-ref">SetTrackedValue</span></a> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> valueName, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> newValue <strong>)</strong></td>
 </tr>
 <tr class="row-odd"><td>string</td>
-<td><a class="reference internal" href="#class-controller-evaluate"><span class="std std-ref">Evaluate</span></a> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty <strong>)</strong></td>
+<td><a class="reference internal" href="#class-controller-evaluate"><span class="std std-ref">Evaluate</span></a> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge <strong>)</strong></td>
 </tr>
 <tr class="row-even"><td>string</td>
-<td><a class="reference internal" href="#class-controller-evaluate-on-curve"><span class="std std-ref">EvaluateOnCurve</span></a> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></td>
+<td><a class="reference internal" href="#class-controller-evaluate-on-curve"><span class="std std-ref">EvaluateOnCurve</span></a> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></td>
 </tr>
 <tr class="row-odd"><td><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> []</td>
-<td><a class="reference internal" href="#class-controller-eval-group"><span class="std std-ref">EvaluateGroupSelection</span></a> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count <strong>)</strong></td>
+<td><a class="reference internal" href="#class-controller-eval-group"><span class="std std-ref">EvaluateGroupSelection</span></a> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count <strong>)</strong></td>
 </tr>
 <tr class="row-even"><td><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> []</td>
-<td><a class="reference internal" href="#class-controller-eval-group-on-curve"><span class="std std-ref">EvaluateGroupSelectionOnCurve</span></a> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></td>
+<td><a class="reference internal" href="#class-controller-eval-group-on-curve"><span class="std std-ref">EvaluateGroupSelectionOnCurve</span></a> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></td>
 </tr>
 </tbody>
 </table>
@@ -109,29 +109,33 @@
 <ul class="simple" id="class-controller-append-tracked-value">
 <li>void <strong>AppendTrackedValue</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> valueName, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> nextValue <strong>)</strong></li>
 </ul>
-<p>Appends a number into the skill named valueName. How the number is applied is based on the selected <a class="reference internal" href="objects.html#class-value-type"><span class="std std-ref">ValueType</span></a></p>
+<p>Appends a number into the skill named valueName. How the number is applied is based on the selected <a class="reference internal" href="objects.html#class-objects-value-type"><span class="std std-ref">ValueType</span></a></p>
 <ul class="simple" id="class-controller-set-tracked-value">
 <li>void <strong>SetTrackedValue</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> valueName, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> newValue <strong>)</strong></li>
 </ul>
 <p>Foribly set the skill to a new value.</p>
 <ul class="simple" id="class-controller-evaluate">
-<li>string <strong>Evaluate</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty <strong>)</strong></li>
+<li>string <strong>Evaluate</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge <strong>)</strong></li>
 </ul>
-<p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the curren <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns the string name of the estimated best output.</p>
+<p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the current <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns the string name of the estimated best output.</p>
 <ul class="simple" id="class-controller-evaluate-on-curve">
-<li>string <strong>EvaluateOnCurve</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></li>
+<li>string <strong>EvaluateOnCurve</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></li>
 </ul>
-<p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the curren <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns the string name of the estimated best output.</p>
-<p>The Desired Difficulty will be modified by the <a class="reference internal" href="microcurve.html#class-micro-curve"><span class="std std-ref">Micro Curve</span></a> before being used to calculate an output.</p>
+<p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the current <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns the string name of the estimated best output.</p>
+<p>The Desired Challenge will be modified by the <a class="reference internal" href="microcurve.html#class-micro-curve"><span class="std std-ref">Micro Curve</span></a> before being used to calculate an output.</p>
 <ul class="simple" id="class-controller-eval-group">
-<li>string[] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count <strong>)</strong></li>
+<li>string[] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count <strong>)</strong></li>
 </ul>
-<p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the curren <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns an array of size <em>count</em> which contains the estimated best group output.</p>
+<p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the current <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns an array of size <em>count</em> which contains the estimated best group output.</p>
 <ul class="simple" id="class-controller-eval-group-on-curve">
-<li>string[] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredDifficulty, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></li>
+<li>string[] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></li>
 </ul>
-<p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the curren <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns an array of size <em>count</em> which contains the estimated best group output.</p>
-<p>The Desired Difficulty will be modified by the <a class="reference internal" href="microcurve.html#class-micro-curve"><span class="std std-ref">Micro Curve</span></a> before being used to calculate an output.</p>
+<p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the current <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns an array of size <em>count</em> which contains the estimated best group output.</p>
+<p>The Desired Challenge will be modified by the <a class="reference internal" href="microcurve.html#class-micro-curve"><span class="std std-ref">Micro Curve</span></a> before being used to calculate an output.</p>
+<div class="section" id="master-settings">
+<span id="class-controller-settings"></span><h2>Master Settings<a class="headerlink" href="#master-settings" title="Permalink to this headline">¶</a></h2>
+<p>Explanation of the settings file, GenerateSettings(), and links to the other settings areas (just microcurve?)</p>
+</div>
 </div>
 
 
@@ -154,9 +158,11 @@
 <p class="caption"><span class="caption-text">Navigation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Curve Flow Controller</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Curve Flow Controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#master-settings">Master Settings</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="outputquery.html">Output Query</a></li>
-<li class="toctree-l1"><a class="reference internal" href="outputquery.html#output-query-xml-settings">Output Query XML Settings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="microcurve.html">Micro Curve</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objects.html">Misc Objects</a></li>
 </ul>

@@ -3,7 +3,7 @@
 Curve Flow Controller
 =====================
 
-Description
+The main controller that drives CurveFlow. All of the processing is handled through this object.
 
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ctor       | :ref:`CurveflowController<class_controller_constructor>` **(** string_ settingsXML **)**                                                                                               |
@@ -22,13 +22,13 @@ Description
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | void       | :ref:`SetTrackedValue<class_controller_set_tracked_value>` **(** string_ valueName, float_ newValue **)**                                                                              |
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| string     | :ref:`Evaluate<class_controller_evaluate>` **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredDifficulty **)**                                                          |
+| string     | :ref:`Evaluate<class_controller_evaluate>` **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge **)**                                                           |
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| string     | :ref:`EvaluateOnCurve<class_controller_evaluate_on_curve>` **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredDifficulty, float_ time **)**                             |
+| string     | :ref:`EvaluateOnCurve<class_controller_evaluate_on_curve>` **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, float_ time **)**                              |
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| string_ [] | :ref:`EvaluateGroupSelection<class_controller_eval_group>` **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredDifficulty, int_ count **)**                              |
+| string_ [] | :ref:`EvaluateGroupSelection<class_controller_eval_group>` **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, int_ count **)**                               |
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| string_ [] | :ref:`EvaluateGroupSelectionOnCurve<class_controller_eval_group_on_curve>` **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredDifficulty, int_ count, float_ time **)** |
+| string_ [] | :ref:`EvaluateGroupSelectionOnCurve<class_controller_eval_group_on_curve>` **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, int_ count, float_ time **)**  |
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. _Stream: https://docs.microsoft.com/en-us/dotnet/api/system.io.stream?view=netframework-4.7.2
@@ -83,7 +83,7 @@ Returns the current value of the skill named valueName.
 
 - void **AppendTrackedValue** **(** string_ valueName, float_ nextValue **)**
 
-Appends a number into the skill named valueName. How the number is applied is based on the selected :ref:`ValueType<class_value_type>`
+Appends a number into the skill named valueName. How the number is applied is based on the selected :ref:`ValueType<class_objects_value_type>`
 
 .. _class_controller_set_tracked_value:
 
@@ -93,28 +93,35 @@ Foribly set the skill to a new value.
 
 .. _class_controller_evaluate:
 
-- string **Evaluate** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredDifficulty **)**
+- string **Evaluate** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge **)**
 
-Evaluates the inserted :ref:`Output Query<class_output_query>` on the curren :ref:`Profile<class_controller_create_profile>` and returns the string name of the estimated best output.
+Evaluates the inserted :ref:`Output Query<class_output_query>` on the current :ref:`Profile<class_controller_create_profile>` and returns the string name of the estimated best output.
 
 .. _class_controller_evaluate_on_curve:
 
-- string **EvaluateOnCurve** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredDifficulty, float_ time **)**
+- string **EvaluateOnCurve** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, float_ time **)**
 
-Evaluates the inserted :ref:`Output Query<class_output_query>` on the curren :ref:`Profile<class_controller_create_profile>` and returns the string name of the estimated best output.
+Evaluates the inserted :ref:`Output Query<class_output_query>` on the current :ref:`Profile<class_controller_create_profile>` and returns the string name of the estimated best output.
 
-The Desired Difficulty will be modified by the :ref:`Micro Curve<class_micro_curve>` before being used to calculate an output.
+The Desired Challenge will be modified by the :ref:`Micro Curve<class_micro_curve>` before being used to calculate an output.
 
 .. _class_controller_eval_group:
 
-- string[] **EvaluateGroupSelection** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredDifficulty, int_ count **)**
+- string[] **EvaluateGroupSelection** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, int_ count **)**
 
-Evaluates the inserted :ref:`Output Query<class_output_query>` on the curren :ref:`Profile<class_controller_create_profile>` and returns an array of size *count* which contains the estimated best group output.
+Evaluates the inserted :ref:`Output Query<class_output_query>` on the current :ref:`Profile<class_controller_create_profile>` and returns an array of size *count* which contains the estimated best group output.
 
 .. _class_controller_eval_group_on_curve:
 
-- string[] **EvaluateGroupSelection** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredDifficulty, int_ count, float_ time **)**
+- string[] **EvaluateGroupSelection** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, int_ count, float_ time **)**
 
-Evaluates the inserted :ref:`Output Query<class_output_query>` on the curren :ref:`Profile<class_controller_create_profile>` and returns an array of size *count* which contains the estimated best group output.
+Evaluates the inserted :ref:`Output Query<class_output_query>` on the current :ref:`Profile<class_controller_create_profile>` and returns an array of size *count* which contains the estimated best group output.
 
-The Desired Difficulty will be modified by the :ref:`Micro Curve<class_micro_curve>` before being used to calculate an output.
+The Desired Challenge will be modified by the :ref:`Micro Curve<class_micro_curve>` before being used to calculate an output.
+
+.. _class_controller_settings:
+
+Master Settings
+^^^^^^^^^^^^^^^
+
+Explanation of the settings file, GenerateSettings(), and links to the other settings areas (just microcurve?)
