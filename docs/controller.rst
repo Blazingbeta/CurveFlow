@@ -124,4 +124,13 @@ The Desired Challenge will be modified by the :ref:`Micro Curve<class_micro_curv
 Master Settings
 ^^^^^^^^^^^^^^^
 
-Explanation of the settings file, GenerateSettings(), and links to the other settings areas (just microcurve?)
+The main settings file here contains all of the information that isn't tied to a specific query.
+It currently just contains the :ref:`Micro Curve Settings<class_micro_curve_settings>` but will eventually have the profile as well. ::
+
+	<?xml version="1.0" encoding="utf-16"?>
+	<Settings>
+		<MicroCurve>
+			<Algorithm>[x] * Sin([t])</Algorithm>
+			<PrecompileExpression>true</PrecompileExpression>
+		</MicroCurve>
+	</Settings>

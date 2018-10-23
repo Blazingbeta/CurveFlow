@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Settings>
+	<MicroCurve>
+		<Algorithm>[x] * Sin([t])</Algorithm>
+		<PrecompileExpression>true</PrecompileExpression>
+	</MicroCurve>
+</Settings>

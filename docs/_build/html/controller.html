@@ -134,7 +134,17 @@
 <p>The Desired Challenge will be modified by the <a class="reference internal" href="microcurve.html#class-micro-curve"><span class="std std-ref">Micro Curve</span></a> before being used to calculate an output.</p>
 <div class="section" id="master-settings">
 <span id="class-controller-settings"></span><h2>Master Settings<a class="headerlink" href="#master-settings" title="Permalink to this headline">¶</a></h2>
-<p>Explanation of the settings file, GenerateSettings(), and links to the other settings areas (just microcurve?)</p>
+<p>The main settings file here contains all of the information that isn’t tied to a specific query.
+It currently just contains the <a class="reference internal" href="microcurve.html#class-micro-curve-settings"><span class="std std-ref">Micro Curve Settings</span></a> but will eventually have the profile as well.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
+&lt;Settings&gt;
+        &lt;MicroCurve&gt;
+                &lt;Algorithm&gt;[x] * Sin([t])&lt;/Algorithm&gt;
+                &lt;PrecompileExpression&gt;true&lt;/PrecompileExpression&gt;
+        &lt;/MicroCurve&gt;
+&lt;/Settings&gt;
+</pre></div>
+</div>
 </div>
 </div>
 

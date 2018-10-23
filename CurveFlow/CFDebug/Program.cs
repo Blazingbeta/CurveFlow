@@ -12,12 +12,13 @@ namespace CFDebug
 		static CurveFlow.CurveFlowController controller;
 		static void Main(string[] args)
 		{
-			//File.WriteAllText("..\\..\\..\\..\\QueryFiles\\LoadAndSave.qf", CurveFlow.OutputQuery.GetDefaultXML());
-			controller = new CurveFlow.CurveFlowController(CurveFlow.CurveFlowController.GenerateSettings());
+			File.WriteAllText("..\\..\\..\\..\\QueryFiles\\DefaultQuery.xml", CurveFlow.OutputQuery.GetDefaultXML());
+
+			/*controller = new CurveFlow.CurveFlowController(CurveFlow.CurveFlowController.GenerateSettings());
 			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)7);
 
 			CreateProfile();
-			LoadAndPrintXML();
+			LoadAndPrintXML();*/
 		}
 		static void LoadAndPrintXML()
 		{

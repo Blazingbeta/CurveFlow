@@ -83,7 +83,70 @@ For specific setup information, see :ref:`OutputQuery XML<class_output_query_xml
 
 If you are just following along, use the following XML ::
 
-	XML HERE XD
+	<?xml version="1.0" encoding="utf-16"?>
+	<Query>
+		<Settings>
+			<RepeatSelection>
+				<DiscourageRepeatSelection>true</DiscourageRepeatSelection>
+				<RepeatSelectionWeight>5.0</RepeatSelectionWeight>
+				<PreviousValuesTracked>3</PreviousValuesTracked>
+				<DiminishingWeight>true</DiminishingWeight>
+			</RepeatSelection>
+			<GroupBinding>
+				<IsGroupSelection>false</IsGroupSelection>
+			</GroupBinding>
+		</Settings>
+		<Output>
+			<Name>ParryChallenge</Name>
+			<Skill>
+				<Name>Parry</Name>
+				<Value>0.95</Value>
+				<Weight>2.3</Weight>
+			</Skill>
+			<Skill>
+				<Name>Dodge</Name>
+				<Value>0.075</Value>
+				<Weight>1.2</Weight>
+			</Skill>
+		</Output>
+		<Output>
+			<Name>DodgeChallenge</Name>
+			<Skill>
+				<Name>Parry</Name>
+				<Value>0.152</Value>
+				<Weight>2.3</Weight>
+			</Skill>
+			<Skill>
+				<Name>Dodge</Name>
+				<Value>0.9124</Value>
+				<Weight>1.2</Weight>
+			</Skill>
+		</Output>
+		<Name>ParryChallenge2</Name>
+			<Skill>
+				<Name>Parry</Name>
+				<Value>0.975</Value>
+				<Weight>2.3</Weight>
+			</Skill>
+			<Skill>
+				<Name>Dodge</Name>
+				<Value>0.075</Value>
+				<Weight>1.2</Weight>
+			</Skill>
+		</Output>
+		<Name>ParryChallenge3</Name>
+			<Skill>
+				<Name>Parry</Name>
+				<Value>0.99</Value>
+				<Weight>2.3</Weight>
+			</Skill>
+			<Skill>
+				<Name>Dodge</Name>
+				<Value>0.075</Value>
+				<Weight>1.2</Weight>
+			</Skill>
+		</Output>
+	</Query>
 	
 Finally, you can get the optimal output from your query by passing it into the :ref:`controller<class_controller>` 
 along with the desired challenge, which is the change in difficulty from the players current estimated skill level. ::

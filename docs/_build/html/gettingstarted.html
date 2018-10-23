@@ -114,7 +114,70 @@ See <a class="reference internal" href="objects.html#class-objects-value-type"><
 </div>
 <p>For specific setup information, see <a class="reference internal" href="outputquery.html#class-output-query-xml-tutorial"><span class="std std-ref">OutputQuery XML</span></a> .</p>
 <p>If you are just following along, use the following XML</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">XML</span> <span class="n">HERE</span> <span class="n">XD</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
+&lt;Query&gt;
+        &lt;Settings&gt;
+                &lt;RepeatSelection&gt;
+                        &lt;DiscourageRepeatSelection&gt;true&lt;/DiscourageRepeatSelection&gt;
+                        &lt;RepeatSelectionWeight&gt;5.0&lt;/RepeatSelectionWeight&gt;
+                        &lt;PreviousValuesTracked&gt;3&lt;/PreviousValuesTracked&gt;
+                        &lt;DiminishingWeight&gt;true&lt;/DiminishingWeight&gt;
+                &lt;/RepeatSelection&gt;
+                &lt;GroupBinding&gt;
+                        &lt;IsGroupSelection&gt;false&lt;/IsGroupSelection&gt;
+                &lt;/GroupBinding&gt;
+        &lt;/Settings&gt;
+        &lt;Output&gt;
+                &lt;Name&gt;ParryChallenge&lt;/Name&gt;
+                &lt;Skill&gt;
+                        &lt;Name&gt;Parry&lt;/Name&gt;
+                        &lt;Value&gt;0.95&lt;/Value&gt;
+                        &lt;Weight&gt;2.3&lt;/Weight&gt;
+                &lt;/Skill&gt;
+                &lt;Skill&gt;
+                        &lt;Name&gt;Dodge&lt;/Name&gt;
+                        &lt;Value&gt;0.075&lt;/Value&gt;
+                        &lt;Weight&gt;1.2&lt;/Weight&gt;
+                &lt;/Skill&gt;
+        &lt;/Output&gt;
+        &lt;Output&gt;
+                &lt;Name&gt;DodgeChallenge&lt;/Name&gt;
+                &lt;Skill&gt;
+                        &lt;Name&gt;Parry&lt;/Name&gt;
+                        &lt;Value&gt;0.152&lt;/Value&gt;
+                        &lt;Weight&gt;2.3&lt;/Weight&gt;
+                &lt;/Skill&gt;
+                &lt;Skill&gt;
+                        &lt;Name&gt;Dodge&lt;/Name&gt;
+                        &lt;Value&gt;0.9124&lt;/Value&gt;
+                        &lt;Weight&gt;1.2&lt;/Weight&gt;
+                &lt;/Skill&gt;
+        &lt;/Output&gt;
+        &lt;Name&gt;ParryChallenge2&lt;/Name&gt;
+                &lt;Skill&gt;
+                        &lt;Name&gt;Parry&lt;/Name&gt;
+                        &lt;Value&gt;0.975&lt;/Value&gt;
+                        &lt;Weight&gt;2.3&lt;/Weight&gt;
+                &lt;/Skill&gt;
+                &lt;Skill&gt;
+                        &lt;Name&gt;Dodge&lt;/Name&gt;
+                        &lt;Value&gt;0.075&lt;/Value&gt;
+                        &lt;Weight&gt;1.2&lt;/Weight&gt;
+                &lt;/Skill&gt;
+        &lt;/Output&gt;
+        &lt;Name&gt;ParryChallenge3&lt;/Name&gt;
+                &lt;Skill&gt;
+                        &lt;Name&gt;Parry&lt;/Name&gt;
+                        &lt;Value&gt;0.99&lt;/Value&gt;
+                        &lt;Weight&gt;2.3&lt;/Weight&gt;
+                &lt;/Skill&gt;
+                &lt;Skill&gt;
+                        &lt;Name&gt;Dodge&lt;/Name&gt;
+                        &lt;Value&gt;0.075&lt;/Value&gt;
+                        &lt;Weight&gt;1.2&lt;/Weight&gt;
+                &lt;/Skill&gt;
+        &lt;/Output&gt;
+&lt;/Query&gt;
 </pre></div>
 </div>
 <p>Finally, you can get the optimal output from your query by passing it into the <a class="reference internal" href="controller.html#class-controller"><span class="std std-ref">controller</span></a>

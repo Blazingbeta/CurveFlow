@@ -59,9 +59,104 @@
 <li><strong>GetXmlString</strong> <strong>(</strong> <strong>)</strong></li>
 </ul>
 <p>Returns the current <a class="reference internal" href="#class-output-query-xml-tutorial"><span class="std std-ref">XML String</span></a> with any modifications made, such as PREVIOUSSELECTIONLOCK</p>
-<div class="section" id="output-query-xml-settings">
-<span id="class-output-query-xml-tutorial"></span><h2>Output Query XML Settings<a class="headerlink" href="#output-query-xml-settings" title="Permalink to this headline">¶</a></h2>
-<p>TODO</p>
+<div class="section" id="output-query-settings">
+<span id="class-output-query-xml-tutorial"></span><h2>Output Query Settings<a class="headerlink" href="#output-query-settings" title="Permalink to this headline">¶</a></h2>
+<p>The Query is entirely defined by it’s settings file. Here is what the full file looks like, and each part is explained in detail further below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
+&lt;Query&gt;
+        &lt;Settings&gt;
+                &lt;RepeatSelection
+                        Enabled=&quot;True&quot;&gt;
+                        &lt;RepeatSelectionWeight&gt;3.0&lt;/RepeatSelectionWeight&gt;
+                        &lt;PreviousValuesTracked&gt;2&lt;/PreviousValuesTracked&gt;
+                        &lt;DiminishingWeight&gt;True&lt;/DiminishingWeight&gt;
+                &lt;/RepeatSelection&gt;
+                &lt;GroupBinding
+                        Enabled=&quot;False&quot;&gt;
+                        &lt;AllowDuplicates&gt;False&lt;/AllowDuplicates&gt;
+                        &lt;GroupRepeatMultiplier&gt;2.0&lt;/GroupRepeatMultiplier&gt;
+                &lt;/GroupBinding&gt;
+                &lt;SelectionLock
+                        Enabled=&quot;False&quot;&gt;
+                        &lt;Lock&gt;OutputName2&lt;/Lock&gt;
+                &lt;/SelectionLock&gt;
+        &lt;/Settings&gt;
+        &lt;Output&gt;
+                &lt;Name&gt;OutputName1&lt;/Name&gt;
+                &lt;Skill&gt;
+                        &lt;Name&gt;Parry&lt;/Name&gt;
+                        &lt;Value&gt;0.5145&lt;/Value&gt;
+                        &lt;Weight&gt;1.0&lt;/Weight&gt;
+                &lt;/Skill&gt;
+                &lt;Skill&gt;
+                        &lt;Name&gt;Dodge&lt;/Name&gt;
+                        &lt;Value&gt;0.1521&lt;/Value&gt;
+                        &lt;Weight&gt;1.0&lt;/Weight&gt;
+                &lt;/Skill&gt;
+        &lt;/Output&gt;
+        &lt;Output&gt;
+                &lt;Name&gt;OutputName2&lt;/Name&gt;
+                &lt;Skill&gt;
+                        &lt;Name&gt;Parry&lt;/Name&gt;
+                        &lt;Value&gt;0.5145&lt;/Value&gt;
+                        &lt;Weight&gt;1.0&lt;/Weight&gt;
+                &lt;/Skill&gt;
+                &lt;Skill&gt;
+                        &lt;Name&gt;Dodge&lt;/Name&gt;
+                        &lt;Value&gt;0.1521&lt;/Value&gt;
+                        &lt;Weight&gt;1.0&lt;/Weight&gt;
+                &lt;/Skill&gt;
+        &lt;/Output&gt;
+&lt;/Query&gt;
+</pre></div>
+</div>
+<div class="section" id="repeat-selection">
+<h3>Repeat Selection<a class="headerlink" href="#repeat-selection" title="Permalink to this headline">¶</a></h3>
+<p>If enabled, causes the Query to keep track of previously output values and it will try to prevent them from happening again.</p>
+<ul class="simple">
+<li>Previous Selection Weight</li>
+</ul>
+<p>If a selection has already been selected, causes it’s challenge delta (how far from your desired challenge number it is) to be multiplied by this much.</p>
+<p>For example, if you have two outputs that evaluate to 0.1 and 0.2, and a repeat selection weight of 3, the 0.2 would be chosen instead of the 0.1 if it was in the list of previous selected values.</p>
+<ul class="simple">
+<li>Prevous Values Tracked</li>
+</ul>
+<p>How many selections will need to be made before one will be no longer tracked.</p>
+<ul class="simple">
+<li>Diminishing Weight</li>
+</ul>
+<p>if true, causes the older selections in the list to be modified by less than the newer ones.</p>
+<p>Given previous selections 1 2 and 3 and a previous selection weight of 9.0, this setting would cause 1’s weight to be 3.0, 2’s weight to be 6.0, and 3’s weight to be 9.0</p>
+</div>
+<div class="section" id="group-binding">
+<h3>Group Binding<a class="headerlink" href="#group-binding" title="Permalink to this headline">¶</a></h3>
+<p>If enabled, this query will be treated as a Group Query. This means that it is setup for each output to be a single part of a whole, such as individual enemies in an encounter.</p>
+<ul class="simple">
+<li>Allow Duplicates</li>
+</ul>
+<p>If true, allows the query to select more than one of the same output in a single evaluation.</p>
+<ul class="simple">
+<li>Group Repeat Multiplier</li>
+</ul>
+<p>If allow duplicates is enabled, the challenge delta of a group (how far from your desired challenge rating it is) will be multiplied by this number for every extra duplicate.</p>
+<p>For exaxmple, a group containing 1, 1, and 2 would be multiplied by the repeat multiplier once.</p>
+</div>
+<div class="section" id="selection-lock">
+<h3>Selection Lock<a class="headerlink" href="#selection-lock" title="Permalink to this headline">¶</a></h3>
+<p>If true, this query will remember the previous returns and never allow them to be repeated. This can be useful for things such as choosing the next level to go to.
+To persist this data, you will have to resave the query.</p>
+<ul class="simple">
+<li>Locks</li>
+</ul>
+<p>Each Lock object in the XML corresponds to a single locked value. You can manually add more by creating new lock objects.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">SelectionLock</span>
+        <span class="n">Enabled</span><span class="o">=</span><span class="s2">&quot;False&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">Lock</span><span class="o">&gt;</span><span class="n">OutputName1</span><span class="o">&lt;/</span><span class="n">Lock</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">Lock</span><span class="o">&gt;</span><span class="n">OutputName2</span><span class="o">&lt;/</span><span class="n">Lock</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">SelectionLock</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -87,7 +182,7 @@
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="controller.html">Curve Flow Controller</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Output Query</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#output-query-xml-settings">Output Query XML Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output-query-settings">Output Query Settings</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="microcurve.html">Micro Curve</a></li>
