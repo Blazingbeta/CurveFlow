@@ -20,7 +20,7 @@ CurveFlow can be hooked into any project or game engine that supports .NET 3.5 D
 Documentation
 -------------
 
-Documentation will be linked here once avalible.
+https://curveflow.readthedocs.io/en/latest/index.html
 
 Support
 -------
