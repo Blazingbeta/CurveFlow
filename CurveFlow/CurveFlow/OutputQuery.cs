@@ -14,6 +14,7 @@ namespace CurveFlow
 	public class OutputQuery
 	{
 		List<Output> m_outputList;
+		string m_name;
 
 		//Repeat Selection
 		int m_nextID = 0;
@@ -30,7 +31,6 @@ namespace CurveFlow
 
 		//Selection Lock
 		bool m_enableSelectionLock = false;
-		List<int> m_lockedOutputIDs = new List<int>();
 
 		public OutputQuery(string xmlString)
 		{
@@ -39,6 +39,7 @@ namespace CurveFlow
 			//TODO try catch
 			XmlDocument doc = new XmlDocument();
 			doc.LoadXml(xmlString);
+			m_name = doc.SelectSingleNode("/Query").Attributes["Name"].InnerText;
 			//Do things on the settings node here
 			var repeatNodes = doc.SelectSingleNode("/Query/Settings/RepeatSelection");
 			m_discourageRepeatSelection = repeatNodes.Attributes["Enabled"].InnerText == "True";
@@ -286,6 +287,7 @@ namespace CurveFlow
 			{
 				writer.WriteStartDocument();
 				writer.WriteStartElement("Query");
+				writer.WriteAttributeString("Name", m_name);
 				//Settings
 				writer.WriteStartElement("Settings");
 				writer.WriteStartElement("RepeatSelection");
@@ -344,6 +346,7 @@ namespace CurveFlow
 			{
 				writer.WriteStartDocument();
 				writer.WriteStartElement("Query");
+				writer.WriteAttributeString("Name", "DefaultQuery");
 				//Settings
 				writer.WriteStartElement("Settings");
 					writer.WriteStartElement("RepeatSelection");

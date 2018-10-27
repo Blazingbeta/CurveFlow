@@ -12,13 +12,11 @@ namespace CFDebug
 		static CurveFlow.CurveFlowController controller;
 		static void Main(string[] args)
 		{
-			File.WriteAllText("..\\..\\..\\..\\QueryFiles\\DefaultQuery.xml", CurveFlow.OutputQuery.GetDefaultXML());
-
-			/*controller = new CurveFlow.CurveFlowController(CurveFlow.CurveFlowController.GenerateSettings());
+			//File.WriteAllText("..\\..\\..\\..\\QueryFiles\\DefaultQuery.xml", CurveFlow.OutputQuery.GetDefaultXML());
+			controller = new CurveFlow.CurveFlowController(CurveFlow.CurveFlowController.GenerateSettings());
 			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)7);
 
-			CreateProfile();
-			LoadAndPrintXML();*/
+			LoadProfile();
 		}
 		static void LoadAndPrintXML()
 		{
@@ -59,15 +57,11 @@ namespace CFDebug
 		}
 		static void SaveProfile()
 		{
-			FileStream file = new FileStream("TestProfile.cfp", FileMode.Create, FileAccess.Write, FileShare.None);
-			controller.SaveProfile(file);
-			file.Close();
+			File.WriteAllText("..\\..\\..\\..\\QueryFiles\\controller.xml", controller.SaveProfile());
 		}
 		static void LoadProfile()
 		{
-			FileStream stream = new FileStream("TestProfile.cfp", FileMode.Open, FileAccess.Read, FileShare.None);
-			controller.LoadProfile(stream);
-			stream.Close();
+			controller.LoadProfile(File.ReadAllText("..\\..\\..\\..\\QueryFiles\\controller.xml"));
 			Console.WriteLine("Loading Profile. Parry: " + controller.GetCurrentValue("Parry"));
 		}
 		static void CreateNewQuery()

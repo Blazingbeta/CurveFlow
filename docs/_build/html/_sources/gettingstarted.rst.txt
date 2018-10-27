@@ -59,6 +59,8 @@ Then call :ref:`InitializeLog<class_controller_initialize_log>` with your bitmas
 		Console.WriteLine(type + message);
 	}
 
+.. _class_profile:
+	
 Next, you will need to initialize the values that CurveFlow will track. These are the numbers that your Queries will be matched against, and you will need to define all of the trackable values.
 See :ref:`Value Type<class_objects_value_type>` for the specifics of each type. ::
 

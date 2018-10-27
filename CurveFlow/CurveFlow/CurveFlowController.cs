@@ -69,16 +69,31 @@ namespace CurveFlow
 		{
 			m_profile = new CFProfile(trackedValues);
 		}
-		public void LoadProfile(Stream profileStream)
+		public void LoadProfile(string xml)
 		{
-			IFormatter formatter = new BinaryFormatter();
-			m_profile = (CFProfile)formatter.Deserialize(profileStream);
-			//new CFProfile((TrackedValue[])formatter.Deserialize(profileStream));
+			XmlDocument doc = new XmlDocument();
+			doc.LoadXml(xml);
+			m_profile = new CFProfile(doc.SelectSingleNode("/Controller"));
 		}
-		public void SaveProfile(Stream outputStream)
+		public string SaveProfile()
 		{
-			IFormatter formatter = new BinaryFormatter();
-			formatter.Serialize(outputStream, m_profile);
+			//Build to xml
+			StringBuilder sb = new StringBuilder();
+			XmlWriterSettings settings = new XmlWriterSettings()
+			{
+				Indent = true,
+				IndentChars = "\t",
+				NewLineOnAttributes = true
+			};
+			using (XmlWriter writer = XmlWriter.Create(sb, settings))
+			{
+				writer.WriteStartDocument();
+				writer.WriteStartElement("Controller");
+				m_profile.ToXML(writer);
+				writer.WriteEndElement();
+				writer.WriteEndDocument();
+			}
+			return sb.ToString();
 		}
 		public float GetCurrentValue(string valueName)
 		{

@@ -78,6 +78,17 @@ The Query is entirely defined by it's settings file. Here is what the full file 
 			</Skill>
 		</Output>
 	</Query>
+
+Outputs
+^^^^^^^
+
+Each output's name corrisponds to a string that the query can potentially return. Each output has a list of skill values that are defined as such
+
+Skill
+
+- Name: The case-sensitive name of the skill in the :ref:`Profile<class_profile>`
+- Value: The estimated amount of that skill this output is associated with
+- Weight: How much weight this skill has to the overall output evaluation. A skill with a weight of 2.5 would be added to the average 2 and a half times (and increase the total count by 2.5 instead of just 1)
 	
 Repeat Selection
 ^^^^^^^^^^^^^^^^

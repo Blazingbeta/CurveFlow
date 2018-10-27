@@ -110,6 +110,16 @@
 &lt;/Query&gt;
 </pre></div>
 </div>
+<div class="section" id="outputs">
+<h3>Outputs<a class="headerlink" href="#outputs" title="Permalink to this headline">¶</a></h3>
+<p>Each output’s name corrisponds to a string that the query can potentially return. Each output has a list of skill values that are defined as such</p>
+<p>Skill</p>
+<ul class="simple">
+<li>Name: The case-sensitive name of the skill in the <a class="reference internal" href="gettingstarted.html#class-profile"><span class="std std-ref">Profile</span></a></li>
+<li>Value: The estimated amount of that skill this output is associated with</li>
+<li>Weight: How much weight this skill has to the overall output evaluation. A skill with a weight of 2.5 would be added to the average 2 and a half times (and increase the total count by 2.5 instead of just 1)</li>
+</ul>
+</div>
 <div class="section" id="repeat-selection">
 <h3>Repeat Selection<a class="headerlink" href="#repeat-selection" title="Permalink to this headline">¶</a></h3>
 <p>If enabled, causes the Query to keep track of previously output values and it will try to prevent them from happening again.</p>

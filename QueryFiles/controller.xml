@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Controller>
+	<Profile>
+		<TrackedValue
+			Name="Parry"
+			Minimum="0"
+			Maximum="1"
+			Value="0.5"
+			Type="AVERAGE"
+			AdditionCount="1" />
+		<TrackedValue
+			Name="Dodge"
+			Minimum="0"
+			Maximum="1"
+			Value="0.5"
+			Type="AVERAGE"
+			AdditionCount="1" />
+		<TrackedValue
+			Name="Health"
+			Minimum="0"
+			Maximum="1"
+			Value="0"
+			Type="SET"
+			AdditionCount="0" />
+	</Profile>
+	<LockedValues>
+		<Query
+			Name="Stage 1 Enemies">
+			<Lock>Challenge Name</Lock>
+		</Query>
+	</LockedValues>
+</Controller>

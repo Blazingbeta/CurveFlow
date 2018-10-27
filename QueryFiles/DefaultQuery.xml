@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
-<Query>
+<Query
+	Name="DefaultQuery">
 	<Settings>
 		<RepeatSelection
 			Enabled="True">
