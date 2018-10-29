@@ -17,6 +17,7 @@ namespace CFDebug
 			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)7);
 
 			LoadProfile();
+			LoadXmlQuery();
 		}
 		static void LoadAndPrintXML()
 		{
@@ -41,7 +42,7 @@ namespace CFDebug
 		}
 		static void LoadXmlQuery()
 		{
-			string xml = File.ReadAllText("GroupQuery.qf");
+			string xml = File.ReadAllText("..\\..\\..\\..\\QueryFiles\\DefaultQuery.xml");
 			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
 			controller.Evaluate(xmlLoadTest, 0.0f);
 		}
@@ -63,28 +64,6 @@ namespace CFDebug
 		{
 			controller.LoadProfile(File.ReadAllText("..\\..\\..\\..\\QueryFiles\\controller.xml"));
 			Console.WriteLine("Loading Profile. Parry: " + controller.GetCurrentValue("Parry"));
-		}
-		static void CreateNewQuery()
-		{
-			CurveFlow.OutputQuery query = new CurveFlow.OutputQuery(CurveFlow.OutputQuery.GetDefaultXML());
-			Dictionary<string, float> sampleMap1 = new Dictionary<string, float>
-			{
-				{ "Parry", 0.95f },
-				{ "Dodge", 0.075f }
-			};
-			Dictionary<string, float> sampleMap2 = new Dictionary<string, float>
-			{
-				{ "Parry", 0.152f },
-				{ "Dodge", 0.9124f }
-			};
-			Dictionary<string, float> weightMap = new Dictionary<string, float>
-			{
-				{"Parry", 2.3f },
-				{"Dodge", 1.2f }
-			};
-			//query.InsertOutput(sampleMap1, weightMap, "ParryChallenge");
-			//query.InsertOutput(sampleMap2, weightMap, "DodgeChallenge");
-			Console.WriteLine("Selection returned: " + controller.Evaluate(query, 0.0f));
 		}
 		static void WriteQueryToFile()
 		{

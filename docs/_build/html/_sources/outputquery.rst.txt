@@ -33,7 +33,8 @@ Output Query Settings
 The Query is entirely defined by it's settings file. Here is what the full file looks like, and each part is explained in detail further below. ::
 
 	<?xml version="1.0" encoding="utf-16"?>
-	<Query>
+	<Query
+		Name="DefaultQuery">
 		<Settings>
 			<RepeatSelection
 				Enabled="True">
@@ -126,18 +127,15 @@ If allow duplicates is enabled, the challenge delta of a group (how far from you
 
 For exaxmple, a group containing 1, 1, and 2 would be multiplied by the repeat multiplier once.
 
+.. _class_output_query_selectionlock:
+
 Selection Lock
 ^^^^^^^^^^^^^^
 
-If true, this query will remember the previous returns and never allow them to be repeated. This can be useful for things such as choosing the next level to go to.
-To persist this data, you will have to resave the query.
-
-- Locks
-
-Each Lock object in the XML corresponds to a single locked value. You can manually add more by creating new lock objects. ::
+If true, this query will remember the previous returns and never allow them to be repeated. 
+This can be useful for things such as choosing the next level to go to without wanting the same one twice.
+These will be saved into the :ref:`profile<class_profile_locks>` ::
 
 	<SelectionLock
 		Enabled="False">
-		<Lock>OutputName1</Lock>
-		<Lock>OutputName2</Lock>
 	</SelectionLock>

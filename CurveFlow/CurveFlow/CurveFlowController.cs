@@ -69,10 +69,10 @@ namespace CurveFlow
 		{
 			m_profile = new CFProfile(trackedValues);
 		}
-		public void LoadProfile(string xml)
+		public void LoadProfile(string profileXML)
 		{
 			XmlDocument doc = new XmlDocument();
-			doc.LoadXml(xml);
+			doc.LoadXml(profileXML);
 			m_profile = new CFProfile(doc.SelectSingleNode("/Controller"));
 		}
 		public string SaveProfile()
@@ -111,12 +111,12 @@ namespace CurveFlow
 		#region OutputQuery
 		public string Evaluate(OutputQuery query, float desiredChallenge)
 		{
-			return query.CalculateOptimalSelection(desiredChallenge, m_profile.GetAllValues());
+			return query.CalculateOptimalSelection(desiredChallenge, m_profile);
 		}
 		public string EvaluateOnCurve(OutputQuery query, float desiredChallenge, float time)
 		{
 			float difficulty = m_curve.EvaluateExpression(desiredChallenge, time);
-			return query.CalculateOptimalSelection(difficulty, m_profile.GetAllValues());
+			return query.CalculateOptimalSelection(difficulty, m_profile);
 		}
 		public string[] EvaluateGroupSelection(OutputQuery query, float desiredChallenge, int count)
 		{

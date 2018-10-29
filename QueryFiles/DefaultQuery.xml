@@ -3,7 +3,7 @@
 	Name="DefaultQuery">
 	<Settings>
 		<RepeatSelection
-			Enabled="True">
+			Enabled="False">
 			<RepeatSelectionWeight>3.0</RepeatSelectionWeight>
 			<PreviousValuesTracked>2</PreviousValuesTracked>
 			<DiminishingWeight>True</DiminishingWeight>
@@ -14,46 +14,44 @@
 			<GroupRepeatMultiplier>2.0</GroupRepeatMultiplier>
 		</GroupBinding>
 		<SelectionLock
-			Enabled="False">
-			<Lock>OutputName2</Lock>
-		</SelectionLock>
+			Enabled="True" />
 	</Settings>
 	<Output>
-		<Name>OutputName1</Name>
+		<Name>OptimalChallenge</Name>
 		<Skill>
 			<Name>Parry</Name>
-			<Value>0.5145</Value>
+			<Value>0.5</Value>
 			<Weight>1.0</Weight>
 		</Skill>
 		<Skill>
 			<Name>Dodge</Name>
-			<Value>0.1521</Value>
+			<Value>0.5</Value>
 			<Weight>1.0</Weight>
 		</Skill>
 	</Output>
 	<Output>
-		<Name>OutputName2</Name>
+		<Name>SuboptimalChallenge</Name>
 		<Skill>
 			<Name>Parry</Name>
-			<Value>0.5145</Value>
+			<Value>0.6</Value>
 			<Weight>1.0</Weight>
 		</Skill>
 		<Skill>
 			<Name>Dodge</Name>
-			<Value>0.1521</Value>
+			<Value>0.6</Value>
 			<Weight>1.0</Weight>
 		</Skill>
 	</Output>
 	<Output>
-		<Name>OutputName3</Name>
+		<Name>BadChallenge</Name>
 		<Skill>
 			<Name>Parry</Name>
-			<Value>0.5145</Value>
+			<Value>0.7</Value>
 			<Weight>1.0</Weight>
 		</Skill>
 		<Skill>
 			<Name>Dodge</Name>
-			<Value>0.1521</Value>
+			<Value>0.7</Value>
 			<Weight>1.0</Weight>
 		</Skill>
 	</Output>

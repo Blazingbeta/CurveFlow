@@ -121,7 +121,7 @@ namespace CurveFlow
 		}
 		internal bool IsOutputLocked(string queryName, string outputName)
 		{
-			return m_lockedOutputs[queryName].Contains(outputName);
+			return m_lockedOutputs.ContainsKey(queryName) && m_lockedOutputs[queryName].Contains(outputName);
 		}
 	}
 }

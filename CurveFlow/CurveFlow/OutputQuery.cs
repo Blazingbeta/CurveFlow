@@ -78,14 +78,6 @@ namespace CurveFlow
 			}
 			var lockNodes = doc.SelectSingleNode("/Query/Settings/SelectionLock");
 			m_enableSelectionLock = lockNodes.Attributes["Enabled"].InnerText == "True";
-			if (m_enableSelectionLock)
-			{
-				foreach(XmlNode node in lockNodes.SelectNodes("Lock"))
-				{
-					Output lockedOutput = m_outputList.Find(o => o.returnString == node.InnerText);
-					m_lockedOutputIDs.Add(lockedOutput.id);
-				}
-			}
 			CFLog.SendMessage("XML Successfully Loaded.", MessageType.STATUS);
 		}
 		internal void InsertOutput(Dictionary<string, float> estimatedValues, string returnString)
@@ -118,7 +110,7 @@ namespace CurveFlow
 			}
 			m_outputList.Add(newOutput);
 		}
-		internal string CalculateOptimalSelection(float intendedDifficulty, TrackedValue[] currentValues)
+		internal string CalculateOptimalSelection(float intendedDifficulty, CFProfile profile)
 		{
 			if (m_isGroupBinding)
 			{
@@ -126,12 +118,16 @@ namespace CurveFlow
 			}
 			StringBuilder sb = new StringBuilder();
 			sb.Append("Beginning Query:\n");
+			TrackedValue[] currentValues = profile.GetAllValues();
 			float currentBestDelta = float.MaxValue;
 			int currentBestIndex = -1;
 			for(int j = 0; j < m_outputList.Count; j++)
 			{
-				if(m_enableSelectionLock && m_lockedOutputIDs.Contains(m_outputList[j].id))
+				if (m_enableSelectionLock && profile.IsOutputLocked(m_name, m_outputList[j].returnString))
 				{
+					sb.Append("Selection Locked: ");
+					sb.Append(m_outputList[j].returnString);
+					sb.Append("\n");
 					continue;
 				}
 				float difficulty = m_outputList[j].CalculateDifficulty(currentValues, sb);
@@ -183,7 +179,7 @@ namespace CurveFlow
 			CFLog.SendMessage(sb.ToString(), MessageType.STATUS);
 			if (m_enableSelectionLock)
 			{
-				m_lockedOutputIDs.Add(m_outputList[currentBestIndex].id);
+				profile.LockOutput(m_name, m_outputList[currentBestIndex].returnString);
 			}
 			return m_outputList[currentBestIndex].returnString;
 		}
@@ -303,10 +299,6 @@ namespace CurveFlow
 				writer.WriteEndElement();
 				writer.WriteStartElement("SelectionLock");
 					writer.WriteAttributeString("Enabled", m_enableSelectionLock.ToString());
-					foreach(int j in m_lockedOutputIDs)
-					{
-						writer.WriteElementString("Lock", m_outputList[j].returnString);
-					}
 				writer.WriteEndElement();
 				writer.WriteEndElement();
 				//Outputs
@@ -362,7 +354,6 @@ namespace CurveFlow
 					writer.WriteEndElement();
 				writer.WriteStartElement("SelectionLock");
 					writer.WriteAttributeString("Enabled", "False");
-					writer.WriteElementString("Lock", "OutputName2");
 				writer.WriteEndElement();
 				writer.WriteEndElement();
 				//Outputs

@@ -1,0 +1,43 @@
+Top down roguelike, emphasis on magic.
+
+Can hold 2 offensive spells + your dodge and catch
+
+Mana
+Offensive Spells cost mana
+Restored over time or by catching and consuming projectiles
+
+Catching
+Doesn't need to be aimed, all projectiles in an AOE around you are caught and put into a single ball of energy
+Can be consumed for mana or shot for a high damage free attack.
+Mana/damage is based on the projectile caught. Same ratio for both
+
+Upgrades:
+New Spells
+	New spells you find can be higher level to encourage swapping
+	Possibly can get upgrades for current spells?
+Mana/Health up
+Dodge/Catch upgrades
+
+Spell Ideas
+Magic Missle - Basic projectile Spell. Only one you start with
+Ice Spear - Long range single target. Accurate
+Flamethrower - Short Range Continuous
+Spectral Sword - Short range sweep, Knockback
+Lightning Strike - Mid Range, point targeted AOE nuke
+Rock Charge - Melee Dash, invincible charge forward and hit people in the way
+
+Levels
+more than you can see in a single run
+CurveFlow controls them, but make sure not you lock players from seeing certain levels.
+
+Enemies
+Make sure they are distinct at a glance, different colors for types of enemies?
+Long Range Types - Red Violet
+ Sorcerer
+ Necromancer
+Mid Range Types - Orange
+ Crossbowman
+ Bomb Thrower
+Melee Types - Red
+ Goblins
+ Zombies

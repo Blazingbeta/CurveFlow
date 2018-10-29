@@ -63,7 +63,8 @@
 <span id="class-output-query-xml-tutorial"></span><h2>Output Query Settings<a class="headerlink" href="#output-query-settings" title="Permalink to this headline">¶</a></h2>
 <p>The Query is entirely defined by it’s settings file. Here is what the full file looks like, and each part is explained in detail further below.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
-&lt;Query&gt;
+&lt;Query
+        Name=&quot;DefaultQuery&quot;&gt;
         &lt;Settings&gt;
                 &lt;RepeatSelection
                         Enabled=&quot;True&quot;&gt;
@@ -152,17 +153,12 @@
 <p>For exaxmple, a group containing 1, 1, and 2 would be multiplied by the repeat multiplier once.</p>
 </div>
 <div class="section" id="selection-lock">
-<h3>Selection Lock<a class="headerlink" href="#selection-lock" title="Permalink to this headline">¶</a></h3>
-<p>If true, this query will remember the previous returns and never allow them to be repeated. This can be useful for things such as choosing the next level to go to.
-To persist this data, you will have to resave the query.</p>
-<ul class="simple">
-<li>Locks</li>
-</ul>
-<p>Each Lock object in the XML corresponds to a single locked value. You can manually add more by creating new lock objects.</p>
+<span id="class-output-query-selectionlock"></span><h3>Selection Lock<a class="headerlink" href="#selection-lock" title="Permalink to this headline">¶</a></h3>
+<p>If true, this query will remember the previous returns and never allow them to be repeated.
+This can be useful for things such as choosing the next level to go to without wanting the same one twice.
+These will be saved into the <a class="reference internal" href="controller.html#class-profile-locks"><span class="std std-ref">profile</span></a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">SelectionLock</span>
         <span class="n">Enabled</span><span class="o">=</span><span class="s2">&quot;False&quot;</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="n">Lock</span><span class="o">&gt;</span><span class="n">OutputName1</span><span class="o">&lt;/</span><span class="n">Lock</span><span class="o">&gt;</span>
-        <span class="o">&lt;</span><span class="n">Lock</span><span class="o">&gt;</span><span class="n">OutputName2</span><span class="o">&lt;/</span><span class="n">Lock</span><span class="o">&gt;</span>
 <span class="o">&lt;/</span><span class="n">SelectionLock</span><span class="o">&gt;</span>
 </pre></div>
 </div>

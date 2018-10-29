@@ -53,10 +53,10 @@
 <td><a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">CreateNewProfile</span></a> <strong>(</strong> <a class="reference internal" href="objects.html#class-objects-trackedvalue"><span class="std std-ref">TrackedValue</span></a> [] trackedValues <strong>)</strong></td>
 </tr>
 <tr class="row-even"><td>void</td>
-<td><a class="reference internal" href="#class-controller-load-profile"><span class="std std-ref">LoadProfile</span></a> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream?view=netframework-4.7.2">Stream</a> profileStream <strong>)</strong></td>
+<td><a class="reference internal" href="#class-controller-load-profile"><span class="std std-ref">LoadProfile</span></a> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> <a class="reference internal" href="#class-controller-profile"><span class="std std-ref">profileXML</span></a> <strong>)</strong></td>
 </tr>
-<tr class="row-odd"><td>void</td>
-<td><a class="reference internal" href="#class-controller-save-profile"><span class="std std-ref">SaveProfile</span></a> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream?view=netframework-4.7.2">Stream</a> outputStream <strong>)</strong></td>
+<tr class="row-odd"><td><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a></td>
+<td><a class="reference internal" href="#class-controller-save-profile"><span class="std std-ref">SaveProfile</span></a> <strong>(</strong> <strong>)</strong></td>
 </tr>
 <tr class="row-even"><td><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a></td>
 <td><a class="reference internal" href="#class-controller-get-current-value"><span class="std std-ref">GetCurrentValue</span></a> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> valueName <strong>)</strong></td>
@@ -95,15 +95,15 @@
 </ul>
 <p>Creates a new profile with the supplied <a class="reference internal" href="objects.html#class-objects-trackedvalue"><span class="std std-ref">TrackedValues</span></a> , which define the names, min/maxes, and append type of each tracked value.</p>
 <ul class="simple" id="class-controller-load-profile">
-<li>void <strong>LoadProfile</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream?view=netframework-4.7.2">Stream</a> profileStream <strong>)</strong></li>
+<li>void <strong>LoadProfile</strong> <strong>(</strong> _string :ref:’profileXML&lt;class_controller_profile&gt;` <strong>)</strong></li>
 </ul>
-<p>Loads a profile along with any current values contained from the specified <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream?view=netframework-4.7.2">Stream</a> .</p>
+<p>Loads a profile along with any current values contained and any locked outputs from the specified <a class="reference internal" href="#class-controller-profile"><span class="std std-ref">Profile XML</span></a>.</p>
 <ul class="simple" id="class-controller-save-profile">
-<li>void <strong>SaveProfile</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream?view=netframework-4.7.2">Stream</a> outputStream <strong>)</strong></li>
+<li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> <strong>SaveProfile</strong> <strong>(</strong> <strong>)</strong></li>
 </ul>
-<p>Saves a profile and any current values contained to the specified <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream?view=netframework-4.7.2">Stream</a> .</p>
+<p>Returns the profile and any current values or locked outputs contained formatted as a <a class="reference internal" href="#class-controller-profile"><span class="std std-ref">Profile XML</span></a>.</p>
 <ul class="simple" id="class-controller-get-current-value">
-<li>float <strong>GetCurrentValue</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> valueName <strong>)</strong></li>
+<li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> <strong>GetCurrentValue</strong> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> valueName <strong>)</strong></li>
 </ul>
 <p>Returns the current value of the skill named valueName.</p>
 <ul class="simple" id="class-controller-append-tracked-value">
@@ -115,20 +115,20 @@
 </ul>
 <p>Foribly set the skill to a new value.</p>
 <ul class="simple" id="class-controller-evaluate">
-<li>string <strong>Evaluate</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge <strong>)</strong></li>
+<li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> <strong>Evaluate</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge <strong>)</strong></li>
 </ul>
 <p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the current <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns the string name of the estimated best output.</p>
 <ul class="simple" id="class-controller-evaluate-on-curve">
-<li>string <strong>EvaluateOnCurve</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></li>
+<li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> <strong>EvaluateOnCurve</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></li>
 </ul>
 <p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the current <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns the string name of the estimated best output.</p>
 <p>The Desired Challenge will be modified by the <a class="reference internal" href="microcurve.html#class-micro-curve"><span class="std std-ref">Micro Curve</span></a> before being used to calculate an output.</p>
 <ul class="simple" id="class-controller-eval-group">
-<li>string[] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count <strong>)</strong></li>
+<li>string_[] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count <strong>)</strong></li>
 </ul>
 <p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the current <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns an array of size <em>count</em> which contains the estimated best group output.</p>
 <ul class="simple" id="class-controller-eval-group-on-curve">
-<li>string[] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></li>
+<li>string_[] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></li>
 </ul>
 <p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the current <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns an array of size <em>count</em> which contains the estimated best group output.</p>
 <p>The Desired Challenge will be modified by the <a class="reference internal" href="microcurve.html#class-micro-curve"><span class="std std-ref">Micro Curve</span></a> before being used to calculate an output.</p>
@@ -144,6 +144,75 @@ It currently just contains the <a class="reference internal" href="microcurve.ht
         &lt;/MicroCurve&gt;
 &lt;/Settings&gt;
 </pre></div>
+</div>
+</div>
+<div class="section" id="profile-settings">
+<span id="class-controller-profile"></span><h2>Profile Settings<a class="headerlink" href="#profile-settings" title="Permalink to this headline">¶</a></h2>
+<p>The Profile XML defines the values being tracked, their current values, and any outputs locked through the <a class="reference internal" href="outputquery.html#class-output-query-selectionlock"><span class="std std-ref">selection lock</span></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
+&lt;Controller&gt;
+        &lt;Profile&gt;
+                &lt;TrackedValue
+                        Name=&quot;Parry&quot;
+                        Minimum=&quot;0&quot;
+                        Maximum=&quot;1&quot;
+                        Value=&quot;0.5&quot;
+                        Type=&quot;AVERAGE&quot;
+                        AdditionCount=&quot;1&quot; /&gt;
+                &lt;TrackedValue
+                        Name=&quot;Dodge&quot;
+                        Minimum=&quot;0&quot;
+                        Maximum=&quot;1&quot;
+                        Value=&quot;0.5&quot;
+                        Type=&quot;AVERAGE&quot;
+                        AdditionCount=&quot;1&quot; /&gt;
+        &lt;/Profile&gt;
+        &lt;LockedValues&gt;
+                &lt;Query
+                        Name=&quot;DefaultQuery&quot;&gt;
+                        &lt;Lock&gt;OptimalChallenge&lt;/Lock&gt;
+                &lt;/Query&gt;
+        &lt;/LockedValues&gt;
+&lt;/Controller&gt;
+</pre></div>
+</div>
+<div class="section" id="profile">
+<h3>Profile<a class="headerlink" href="#profile" title="Permalink to this headline">¶</a></h3>
+<p>The profile section contains the list of <a class="reference internal" href="objects.html#class-objects-trackedvalue"><span class="std std-ref">Tracked Values</span></a>.
+Each section is explained on the <a class="reference internal" href="objects.html#class-objects-trackedvalue"><span class="std std-ref">Tracked Values</span></a> page with the exception of the AdditionCount variable,
+which is simply the amount of numbers that have been added into an AVERAGE type value in order to track the weight.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Profile</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">TrackedValue</span>
+                <span class="n">Name</span><span class="o">=</span><span class="s2">&quot;Parry&quot;</span>
+                <span class="n">Minimum</span><span class="o">=</span><span class="s2">&quot;0&quot;</span>
+                <span class="n">Maximum</span><span class="o">=</span><span class="s2">&quot;1&quot;</span>
+                <span class="n">Value</span><span class="o">=</span><span class="s2">&quot;0.5&quot;</span>
+                <span class="n">Type</span><span class="o">=</span><span class="s2">&quot;AVERAGE&quot;</span>
+                <span class="n">AdditionCount</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">TrackedValue</span>
+                <span class="n">Name</span><span class="o">=</span><span class="s2">&quot;Dodge&quot;</span>
+                <span class="n">Minimum</span><span class="o">=</span><span class="s2">&quot;0&quot;</span>
+                <span class="n">Maximum</span><span class="o">=</span><span class="s2">&quot;1&quot;</span>
+                <span class="n">Value</span><span class="o">=</span><span class="s2">&quot;0.5&quot;</span>
+                <span class="n">Type</span><span class="o">=</span><span class="s2">&quot;AVERAGE&quot;</span>
+                <span class="n">AdditionCount</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">Profile</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lockedvalues">
+<span id="class-profile-locks"></span><h3>LockedValues<a class="headerlink" href="#lockedvalues" title="Permalink to this headline">¶</a></h3>
+<p>This section tracks the <a class="reference internal" href="outputquery.html#class-output-query-selectionlock"><span class="std std-ref">locked selections</span></a>.
+Each <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">query</span></a> object holds each of the locks for the query with the associated name.
+Each lock contains the name of the output inside that query which has been locked for this profile.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">LockedValues</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">Query</span>
+                <span class="n">Name</span><span class="o">=</span><span class="s2">&quot;DefaultQuery&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">Lock</span><span class="o">&gt;</span><span class="n">OptimalChallenge</span><span class="o">&lt;/</span><span class="n">Lock</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">Query</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">LockedValues</span><span class="o">&gt;</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -170,6 +239,7 @@ It currently just contains the <a class="reference internal" href="microcurve.ht
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Curve Flow Controller</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#master-settings">Master Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#profile-settings">Profile Settings</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="outputquery.html">Output Query</a></li>

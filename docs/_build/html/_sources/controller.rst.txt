@@ -12,9 +12,9 @@ The main controller that drives CurveFlow. All of the processing is handled thro
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | void       | :ref:`CreateNewProfile<class_controller_create_profile>` **(** :ref:`TrackedValue<class_objects_trackedvalue>` [] trackedValues **)**                                                  |
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| void       | :ref:`LoadProfile<class_controller_load_profile>` **(** Stream_ profileStream **)**                                                                                                    |
+| void       | :ref:`LoadProfile<class_controller_load_profile>` **(** string_ :ref:`profileXML<class_controller_profile>` **)**                                                                      |
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| void       | :ref:`SaveProfile<class_controller_save_profile>` **(** Stream_ outputStream **)**                                                                                                     |
+| string_    | :ref:`SaveProfile<class_controller_save_profile>` **(** **)**                                                                                                                          |
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | float_     | :ref:`GetCurrentValue<class_controller_get_current_value>` **(** string_ valueName **)**                                                                                               |
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -30,8 +30,6 @@ The main controller that drives CurveFlow. All of the processing is handled thro
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | string_ [] | :ref:`EvaluateGroupSelectionOnCurve<class_controller_eval_group_on_curve>` **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, int_ count, float_ time **)**  |
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-
-.. _Stream: https://docs.microsoft.com/en-us/dotnet/api/system.io.stream?view=netframework-4.7.2
 
 .. _int: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int
 
@@ -63,19 +61,19 @@ Creates a new profile with the supplied :ref:`TrackedValues<class_objects_tracke
 
 .. _class_controller_load_profile:
 
-- void **LoadProfile** **(** Stream_ profileStream **)**
+- void **LoadProfile** **(** _string :ref:'profileXML<class_controller_profile>` **)**
 
-Loads a profile along with any current values contained from the specified Stream_ .
+Loads a profile along with any current values contained and any locked outputs from the specified :ref:`Profile XML<class_controller_profile>`.
 
 .. _class_controller_save_profile:
 
-- void **SaveProfile** **(** Stream_ outputStream **)**
+- string_ **SaveProfile** **(** **)**
 
-Saves a profile and any current values contained to the specified Stream_ .
+Returns the profile and any current values or locked outputs contained formatted as a :ref:`Profile XML<class_controller_profile>`.
 
 .. _class_controller_get_current_value:
 
-- float **GetCurrentValue** **(** string_ valueName **)**
+- float_ **GetCurrentValue** **(** string_ valueName **)**
 
 Returns the current value of the skill named valueName.
 
@@ -93,13 +91,13 @@ Foribly set the skill to a new value.
 
 .. _class_controller_evaluate:
 
-- string **Evaluate** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge **)**
+- string_ **Evaluate** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge **)**
 
 Evaluates the inserted :ref:`Output Query<class_output_query>` on the current :ref:`Profile<class_controller_create_profile>` and returns the string name of the estimated best output.
 
 .. _class_controller_evaluate_on_curve:
 
-- string **EvaluateOnCurve** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, float_ time **)**
+- string_ **EvaluateOnCurve** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, float_ time **)**
 
 Evaluates the inserted :ref:`Output Query<class_output_query>` on the current :ref:`Profile<class_controller_create_profile>` and returns the string name of the estimated best output.
 
@@ -107,13 +105,13 @@ The Desired Challenge will be modified by the :ref:`Micro Curve<class_micro_curv
 
 .. _class_controller_eval_group:
 
-- string[] **EvaluateGroupSelection** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, int_ count **)**
+- string_[] **EvaluateGroupSelection** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, int_ count **)**
 
 Evaluates the inserted :ref:`Output Query<class_output_query>` on the current :ref:`Profile<class_controller_create_profile>` and returns an array of size *count* which contains the estimated best group output.
 
 .. _class_controller_eval_group_on_curve:
 
-- string[] **EvaluateGroupSelection** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, int_ count, float_ time **)**
+- string_[] **EvaluateGroupSelection** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, int_ count, float_ time **)**
 
 Evaluates the inserted :ref:`Output Query<class_output_query>` on the current :ref:`Profile<class_controller_create_profile>` and returns an array of size *count* which contains the estimated best group output.
 
@@ -122,7 +120,7 @@ The Desired Challenge will be modified by the :ref:`Micro Curve<class_micro_curv
 .. _class_controller_settings:
 
 Master Settings
-^^^^^^^^^^^^^^^
+---------------
 
 The main settings file here contains all of the information that isn't tied to a specific query.
 It currently just contains the :ref:`Micro Curve Settings<class_micro_curve_settings>` but will eventually have the profile as well. ::
@@ -134,3 +132,76 @@ It currently just contains the :ref:`Micro Curve Settings<class_micro_curve_sett
 			<PrecompileExpression>true</PrecompileExpression>
 		</MicroCurve>
 	</Settings>
+
+.. _class_controller_profile:
+	
+Profile Settings
+----------------
+
+The Profile XML defines the values being tracked, their current values, and any outputs locked through the :ref:`selection lock<class_output_query_selectionlock>`. ::
+
+	<?xml version="1.0" encoding="utf-16"?>
+	<Controller>
+		<Profile>
+			<TrackedValue
+				Name="Parry"
+				Minimum="0"
+				Maximum="1"
+				Value="0.5"
+				Type="AVERAGE"
+				AdditionCount="1" />
+			<TrackedValue
+				Name="Dodge"
+				Minimum="0"
+				Maximum="1"
+				Value="0.5"
+				Type="AVERAGE"
+				AdditionCount="1" />
+		</Profile>
+		<LockedValues>
+			<Query
+				Name="DefaultQuery">
+				<Lock>OptimalChallenge</Lock>
+			</Query>
+		</LockedValues>
+	</Controller>
+
+Profile
+^^^^^^^
+
+The profile section contains the list of :ref:`Tracked Values<class_objects_trackedvalue>`.
+Each section is explained on the :ref:`Tracked Values<class_objects_trackedvalue>` page with the exception of the AdditionCount variable, 
+which is simply the amount of numbers that have been added into an AVERAGE type value in order to track the weight. ::
+
+	<Profile>
+		<TrackedValue
+			Name="Parry"
+			Minimum="0"
+			Maximum="1"
+			Value="0.5"
+			Type="AVERAGE"
+			AdditionCount="1" />
+		<TrackedValue
+			Name="Dodge"
+			Minimum="0"
+			Maximum="1"
+			Value="0.5"
+			Type="AVERAGE"
+			AdditionCount="1" />
+	</Profile>
+
+.. _class_profile_locks:
+	
+LockedValues
+^^^^^^^^^^^^
+
+This section tracks the :ref:`locked selections<class_output_query_selectionlock>`.
+Each :ref:`query<class_output_query>` object holds each of the locks for the query with the associated name.
+Each lock contains the name of the output inside that query which has been locked for this profile. ::
+
+	<LockedValues>
+		<Query
+			Name="DefaultQuery">
+			<Lock>OptimalChallenge</Lock>
+		</Query>
+	</LockedValues>
