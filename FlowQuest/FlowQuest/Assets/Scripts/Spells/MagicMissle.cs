@@ -8,9 +8,11 @@ namespace Spells
 	public class MagicMissle : Spell
 	{
 		[SerializeField] GameObject m_projectilePrefab = null;
+		[SerializeField] float m_bulletSpread = 45f;
 		public override void Cast(PlayerController owner)
 		{
-			Instantiate(m_projectilePrefab, owner.transform.position, owner.transform.rotation);
+			GameObject bullet = Instantiate(m_projectilePrefab, owner.transform.position + owner.m_projectileSpawnOffset, owner.transform.rotation);
+			bullet.transform.Rotate(0, Random.Range(-m_bulletSpread, m_bulletSpread), 0);
 		}
 	}
 }

@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c12921c2a304145bd29cff142dc2d7, type: 3}
   m_Name: MagicMissle1
   m_EditorClassIdentifier: 
-  m_cooldown: 0.3
+  m_cooldown: 0.1
   m_canHold: 1
   m_onCooldown: 0
   m_projectilePrefab: {fileID: 1948150760654432, guid: 7177d94f5a4d89b448ff17b525a2d45c,
     type: 2}
+  m_bulletSpread: 30
