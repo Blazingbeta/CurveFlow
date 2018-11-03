@@ -9,21 +9,21 @@ public class MeleeEnemy : Enemy
 	[SerializeField] float m_detectionRange = 2.0f;
 	[SerializeField] float m_attackWindupTime = 1.0f;
 	[SerializeField] float m_attackRecoveryTime = 2.0f;
-	private Transform m_playerTransform = null;
 
 	int m_currentWaypoint = 0;
 	private void Start() 
 	{
-		m_states[EState.OTHER] = DoNothing; //During Misc Coroutine (shouldn't be used?)
-		m_states[EState.ATTACKING] = DoNothing; //While attack windup is happening
-		m_states[EState.RECOVERY] = DoNothing; //While attaack recovery is happening
+		Initialize();
+
+		m_states[EState.OTHER] = DoNothing; //During Misc Coroutine
 		m_states[EState.IDLE] = SearchForPlayer; //While nothing is happening, searches for player
 		m_states[EState.MOVING] = ChargeTowardsPlayer; //Moving towards found player
-		m_states[EState.PREPARING] = PrepareAttack; //Begins attack prep (only in state for one frame)
+		m_states[EState.PREPARING] = DoNothing; //While attack windup is happening
+		m_states[EState.RECOVERY] = DoNothing; //While attack recovery is happening
 
 		m_states.State = EState.IDLE;
 
-		m_playerTransform = PlayerController.player.transform;
+		FacePosition(m_wayPoints[0]);
 	}
 	void Update()
 	{
@@ -31,6 +31,7 @@ public class MeleeEnemy : Enemy
 	}
 	protected EState SearchForPlayer()
 	{
+		FacePosition(m_wayPoints[m_currentWaypoint]);
 		transform.position = Vector3.MoveTowards(transform.position, m_wayPoints[m_currentWaypoint], 
 			m_moveSpeed*Time.deltaTime);
 		if((transform.position - m_wayPoints[m_currentWaypoint]).sqrMagnitude < .3f)
@@ -47,23 +48,27 @@ public class MeleeEnemy : Enemy
 	}
 	protected EState ChargeTowardsPlayer()
 	{
+		FacePosition(m_playerTransform.position);
 		transform.position = Vector3.MoveTowards(transform.position, m_playerTransform.position, 
 			m_moveSpeed*Time.deltaTime);
 		if((transform.position - m_playerTransform.position).sqrMagnitude < m_reachedRange)
 		{
+			//Begins the attack
+			StartCoroutine(MeleeAttack());
 			return EState.PREPARING;
 		}
 		return EState.MOVING;
 	}
-	protected EState PrepareAttack()
-	{
-		StartCoroutine(MeleeAttack());
-		return EState.ATTACKING;
-	}
 	protected IEnumerator MeleeAttack()
 	{
 		//Attack Windup
-		yield return new WaitForSeconds(m_attackWindupTime);
+		float timer = m_attackWindupTime;
+		while(timer > 0)
+		{
+			yield return null;
+			timer -= Time.deltaTime;
+			FacePosition(m_playerTransform.position);
+		}
 		Debug.Log("Get Attacked Nerd");
 		//Attacl Recovery
 		m_states.State = EState.RECOVERY;
