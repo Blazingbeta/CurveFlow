@@ -7,6 +7,11 @@ public class RangedEnemy : Enemy
 	[SerializeField] float m_detectionRange = 5.0f;
 	[SerializeField] float m_attackWindupTime = 3.0f;
 	[SerializeField] float m_attackRecoveryTime = 3.0f;
+	[SerializeField] ERangedAttackType m_attackType;
+	[SerializeField] GameObject m_projectilePrefab = null;
+	[SerializeField] float m_projectileSpeed = 5.0f;
+	[SerializeField] Vector3 m_projectileSpawnPosition = Vector3.zero;
+	[SerializeField] float m_attackSpread = 5.0f;
 
 	private void Start()
 	{
@@ -43,9 +48,16 @@ public class RangedEnemy : Enemy
 		{
 			yield return null;
 			timer -= Time.deltaTime;
-			FacePosition(m_playerTransform.position);
+			if(m_attackType == ERangedAttackType.DIRECT)
+			{
+				FacePosition(m_playerTransform.position);
+			}
+			else
+			{
+				FacePosition(GetApproximateAimPosition(m_projectileSpeed));
+			}
 		}
-		Debug.Log("Get Ranged Attacked Nerd");
+		Fire();
 		//Attacl Recovery
 		m_states.State = EState.RECOVERY;
 		yield return new WaitForSeconds(m_attackRecoveryTime);
@@ -54,5 +66,11 @@ public class RangedEnemy : Enemy
 			StartCoroutine(RangedAttack());
 		else
 			m_states.State = EState.IDLE;
+	}
+	private void Fire()
+	{
+		ProjectileMovement bullet = Instantiate(m_projectilePrefab, transform.TransformPoint(m_projectileSpawnPosition), transform.rotation).GetComponent<ProjectileMovement>();
+		bullet.m_speed = m_projectileSpeed;
+		bullet.transform.Rotate(0, Random.Range(-m_attackSpread, m_attackSpread), 0);
 	}
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour 
 {
 	protected enum EState { OTHER, IDLE, MOVING, PREPARING, ATTACKING, RECOVERY } 
-
+	protected enum ERangedAttackType { DIRECT, APPROXIMATE, PREDICTIVE }
 	[SerializeField] protected float m_moveSpeed = 3.0f;
 	[SerializeField] protected float m_turnSpeed = 3f;
 	[SerializeField] protected int m_health = 7;
@@ -55,5 +55,13 @@ public class Enemy : MonoBehaviour
 			transform.rotation = Quaternion.AngleAxis(m_currentAngle, Vector3.up);
 		}
 	}
-
+	protected Vector3 GetApproximateAimPosition(float projectileSpeed)
+	{
+		//find time to reach the players current position
+		float timeToReach = (m_playerTransform.position - transform.position).magnitude / projectileSpeed;
+		//get players position at that time
+		Vector3 pos = m_playerTransform.position + (PlayerController.player.m_movement.m_velocity * timeToReach);
+		Debug.DrawLine(transform.position, pos, Color.blue);
+		return pos;
+	}
 }

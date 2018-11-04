@@ -10,7 +10,7 @@ namespace Spells
 		[SerializeField] GameObject m_projectilePrefab = null;
 		public override void Cast(PlayerController owner)
 		{
-			Instantiate(m_projectilePrefab, owner.transform.position + owner.m_projectileSpawnOffset, owner.transform.rotation);
+			Instantiate(m_projectilePrefab, owner.transform.position + (owner.transform.rotation * owner.m_projectileSpawnOffset), owner.transform.rotation);
 		}
 	}
 }

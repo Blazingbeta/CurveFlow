@@ -20,7 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4905592807398254}
   - component: {fileID: 114639483330554542}
-  m_Layer: 0
+  - component: {fileID: 136458545606362714}
+  m_Layer: 14
   m_Name: MeleeEnemey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +56,6 @@ GameObject:
   - component: {fileID: 4405531833126020}
   - component: {fileID: 33404140319238596}
   - component: {fileID: 23826542639503582}
-  - component: {fileID: 136906431778649904}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -129,7 +129,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1209899506294868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 4}
+  m_LocalPosition: {x: 0.28323388, y: 3.6666272e-16, z: 6.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4405531833126020}
@@ -307,16 +307,16 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &136906431778649904
+--- !u!136 &136458545606362714
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1579638582730426}
+  m_GameObject: {fileID: 1209899506294868}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}

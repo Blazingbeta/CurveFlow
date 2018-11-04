@@ -17,10 +17,10 @@ TagManager:
   - PostProcessing
   - Floor
   - PlaneCast
-  - 
-  - 
-  - 
-  - 
+  - PlayerProjectile
+  - EnemyProjectile
+  - Player
+  - Enemy
   - 
   - 
   - 

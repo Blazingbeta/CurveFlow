@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] float m_moveSpeed = 5.0f;
 	[SerializeField] float m_lookSpeed = 5.0f;
 
+	public Vector3 m_velocity = Vector3.zero;
+
 	Transform m_transform;
 
 	float m_currentAngle = 90.0f;
@@ -31,14 +33,16 @@ public class PlayerMovement : MonoBehaviour
 		{
 			moveDir.Normalize();
 		}
+		m_velocity = moveDir * m_moveSpeed;
 		m_transform.position += moveDir * m_moveSpeed * Time.deltaTime;
 	}
 	void UpdateLookPosition()
 	{
-		Vector3 lookDir = CameraController.currentCam.GetLookPosition();
-		if (lookDir.sqrMagnitude > 0)
+		Vector3 lookPos = CameraController.currentCam.GetLookPosition();
+		if (lookPos.sqrMagnitude > 0)
 		{
-			Vector3 targetDir = (lookDir - m_transform.position);
+			Vector3 targetDir = (lookPos - m_transform.position);
+			Debug.DrawLine(transform.position, lookPos, Color.red);
 			float targetAngle = Mathf.Atan2(targetDir.x, targetDir.z) * Mathf.Rad2Deg;
 			m_currentAngle = Mathf.LerpAngle(m_currentAngle, targetAngle, m_lookSpeed * Time.deltaTime);
 			m_transform.rotation = Quaternion.AngleAxis(m_currentAngle, Vector3.up);
