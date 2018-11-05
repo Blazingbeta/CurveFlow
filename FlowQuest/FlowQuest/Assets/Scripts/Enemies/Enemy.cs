@@ -67,4 +67,23 @@ public class Enemy : MonoBehaviour
 		Debug.DrawLine(transform.position, pos, Color.blue);
 		return pos;
 	}
+	private void OnTriggerEnter(Collider other) 
+	{
+		ProjectileMovement proj = other.gameObject.GetComponent<ProjectileMovement>();
+		if(proj != null && proj.gameObject.layer == 11)
+		{
+			TakeDamage(proj.m_damage);
+			proj.gameObject.SetActive(false);
+		}
+		else
+		{
+			Debug.Log("Hit by unkown object: " + other.gameObject.name);
+		}	
+	}
+	protected virtual void TakeDamage(int damage)
+	{
+		m_health -= damage;
+		if(m_health <= 0)
+			gameObject.SetActive(false);
+	}
 }

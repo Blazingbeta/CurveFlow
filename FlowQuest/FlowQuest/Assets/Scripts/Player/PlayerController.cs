@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
 	private void OnTriggerEnter(Collider other) 
 	{
 		ProjectileMovement proj = other.gameObject.GetComponent<ProjectileMovement>();
-		if(proj != null)
+		if(proj != null && proj.gameObject.layer == 12)
 		{
 			TakeDamage(proj.m_damage);
 			proj.gameObject.SetActive(false);
