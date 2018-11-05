@@ -6,6 +6,7 @@ namespace Spells
 {
 	public class Spell : ScriptableObject
 	{
+		[SerializeField] public int m_damage = 3;
 		[SerializeField] public float m_cooldown = 1.0f;
 		[SerializeField] public bool m_canHold = true;
 		[SerializeField] public bool m_displayCooldown = false;

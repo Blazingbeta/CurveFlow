@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
 	[SerializeField] protected float m_moveSpeed = 3.0f;
 	[SerializeField] protected float m_turnSpeed = 3f;
 	[SerializeField] protected int m_health = 7;
+	[SerializeField] protected float m_detectionRange = 5.0f;
+	[SerializeField] protected float m_attackWindupTime = 3.0f;
+	[SerializeField] protected float m_attackRecoveryTime = 3.0f;
 
 	protected StateMachine<EState> m_states = new StateMachine<EState>();
 	protected Transform m_playerTransform = null;

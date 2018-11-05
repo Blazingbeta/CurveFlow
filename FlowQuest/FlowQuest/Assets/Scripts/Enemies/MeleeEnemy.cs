@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class MeleeEnemy : Enemy 
 {
-	[SerializeField] Vector3[] m_wayPoints = null;
-	[SerializeField] float m_reachedRange = 0.5f;
-	[SerializeField] float m_detectionRange = 2.0f;
-	[SerializeField] float m_attackWindupTime = 1.0f;
-	[SerializeField] float m_attackRecoveryTime = 2.0f;
+	[SerializeField] protected int m_attackDamage = 3;
+	[SerializeField] protected float m_attackArcAngle = 15.0f;
+	[SerializeField] protected float m_attackDistance = 4f;
+	[SerializeField] protected float m_attackCloseRadius = 1f;
+	[SerializeField] protected Vector3[] m_wayPoints = null;
+	[SerializeField] protected float m_reachedRange = 0.5f;
 
 	int m_currentWaypoint = 0;
 	private void Start() 
@@ -69,7 +70,7 @@ public class MeleeEnemy : Enemy
 			timer -= Time.deltaTime;
 			FacePosition(m_playerTransform.position);
 		}
-		Debug.Log("Get Attacked Nerd");
+		Attack();
 		//Attacl Recovery
 		m_states.State = EState.RECOVERY;
 		yield return new WaitForSeconds(m_attackRecoveryTime);
@@ -78,5 +79,26 @@ public class MeleeEnemy : Enemy
 			m_states.State = EState.MOVING;
 		else
 			m_states.State = EState.IDLE;
+	}
+	protected bool Attack()
+	{
+		Vector3 toPlayer = (m_playerTransform.position - transform.position);
+		/*float debugLength = Mathf.Sqrt(m_attackDistance);
+		Debug.DrawLine(transform.position, transform.position + (transform.forward * debugLength), Color.green, 3.0f);
+		Debug.DrawLine(transform.position, transform.position + (transform.forward * Mathf.Sqrt(m_attackCloseRadius)), Color.red, 3.0f);
+		Debug.DrawLine(transform.position, transform.position + (Quaternion.AngleAxis(m_currentAngle + m_attackArcAngle, Vector3.up) * Vector3.forward * debugLength), Color.green, 3.0f);
+		Debug.DrawLine(transform.position, transform.position + (Quaternion.AngleAxis(m_currentAngle - m_attackArcAngle, Vector3.up) * Vector3.forward * debugLength), Color.green, 3.0f);*/
+		float toPlayerAngle = Mathf.Atan2(toPlayer.x, toPlayer.z) * Mathf.Rad2Deg;
+		if(toPlayer.sqrMagnitude < m_attackCloseRadius || (toPlayer.sqrMagnitude < m_attackDistance && Mathf.Abs(toPlayerAngle - m_currentAngle) < m_attackArcAngle))
+		{
+			PlayerController.player.TakeDamage(m_attackDamage);
+			//Hit animation
+			return true;
+		}
+		else
+		{
+			//Whiff animation
+			return false;
+		}
 	}
 }

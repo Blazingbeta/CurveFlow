@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class RangedEnemy : Enemy
 {
-	[SerializeField] float m_detectionRange = 5.0f;
-	[SerializeField] float m_attackWindupTime = 3.0f;
-	[SerializeField] float m_attackRecoveryTime = 3.0f;
 	[SerializeField] ERangedAttackType m_attackType;
+	[SerializeField] int m_attackDamage = 3;
 	[SerializeField] GameObject m_projectilePrefab = null;
 	[SerializeField] float m_projectileSpeed = 5.0f;
 	[SerializeField] Vector3 m_projectileSpawnPosition = Vector3.zero;
@@ -71,6 +69,7 @@ public class RangedEnemy : Enemy
 	{
 		ProjectileMovement bullet = Instantiate(m_projectilePrefab, transform.TransformPoint(m_projectileSpawnPosition), transform.rotation).GetComponent<ProjectileMovement>();
 		bullet.m_speed = m_projectileSpeed;
+		bullet.m_damage = m_attackDamage;
 		bullet.transform.Rotate(0, Random.Range(-m_attackSpread, m_attackSpread), 0);
 	}
 }

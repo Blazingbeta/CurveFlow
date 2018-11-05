@@ -276,13 +276,17 @@ MonoBehaviour:
   m_moveSpeed: 3
   m_turnSpeed: 4
   m_health: 7
-  m_wayPoints:
-  - {x: 2, y: 0, z: 4}
-  - {x: -2, y: 0, z: 4}
-  m_reachedRange: 0.3
   m_detectionRange: 9
   m_attackWindupTime: 1
   m_attackRecoveryTime: 2
+  m_attackDamage: 3
+  m_attackArcAngle: 25
+  m_attackDistance: 7
+  m_attackCloseRadius: 1.5
+  m_wayPoints:
+  - {x: 2, y: 0, z: 4}
+  - {x: -2, y: 0, z: 4}
+  m_reachedRange: 0.5
 --- !u!135 &135508954625040758
 SphereCollider:
   m_ObjectHideFlags: 1
