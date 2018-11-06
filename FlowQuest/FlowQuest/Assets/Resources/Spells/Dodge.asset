@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5055adcabe6721141a443208306a16c8, type: 3}
   m_Name: Dodge
   m_EditorClassIdentifier: 
-  m_cooldown: 2
+  m_damage: 3
+  m_cooldown: 10
   m_canHold: 0
   m_displayCooldown: 1
   m_onCooldown: 0

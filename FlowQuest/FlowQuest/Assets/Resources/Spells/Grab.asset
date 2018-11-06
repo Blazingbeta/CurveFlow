@@ -11,8 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eee6eced445d344b922404ba8829809, type: 3}
   m_Name: Grab
   m_EditorClassIdentifier: 
+  m_damage: 3
   m_cooldown: 3
   m_canHold: 0
   m_displayCooldown: 1
   m_onCooldown: 0
   m_cooldownText: {fileID: 0}
+  m_radius: 3
+  m_grabMask:
+    serializedVersion: 2
+    m_Bits: 4096
