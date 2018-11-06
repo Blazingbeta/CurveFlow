@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
 	public PlayerMovement m_movement;
 
 	public int m_maxHealth;
-	public int m_currentHealth;
+	[HideInInspector] public int m_currentHealth;
+	[HideInInspector] public bool m_invincible;
 
 	private Image m_healthImage;
 	private TMPro.TMP_Text m_healthText;
@@ -42,7 +43,7 @@ public class PlayerController : MonoBehaviour
 	private void OnTriggerEnter(Collider other) 
 	{
 		ProjectileMovement proj = other.gameObject.GetComponent<ProjectileMovement>();
-		if(proj != null && proj.gameObject.layer == 12)
+		if(!m_invincible && proj != null && proj.gameObject.layer == 12)
 		{
 			TakeDamage(proj.m_damage);
 			proj.gameObject.SetActive(false);

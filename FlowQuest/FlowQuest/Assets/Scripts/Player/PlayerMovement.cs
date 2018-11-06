@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
 	Transform m_transform;
 
 	float m_currentAngle = 90.0f;
-	bool m_freezeMovement = false;
+	[HideInInspector] public bool m_freezeMovement = false;
 
 	private void Awake()
 	{
@@ -46,9 +46,5 @@ public class PlayerMovement : MonoBehaviour
 			m_currentAngle = Mathf.LerpAngle(m_currentAngle, targetAngle, m_lookSpeed * Time.deltaTime);
 			m_transform.rotation = Quaternion.AngleAxis(m_currentAngle, Vector3.up);
 		}
-	}
-	public void FreezeMovement()
-	{
-		m_freezeMovement = true;
 	}
 }

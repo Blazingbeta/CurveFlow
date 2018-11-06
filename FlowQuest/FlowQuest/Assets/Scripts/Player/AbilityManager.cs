@@ -6,9 +6,12 @@ public class AbilityManager : MonoBehaviour
 {
 	PlayerController m_controller;
 
+	[SerializeField] private GameObject m_grabOrb = null;
 	Dictionary<string, Spell> m_spells;
-	[HideInInspector] public bool m_isCasting = false;
 
+	[SerializeField] public int m_maxMana = 100;
+	private int m_currentMana;
+	[HideInInspector] public bool m_isCasting = false;
 	private bool m_isHolding = false;
 	private int  m_holdCount = 0;
 
@@ -28,6 +31,8 @@ public class AbilityManager : MonoBehaviour
 		m_spells["SecondaryFire"].InitializeSpell(abilityPanel.transform.Find("SecondaryFire"));
 		m_spells["Dodge"].InitializeSpell(abilityPanel.transform.Find("Dodge"));
 		m_spells["Grab"].InitializeSpell(abilityPanel.transform.Find("Grab"));
+
+		m_currentMana = m_maxMana;
 	}
 	private void Update()
 	{
@@ -54,13 +59,11 @@ public class AbilityManager : MonoBehaviour
 	{
 		if (Input.GetButtonDown("PrimaryFire"))
 		{
-			Debug.Log(m_holdCount);
-			m_isHolding = false;
-			//Fire Held Projectiles
+			StartCoroutine(ThrowHeldAttacks());
 		}
 		else if (Input.GetButtonDown("SecondaryFire"))
 		{
-			//Consume Held Projectiles
+			StartCoroutine(ConsumeHeldAttacks());
 		}
 	}
 	private void CastSpell(Spell spell)
@@ -86,5 +89,27 @@ public class AbilityManager : MonoBehaviour
 		}
 		spell.m_cooldownText.text = "";
 		spell.m_onCooldown = false;
+	}
+	private IEnumerator ConsumeHeldAttacks()
+	{
+		m_isCasting = true;
+		Grab grab = (Grab)m_spells["Grab"];
+		m_currentMana = Mathf.Min(m_currentMana + grab.m_baseManaGained + (grab.m_manaPerHold * m_holdCount), m_maxMana);
+		yield return new WaitForSeconds(0.2f);
+		m_isCasting = false;
+		m_isHolding = false;
+	}
+	private IEnumerator ThrowHeldAttacks()
+	{
+		m_isCasting = true;
+		ProjectileMovement orb = Instantiate(m_grabOrb, transform.position + (transform.rotation 
+			* m_controller.m_projectileSpawnOffset), transform.rotation).GetComponent<ProjectileMovement>();
+		Grab grab = (Grab)m_spells["Grab"];
+		orb.m_speed = grab.m_baseSpeed + (m_holdCount * grab.m_speedPerHold);
+		orb.m_damage = grab.m_damage + (m_holdCount * grab.m_damagePerHold);
+		orb.transform.localScale = Vector3.one * (grab.m_baseScale + (grab.m_scalePerHold * m_holdCount));
+		yield return new WaitForSeconds(1.0f);
+		m_isCasting = false;
+		m_isHolding = false;
 	}
 }

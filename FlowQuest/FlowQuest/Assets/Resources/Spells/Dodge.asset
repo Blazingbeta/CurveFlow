@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Name: Dodge
   m_EditorClassIdentifier: 
   m_damage: 3
-  m_cooldown: 10
+  m_cooldown: 4
   m_canHold: 0
   m_displayCooldown: 1
   m_onCooldown: 0
   m_cooldownText: {fileID: 0}
+  m_duration: 0.2
+  m_maxDistance: 3
