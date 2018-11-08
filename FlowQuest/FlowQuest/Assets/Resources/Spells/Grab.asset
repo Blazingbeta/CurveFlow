@@ -14,6 +14,7 @@ MonoBehaviour:
   m_uiImage: {fileID: 2800000, guid: 5b40a8a0e357b324cb24a63e5ab9897a, type: 3}
   m_damage: 2
   m_cooldown: 3
+  m_manaCost: 0
   m_canHold: 0
   m_displayCooldown: 1
   m_onCooldown: 0

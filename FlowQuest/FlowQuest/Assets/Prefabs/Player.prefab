@@ -223,7 +223,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1781346752758638}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.6500015}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4742598942532466}
@@ -499,7 +499,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_grabOrb: {fileID: 1243534075514368, guid: c881272b1cfbdef41817efb61e4af2c5, type: 2}
-  m_maxMana: 100
+  m_maxMana: 20
+  m_manaGainTime: 1
+  m_manaPerTick: 2
   m_isCasting: 0
 --- !u!135 &135067189711580490
 SphereCollider:
@@ -607,7 +609,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -1192,7 +1194,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 2.292625
+      value: 3
       mode: 0
       spread: 0
       speed:

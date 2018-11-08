@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 	public int m_maxHealth;
 	[HideInInspector] public int m_currentHealth;
 	[HideInInspector] public bool m_invincible;
+	[HideInInspector] public bool m_isDead = false;
 
 	private Image m_healthImage;
 	private TMPro.TMP_Text m_healthText;
@@ -35,10 +36,34 @@ public class PlayerController : MonoBehaviour
 	}
 	public void TakeDamage(int damage)
 	{
+		if(m_isDead) return;
 		m_currentHealth -= damage;
+		if(m_currentHealth <= 0)
+			Die();
 		m_healthText.text = m_currentHealth.ToString();
 		m_healthImage.fillAmount = (float)m_currentHealth/m_maxHealth;
-		//TODO dead
+	}
+	private void Die()
+	{
+		m_currentHealth = 0;
+		m_isDead = true;
+		StartCoroutine(DeathAnimations());
+	}
+	private IEnumerator DeathAnimations()
+	{
+		CanvasGroup group = GameObject.Find("DeathPanel").GetComponent<CanvasGroup>();
+		//MAGIC NUMBER: Time to delay the deathanimations
+		yield return new WaitForSeconds(0.6f);
+		//MAGIC NUMBER: time to fade in the death menu
+		float MENUFADEINTIME = 1.2f;
+		float timer = 0.0f;
+		while(timer < MENUFADEINTIME)
+		{
+			timer += Time.deltaTime;
+			group.alpha = timer/MENUFADEINTIME;
+			yield return null;
+		}
+		group.alpha = 1;
 	}
 	private void OnTriggerEnter(Collider other) 
 	{

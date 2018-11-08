@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
 	public Vector3 m_velocity = Vector3.zero;
 
 	Transform m_transform;
+	PlayerController m_controller;
 
 	float m_currentAngle = 90.0f;
 	[HideInInspector] public bool m_freezeMovement = false;
@@ -17,9 +18,11 @@ public class PlayerMovement : MonoBehaviour
 	private void Awake()
 	{
 		m_transform = transform;
+		m_controller = GetComponent<PlayerController>();
 	}
 	void Update ()
 	{
+		if(m_controller.m_isDead) return;
 		UpdateLookPosition();
 		UpdateMovement();
 	}
