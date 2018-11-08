@@ -16,8 +16,16 @@ namespace Spells
 		[SerializeField] public float m_scalePerHold = 0.2f;
 		[SerializeField] float m_radius = 3.0f;
 		[SerializeField] LayerMask m_grabMask;
+		ParticleSystem m_grabParticles = null;
 		public override void Cast(PlayerController owner)
 		{
+			if(m_grabParticles == null)
+			{
+				m_grabParticles = owner.transform.Find("GrabParticle").GetComponent<ParticleSystem>();
+				ParticleSystem.ShapeModule shape = m_grabParticles.shape;
+				shape.radius = m_radius;
+			}
+			m_grabParticles.Play();
 			owner.StartCoroutine(GrabProjectiles(owner));
 		}
 		private IEnumerator GrabProjectiles(PlayerController owner)

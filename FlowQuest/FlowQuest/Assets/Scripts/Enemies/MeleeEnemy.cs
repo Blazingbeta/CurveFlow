@@ -28,6 +28,7 @@ public class MeleeEnemy : Enemy
 	}
 	void Update()
 	{
+		if (m_isDead) return;
 		m_states.Update();
 	}
 	protected EState SearchForPlayer()
@@ -63,6 +64,7 @@ public class MeleeEnemy : Enemy
 	protected IEnumerator MeleeAttack()
 	{
 		//Attack Windup
+		m_anim.SetTrigger("Windup");
 		float timer = m_attackWindupTime;
 		while(timer > 0)
 		{
@@ -82,6 +84,7 @@ public class MeleeEnemy : Enemy
 	}
 	protected bool Attack()
 	{
+		m_anim.SetTrigger("Attack");
 		Vector3 toPlayer = (m_playerTransform.position - transform.position);
 		/*float debugLength = Mathf.Sqrt(m_attackDistance);
 		Debug.DrawLine(transform.position, transform.position + (transform.forward * debugLength), Color.green, 3.0f);

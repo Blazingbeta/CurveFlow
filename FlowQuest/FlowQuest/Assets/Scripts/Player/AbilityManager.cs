@@ -80,6 +80,7 @@ public class AbilityManager : MonoBehaviour
 	private IEnumerator SpellCooldown(Spell spell)
 	{
 		spell.m_onCooldown = true;
+		spell.m_cooldownImage.color = new Color(.5f, .5f, .5f, .5f);
 		float timeRemaining = spell.m_cooldown;
 		while(timeRemaining > 0)
 		{
@@ -88,6 +89,7 @@ public class AbilityManager : MonoBehaviour
 			yield return null;
 		}
 		spell.m_cooldownText.text = "";
+		spell.m_cooldownImage.color = new Color(1f, 1f, 1f, 1f);
 		spell.m_onCooldown = false;
 	}
 	private IEnumerator ConsumeHeldAttacks()

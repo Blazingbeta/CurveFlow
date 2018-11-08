@@ -12,15 +12,19 @@ public class Enemy : MonoBehaviour
 	[SerializeField] protected float m_detectionRange = 5.0f;
 	[SerializeField] protected float m_attackWindupTime = 3.0f;
 	[SerializeField] protected float m_attackRecoveryTime = 3.0f;
+	[SerializeField] protected float m_despawnTime = 1.0f;
+	protected bool m_isDead = false;
 
 	protected StateMachine<EState> m_states = new StateMachine<EState>();
 	protected Transform m_playerTransform = null;
+	protected Animator m_anim = null;
 
 	protected float m_currentAngle;
 
 	protected void Initialize()
 	{
 		m_playerTransform = PlayerController.player.transform;
+		m_anim = transform.GetChild(0).GetComponent<Animator>();
 
 		m_currentAngle = Mathf.Atan2(transform.forward.x, transform.forward.z) * Mathf.Rad2Deg;
 	}
@@ -83,7 +87,22 @@ public class Enemy : MonoBehaviour
 	protected virtual void TakeDamage(int damage)
 	{
 		m_health -= damage;
-		if(m_health <= 0)
-			gameObject.SetActive(false);
+		if (m_health <= 0)
+		{
+			m_anim.SetTrigger("Die");
+			m_isDead = true;
+			enabled = false;
+			StartCoroutine(Despawn());
+			//gameObject.SetActive(false);
+		}
+		else
+		{
+			m_anim.SetTrigger("Hit");
+		}
+	}
+	protected IEnumerator Despawn()
+	{
+		yield return new WaitForSeconds(m_despawnTime);
+		gameObject.SetActive(false);
 	}
 }

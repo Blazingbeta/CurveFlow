@@ -39,34 +39,42 @@ public class RangedEnemy : Enemy
 	}
 	private IEnumerator RangedAttack()
 	{
-		m_states.State = EState.PREPARING;
-		//Attack Windup
-		float timer = m_attackWindupTime;
-		while (timer > 0)
+		if (!m_isDead)
 		{
-			yield return null;
-			timer -= Time.deltaTime;
-			if(m_attackType == ERangedAttackType.DIRECT)
+			m_states.State = EState.PREPARING;
+			//Attack Windup
+			m_anim.SetTrigger("Windup");
+			float timer = m_attackWindupTime;
+			while (timer > 0)
 			{
-				FacePosition(m_playerTransform.position);
-			}
-			else
-			{
-				FacePosition(GetApproximateAimPosition(m_projectileSpeed));
+				yield return null;
+				timer -= Time.deltaTime;
+				if (m_attackType == ERangedAttackType.DIRECT)
+				{
+					FacePosition(m_playerTransform.position);
+				}
+				else
+				{
+					FacePosition(GetApproximateAimPosition(m_projectileSpeed));
+				}
 			}
 		}
-		Fire();
-		//Attacl Recovery
-		m_states.State = EState.RECOVERY;
-		yield return new WaitForSeconds(m_attackRecoveryTime);
-		//Next State
-		if ((transform.position - m_playerTransform.position).sqrMagnitude < m_detectionRange)
-			StartCoroutine(RangedAttack());
-		else
-			m_states.State = EState.IDLE;
+		if (!m_isDead)
+		{
+			Fire();
+			//Attacl Recovery
+			m_states.State = EState.RECOVERY;
+			yield return new WaitForSeconds(m_attackRecoveryTime);
+			//Next State
+			if ((transform.position - m_playerTransform.position).sqrMagnitude < m_detectionRange)
+				StartCoroutine(RangedAttack());
+			else
+				m_states.State = EState.IDLE;
+		}
 	}
 	private void Fire()
 	{
+		m_anim.SetTrigger("Attack");
 		ProjectileMovement bullet = Instantiate(m_projectilePrefab, transform.TransformPoint(m_projectileSpawnPosition), transform.rotation).GetComponent<ProjectileMovement>();
 		bullet.m_speed = m_projectileSpeed;
 		bullet.m_damage = m_attackDamage;

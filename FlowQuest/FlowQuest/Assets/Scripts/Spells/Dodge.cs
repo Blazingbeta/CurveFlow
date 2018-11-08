@@ -21,15 +21,16 @@ namespace Spells
 			Vector3 startPos = owner.transform.position;
 			//Get proper end pos
 			Vector3 endPos = CameraController.currentCam.GetLookPosition();
-			if(endPos.sqrMagnitude > m_maxDistance * m_maxDistance)
+			Vector3 endDir = endPos - startPos;
+			if(endDir.sqrMagnitude > m_maxDistance * m_maxDistance)
 			{
-				endPos = endPos.normalized * m_maxDistance;
+				endDir = endDir.normalized * m_maxDistance;
 			}
 			float timer = 0.0f;
 			while(timer < m_duration)
 			{
 				timer += Time.deltaTime;
-				owner.transform.position = Vector3.Lerp(startPos, endPos, timer/m_duration);
+				owner.transform.position = Vector3.Lerp(startPos, startPos + endDir, timer/m_duration);
 				yield return null;
 			}
 			owner.m_movement.m_freezeMovement = false;
