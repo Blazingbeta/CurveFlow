@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Controller>
+	<Profile>
+		<TrackedValue
+			Name="GrabSkill"
+			Minimum="0"
+			Maximum="1"
+			Value="0"
+			Type="AVERAGE"
+			AdditionCount="0" />
+		<TrackedValue
+			Name="DodgeSkill"
+			Minimum="0"
+			Maximum="1"
+			Value="0"
+			Type="AVERAGE"
+			AdditionCount="0" />
+		<TrackedValue
+			Name="CurrentHealth"
+			Minimum="0"
+			Maximum="1"
+			Value="0"
+			Type="SET"
+			AdditionCount="0" />
+	</Profile>
+	<LockedValues />
+</Controller>

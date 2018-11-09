@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Query
+	Name="DefaultQuery">
+	<Settings>
+		<RepeatSelection
+			Enabled="True">
+			<RepeatSelectionWeight>3.0</RepeatSelectionWeight>
+			<PreviousValuesTracked>2</PreviousValuesTracked>
+			<DiminishingWeight>True</DiminishingWeight>
+		</RepeatSelection>
+		<GroupBinding
+			Enabled="False">
+			<AllowDuplicates>False</AllowDuplicates>
+			<GroupRepeatMultiplier>2.0</GroupRepeatMultiplier>
+		</GroupBinding>
+		<SelectionLock
+			Enabled="False" />
+	</Settings>
+	<Output>
+		<Name>HarderParrySkill</Name>
+		<Skill>
+			<Name>ParrySkill</Name>
+			<Value>0.6</Value>
+			<Weight>2.0</Weight>
+		</Skill>
+		<Skill>
+			<Name>GrabSkill</Name>
+			<Value>0.2</Value>
+			<Weight>1.0</Weight>
+		</Skill>
+	</Output>
+	<Output>
+		<Name>HarderGrabSkill</Name>
+		<Skill>
+			<Name>ParrySkill</Name>
+			<Value>0.124</Value>
+			<Weight>1.0</Weight>
+		</Skill>
+		<Skill>
+			<Name>GrabSkill</Name>
+			<Value>0.6</Value>
+			<Weight>2.0</Weight>
+		</Skill>
+	</Output>
+</Query>
