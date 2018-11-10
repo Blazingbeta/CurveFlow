@@ -368,3 +368,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Custom Allow
+!CurveFlow.dll
+!CurveFlow.dll.meta
