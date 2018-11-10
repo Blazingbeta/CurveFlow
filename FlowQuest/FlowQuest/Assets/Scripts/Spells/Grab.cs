@@ -15,6 +15,7 @@ namespace Spells
 		[SerializeField] public float m_baseScale = 0.3f;
 		[SerializeField] public float m_scalePerHold = 0.2f;
 		[SerializeField] float m_radius = 3.0f;
+		[SerializeField] float m_missRadius = 5.0f;
 		[SerializeField] LayerMask m_grabMask;
 		ParticleSystem m_grabParticles = null;
 		public override void Cast(PlayerController owner)
@@ -34,6 +35,12 @@ namespace Spells
 			//Do some sort of visual here
 			if(enemyProjectiles.Length == 0)
 			{
+				//If anyprojectiles are near but not caught, minus the grab skill
+				enemyProjectiles = Physics.OverlapSphere(owner.transform.position, m_missRadius, m_grabMask, QueryTriggerInteraction.Collide);
+				if(enemyProjectiles.Length != 0)
+				{
+					owner.m_curveFlow.AppendValue("GrabSkill", 0.0f);
+				}
 				//Spell has not gotten a projectile, don't lock casting and just let the whiff animation play
 				yield return null;
 			}
@@ -46,6 +53,7 @@ namespace Spells
 				for (int j = 0; j < enemyProjectiles.Length; j++)
 				{
 					enemyProjectiles[j].gameObject.SetActive(false);
+					owner.m_curveFlow.AppendValue("GrabSkill", 1.0f);
 				}
 				owner.m_abilityManager.SetGrab(enemyProjectiles.Length);
 				owner.m_abilityManager.m_isCasting = false;

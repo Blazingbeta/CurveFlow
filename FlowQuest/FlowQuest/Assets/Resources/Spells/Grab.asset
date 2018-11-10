@@ -26,8 +26,9 @@ MonoBehaviour:
   m_baseManaGained: 10
   m_manaPerHold: 20
   m_baseScale: 0.3
-  m_scalePerHold: 0.2
+  m_scalePerHold: 0.4
   m_radius: 3
+  m_missRadius: 5
   m_grabMask:
     serializedVersion: 2
     m_Bits: 4096

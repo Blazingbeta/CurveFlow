@@ -109,6 +109,14 @@ public class AbilityManager : MonoBehaviour
 		m_holdCount = count;
 		//TODO spawn visual in front of player
 	}
+	public bool IsDodgeAvalible()
+	{
+		return !m_spells["Dodge"].m_onCooldown;
+	}
+	public bool IsGrabAvalible()
+	{
+		return !m_spells["Grab"].m_onCooldown;
+	}
 	private IEnumerator SpellCooldown(Spell spell)
 	{
 		spell.m_onCooldown = true;
@@ -141,7 +149,10 @@ public class AbilityManager : MonoBehaviour
 		Grab grab = (Grab)m_spells["Grab"];
 		orb.m_speed = grab.m_baseSpeed + (m_holdCount * grab.m_speedPerHold);
 		orb.m_damage = grab.m_damage + (m_holdCount * grab.m_damagePerHold);
-		orb.transform.localScale = Vector3.one * (grab.m_baseScale + (grab.m_scalePerHold * m_holdCount));
+		float scaleMod = (grab.m_baseScale + (grab.m_scalePerHold * m_holdCount));
+		orb.transform.localScale = Vector3.one * scaleMod;
+		ParticleSystem.MainModule mainMod = orb.transform.GetChild(0).GetComponent<ParticleSystem>().main;
+		mainMod.startSize = 0.7f * scaleMod;
 		yield return new WaitForSeconds(1.0f);
 		m_isCasting = false;
 		m_isHolding = false;

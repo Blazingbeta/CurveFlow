@@ -94,7 +94,7 @@ public class MeleeEnemy : Enemy
 		float toPlayerAngle = Mathf.Atan2(toPlayer.x, toPlayer.z) * Mathf.Rad2Deg;
 		if(toPlayer.sqrMagnitude < m_attackCloseRadius || (toPlayer.sqrMagnitude < m_attackDistance && Mathf.Abs(toPlayerAngle - m_currentAngle) < m_attackArcAngle))
 		{
-			PlayerController.player.TakeDamage(m_attackDamage);
+			PlayerController.player.TakeMeleeAttack(m_attackDamage);
 			//Hit animation
 			return true;
 		}

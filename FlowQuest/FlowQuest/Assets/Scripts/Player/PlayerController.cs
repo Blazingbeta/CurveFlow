@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] public Vector3 m_projectileSpawnOffset = Vector3.zero;
 	public AbilityManager m_abilityManager;
 	public PlayerMovement m_movement;
+	public CurveFlowManager m_curveFlow;
 
 	public int m_maxHealth;
 	[HideInInspector] public int m_currentHealth;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
 	{
 		m_abilityManager = GetComponent<AbilityManager>();
 		m_movement = GetComponent<PlayerMovement>();
+		m_curveFlow = GetComponent<CurveFlowManager>();
 		if(player != null)
 		{
 			Debug.Log("Static Playercontroller already exists. Proceeding.");
@@ -33,8 +35,9 @@ public class PlayerController : MonoBehaviour
 		m_healthImage = GameObject.Find("HealthImage").GetComponent<Image>();
 		m_healthText = m_healthImage.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
 		m_healthText.text = m_currentHealth.ToString();
+		m_curveFlow.SetValue("CurrentHealth", (float)m_currentHealth / m_maxHealth);
 	}
-	public void TakeDamage(int damage)
+	private void TakeDamage(int damage)
 	{
 		if(m_isDead) return;
 		m_currentHealth -= damage;
@@ -42,12 +45,29 @@ public class PlayerController : MonoBehaviour
 			Die();
 		m_healthText.text = m_currentHealth.ToString();
 		m_healthImage.fillAmount = (float)m_currentHealth/m_maxHealth;
+		m_curveFlow.SetValue("CurrentHealth", (float)m_currentHealth / m_maxHealth);
 	}
 	private void Die()
 	{
 		m_currentHealth = 0;
 		m_isDead = true;
 		StartCoroutine(DeathAnimations());
+	}
+	public void TakeMeleeAttack(int damage)
+	{
+		if (m_invincible)
+		{
+			//DodgeSkill also includes other skills that make you invincible (if they exist)
+			m_curveFlow.AppendValue("DodgeSkill", 1.0f);
+		}
+		else
+		{
+			TakeDamage(damage);
+			if (m_abilityManager.IsDodgeAvalible())
+			{
+				m_curveFlow.AppendValue("DodgeSkill", 0.0f);
+			}
+		}
 	}
 	private IEnumerator DeathAnimations()
 	{
@@ -67,15 +87,23 @@ public class PlayerController : MonoBehaviour
 	}
 	private void OnTriggerEnter(Collider other) 
 	{
+		if (!m_invincible)
+		{ 
 		ProjectileMovement proj = other.gameObject.GetComponent<ProjectileMovement>();
-		if(!m_invincible && proj != null && proj.gameObject.layer == 12)
-		{
-			TakeDamage(proj.m_damage);
-			proj.gameObject.SetActive(false);
-		}
-		else
-		{
-			Debug.Log("Hit by unkown object: " + other.gameObject.name);
+			if (proj != null && proj.gameObject.layer == 12)
+			{
+				TakeDamage(proj.m_damage);
+				proj.gameObject.SetActive(false);
+				//If they got hit by a projectile and could have grabbed it
+				if (m_abilityManager.IsGrabAvalible())
+				{
+					m_curveFlow.AppendValue("GrabSkill", 0.0f);
+				}
+			}
+			else
+			{
+				Debug.Log("Hit by unkown object: " + other.gameObject.name);
+			}
 		}
 	}
 }

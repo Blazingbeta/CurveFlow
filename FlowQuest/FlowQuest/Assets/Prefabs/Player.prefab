@@ -107,6 +107,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4880677103267014}
+  - component: {fileID: 114665911006409894}
   - component: {fileID: 114232922317416950}
   - component: {fileID: 114493362885330162}
   - component: {fileID: 114797280343485308}
@@ -469,9 +470,11 @@ MonoBehaviour:
   m_projectileSpawnOffset: {x: 0, y: 1, z: 0.8}
   m_abilityManager: {fileID: 0}
   m_movement: {fileID: 0}
+  m_curveFlow: {fileID: 0}
   m_maxHealth: 10
   m_currentHealth: 10
   m_invincible: 0
+  m_isDead: 0
 --- !u!114 &114493362885330162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -487,6 +490,17 @@ MonoBehaviour:
   m_lookSpeed: 5
   m_velocity: {x: 0, y: 0, z: 0}
   m_freezeMovement: 0
+--- !u!114 &114665911006409894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1781346752758638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a39f8e7f9130aaa45b72aab0305ad9ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114797280343485308
 MonoBehaviour:
   m_ObjectHideFlags: 1
