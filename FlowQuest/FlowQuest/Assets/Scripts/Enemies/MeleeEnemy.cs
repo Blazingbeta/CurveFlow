@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MeleeEnemy : Enemy 
 {
@@ -24,7 +25,7 @@ public class MeleeEnemy : Enemy
 
 		m_states.State = EState.IDLE;
 
-		FacePosition(m_wayPoints[0]);
+		m_agent.SetDestination(m_wayPoints[0]);
 	}
 	void Update()
 	{
@@ -33,13 +34,15 @@ public class MeleeEnemy : Enemy
 	}
 	protected EState SearchForPlayer()
 	{
-		FacePosition(m_wayPoints[m_currentWaypoint]);
-		transform.position = Vector3.MoveTowards(transform.position, m_wayPoints[m_currentWaypoint], 
-			m_moveSpeed*Time.deltaTime);
+
+		//FacePosition(m_wayPoints[m_currentWaypoint]);
+		//transform.position = Vector3.MoveTowards(transform.position, m_wayPoints[m_currentWaypoint], 
+			//m_moveSpeed*Time.deltaTime);
 		if((transform.position - m_wayPoints[m_currentWaypoint]).sqrMagnitude < .3f)
 		{
 			m_currentWaypoint++;
 			m_currentWaypoint %= m_wayPoints.Length;
+			m_agent.SetDestination(m_wayPoints[m_currentWaypoint]);
 		}
 		//Check if player is found
 		if((transform.position - m_playerTransform.position).sqrMagnitude < m_detectionRange)
@@ -50,12 +53,14 @@ public class MeleeEnemy : Enemy
 	}
 	protected EState ChargeTowardsPlayer()
 	{
-		FacePosition(m_playerTransform.position);
+		/*FacePosition(m_playerTransform.position);
 		transform.position = Vector3.MoveTowards(transform.position, m_playerTransform.position, 
-			m_moveSpeed*Time.deltaTime);
-		if((transform.position - m_playerTransform.position).sqrMagnitude < m_reachedRange)
+			m_moveSpeed*Time.deltaTime);*/
+		m_agent.SetDestination(m_playerTransform.position);
+		if ((transform.position - m_playerTransform.position).sqrMagnitude < m_reachedRange)
 		{
 			//Begins the attack
+			m_agent.isStopped = true;
 			StartCoroutine(MeleeAttack());
 			return EState.PREPARING;
 		}
@@ -77,10 +82,16 @@ public class MeleeEnemy : Enemy
 		m_states.State = EState.RECOVERY;
 		yield return new WaitForSeconds(m_attackRecoveryTime);
 		//Next State
-		if((transform.position - m_playerTransform.position).sqrMagnitude < m_detectionRange)
+		m_agent.isStopped = false;
+		if ((transform.position - m_playerTransform.position).sqrMagnitude < m_detectionRange)
+		{
 			m_states.State = EState.MOVING;
+		}
 		else
+		{
+			m_agent.SetDestination(m_wayPoints[m_currentWaypoint]);
 			m_states.State = EState.IDLE;
+		}
 	}
 	protected bool Attack()
 	{

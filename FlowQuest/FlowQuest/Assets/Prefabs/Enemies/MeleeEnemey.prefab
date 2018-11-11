@@ -803,7 +803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_moveSpeed: 3
-  m_turnSpeed: 4
+  m_turnSpeed: 160
   m_health: 7
   m_detectionRange: 9
   m_attackWindupTime: 1
@@ -814,8 +814,8 @@ MonoBehaviour:
   m_attackDistance: 7
   m_attackCloseRadius: 1.5
   m_wayPoints:
-  - {x: 2, y: 0, z: 4}
-  - {x: -2, y: 0, z: 4}
+  - {x: 4, y: 0, z: 4}
+  - {x: -4, y: 0, z: 4}
   m_reachedRange: 0.5
 --- !u!135 &135508954625040758
 SphereCollider:

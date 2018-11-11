@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour 
 {
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour
 	protected StateMachine<EState> m_states = new StateMachine<EState>();
 	protected Transform m_playerTransform = null;
 	protected Animator m_anim = null;
+	protected NavMeshAgent m_agent;
 
 	protected float m_currentAngle;
 
@@ -25,6 +27,9 @@ public class Enemy : MonoBehaviour
 	{
 		m_playerTransform = PlayerController.player.transform;
 		m_anim = transform.GetChild(0).GetComponent<Animator>();
+		m_agent = GetComponent<NavMeshAgent>();
+		m_agent.speed = m_moveSpeed;
+		m_agent.angularSpeed = m_turnSpeed;
 
 		m_currentAngle = Mathf.Atan2(transform.forward.x, transform.forward.z) * Mathf.Rad2Deg;
 	}
