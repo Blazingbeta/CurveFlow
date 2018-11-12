@@ -7,8 +7,10 @@ namespace Spells
 	[CreateAssetMenu(fileName = "Dodge", menuName = "Spell/Dodge", order = 2)]
 	public class Dodge : Spell 
 	{
-		[SerializeField] float m_duration = 0.6f;
+		[SerializeField] float m_speed;
+		[SerializeField] float m_minDistance = 1.0f;
 		[SerializeField] float m_maxDistance = 5.0f;
+		[SerializeField] LayerMask m_wallMask;
 		public override void Cast(PlayerController owner)
 		{
 			owner.StartCoroutine(DashRoutine(owner));
@@ -27,11 +29,24 @@ namespace Spells
 			{
 				endDir = endDir.normalized * m_maxDistance;
 			}
+			if(endDir.sqrMagnitude < m_minDistance * m_minDistance)
+			{
+				endDir = endDir.normalized * m_minDistance;
+			}
+			//Raycast to not fly through a wall
+			RaycastHit hit;
+			if(Physics.Raycast(startPos, endDir, out hit, m_maxDistance, m_wallMask))
+			{
+				//If hit a wall, this means that we need to cut the movement short.
+				endDir = hit.point - startPos;
+				endDir.y = 0;
+			}
 			float timer = 0.0f;
-			while(timer < m_duration)
+			float duration = endDir.magnitude / m_speed;
+			while(timer < duration)
 			{
 				timer += Time.deltaTime;
-				owner.transform.position = Vector3.Lerp(startPos, startPos + endDir, timer/m_duration);
+				owner.transform.position = Vector3.Lerp(startPos, startPos + endDir, timer/duration);
 				yield return null;
 			}
 			owner.m_movement.m_freezeMovement = false;

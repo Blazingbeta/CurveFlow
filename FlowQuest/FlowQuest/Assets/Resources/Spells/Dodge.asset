@@ -20,5 +20,9 @@ MonoBehaviour:
   m_onCooldown: 0
   m_cooldownText: {fileID: 0}
   m_cooldownImage: {fileID: 0}
-  m_duration: 0.2
+  m_speed: 16
+  m_minDistance: 1
   m_maxDistance: 4
+  m_wallMask:
+    serializedVersion: 2
+    m_Bits: 32768

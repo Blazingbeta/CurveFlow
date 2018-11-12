@@ -12,29 +12,13 @@ using UnityEngine.AI;
  * 
  */
 public class WorldController : MonoBehaviour {
-	List<NavMeshDataInstance> m_navMeshInstances = new List<NavMeshDataInstance>();
+	[SerializeField] NavMeshSurface surface;
 	// Use this for initialization
 	void Awake ()
 	{
-		SpawnTestTile(Vector3.zero);
-		SpawnTestTile(Vector3.right * 30.0f);
-	}
-	void SpawnTestTile(Vector3 offset)
-	{
-		Instantiate(Resources.Load("TileSets/Dungeon/Tiles/NavMeshDemo") as GameObject, offset, Quaternion.identity);
-		m_navMeshInstances.Add(NavMesh.AddNavMeshData(Resources.Load<NavMeshData>("TileSets/Dungeon/NavMesh/NavMeshDemo"), offset, Quaternion.identity));
-
-	}
-	// Update is called once per frame
-	void Update ()
-	{
-		
-	}
-	private void OnApplicationQuit()
-	{
-		foreach(NavMeshDataInstance data in m_navMeshInstances)
-		{
-			NavMesh.RemoveNavMeshData(data);
-		}
+		GameObject tile = Resources.Load("TileSets/DDungeon/TileIIWalls") as GameObject;
+		Instantiate(tile, Vector3.zero, Quaternion.identity, surface.transform);
+		Instantiate(tile, Vector3.right * 30.0f, Quaternion.identity, surface.transform);
+		surface.BuildNavMesh();
 	}
 }
