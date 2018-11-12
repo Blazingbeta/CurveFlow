@@ -678,6 +678,7 @@ GameObject:
   - component: {fileID: 114225414596474144}
   - component: {fileID: 136843841865474198}
   - component: {fileID: 54308203849161088}
+  - component: {fileID: 195024253229396398}
   m_Layer: 14
   m_Name: RangedEnemy
   m_TagString: Untagged
@@ -1592,6 +1593,7 @@ MonoBehaviour:
   m_detectionRange: 36
   m_attackWindupTime: 1.5
   m_attackRecoveryTime: 0.5
+  m_despawnTime: 1
   m_attackType: 1
   m_attackDamage: 3
   m_projectilePrefab: {fileID: 1554595469588848, guid: e35fa3082a3162242a176feab0202e4d,
@@ -1718,3 +1720,24 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.012388031, y: 0, z: 0.0015562545}
     m_Extent: {x: 0.0153516615, y: 0.035812914, z: 0.010000499}
   m_DirtyAABB: 0
+--- !u!195 &195024253229396398
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1837365662385608}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

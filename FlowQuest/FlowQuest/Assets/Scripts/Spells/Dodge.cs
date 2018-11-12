@@ -22,6 +22,7 @@ namespace Spells
 			//Get proper end pos
 			Vector3 endPos = CameraController.currentCam.GetLookPosition();
 			Vector3 endDir = endPos - startPos;
+			endDir.y = 0;
 			if(endDir.sqrMagnitude > m_maxDistance * m_maxDistance)
 			{
 				endDir = endDir.normalized * m_maxDistance;

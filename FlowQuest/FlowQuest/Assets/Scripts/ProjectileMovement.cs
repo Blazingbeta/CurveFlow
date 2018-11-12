@@ -10,4 +10,11 @@ public class ProjectileMovement : MonoBehaviour
 	{
 		transform.position += transform.forward * m_speed * Time.deltaTime;
 	}
+	private void OnTriggerEnter(Collider other)
+	{
+		if(other.gameObject.layer  == 15)
+		{
+			gameObject.SetActive(false);
+		}
+	}
 }

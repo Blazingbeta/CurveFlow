@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
 		}
 		m_velocity = moveDir * m_moveSpeed;
 		m_transform.position += moveDir * m_moveSpeed * Time.deltaTime;
+		//Y drift fix?
+		m_transform.position += Vector3.down * m_transform.position.y;
 	}
 	void UpdateLookPosition()
 	{

@@ -22,4 +22,4 @@ MonoBehaviour:
   m_cooldownImage: {fileID: 0}
   m_projectilePrefab: {fileID: 1010980732588686, guid: a7dbbad5b6ec8ce499c07ce1ff7557dc,
     type: 2}
-  m_projectileSpeed: 8
+  m_projectileSpeed: 14

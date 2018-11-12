@@ -18,12 +18,14 @@ public class PlayerController : MonoBehaviour
 
 	private Image m_healthImage;
 	private TMPro.TMP_Text m_healthText;
+	private Rigidbody m_rb;
 
 	private void Awake()
 	{
 		m_abilityManager = GetComponent<AbilityManager>();
 		m_movement = GetComponent<PlayerMovement>();
 		m_curveFlow = GetComponent<CurveFlowManager>();
+		m_rb = GetComponent<Rigidbody>();
 		if(player != null)
 		{
 			Debug.Log("Static Playercontroller already exists. Proceeding.");
@@ -36,6 +38,10 @@ public class PlayerController : MonoBehaviour
 		m_healthText = m_healthImage.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
 		m_healthText.text = m_currentHealth.ToString();
 		m_curveFlow.SetValue("CurrentHealth", (float)m_currentHealth / m_maxHealth);
+	}
+	private void Update()
+	{
+		m_rb.velocity = Vector3.zero;
 	}
 	private void TakeDamage(int damage)
 	{

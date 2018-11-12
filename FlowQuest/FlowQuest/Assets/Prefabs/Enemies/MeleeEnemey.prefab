@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 114639483330554542}
   - component: {fileID: 54089876947478632}
   - component: {fileID: 135522937852435490}
+  - component: {fileID: 195165729994509396}
   m_Layer: 14
   m_Name: MeleeEnemey
   m_TagString: Untagged
@@ -610,7 +611,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1209899506294868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.28323388, y: 3.6666272e-16, z: 4.55}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4737410906594420}
@@ -814,8 +815,8 @@ MonoBehaviour:
   m_attackDistance: 7
   m_attackCloseRadius: 1.5
   m_wayPoints:
-  - {x: 4, y: 0, z: 4}
-  - {x: -4, y: 0, z: 4}
+  - {x: 4, y: 0, z: 10}
+  - {x: -4, y: 0, z: 10}
   m_reachedRange: 0.5
 --- !u!135 &135508954625040758
 SphereCollider:
@@ -907,3 +908,24 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.006139921, y: 0.0028275084, z: 0}
     m_Extent: {x: 0.01241916, y: 0.012917738, z: 0.011072946}
   m_DirtyAABB: 0
+--- !u!195 &195165729994509396
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1209899506294868}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

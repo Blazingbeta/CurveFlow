@@ -98,6 +98,7 @@ public class Enemy : MonoBehaviour
 			m_isDead = true;
 			enabled = false;
 			StartCoroutine(Despawn());
+			m_agent.isStopped = true;
 			//gameObject.SetActive(false);
 		}
 		else
