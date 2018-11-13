@@ -39,7 +39,7 @@ namespace Spells
 				enemyProjectiles = Physics.OverlapSphere(owner.transform.position, m_missRadius, m_grabMask, QueryTriggerInteraction.Collide);
 				if(enemyProjectiles.Length != 0)
 				{
-					owner.m_curveFlow.AppendValue("GrabSkill", 0.0f);
+					CurveFlowManager.AppendValue("GrabSkill", 0.0f);
 				}
 				//Spell has not gotten a projectile, don't lock casting and just let the whiff animation play
 				yield return null;
@@ -53,7 +53,7 @@ namespace Spells
 				for (int j = 0; j < enemyProjectiles.Length; j++)
 				{
 					enemyProjectiles[j].gameObject.SetActive(false);
-					owner.m_curveFlow.AppendValue("GrabSkill", 1.0f);
+					CurveFlowManager.AppendValue("GrabSkill", 1.0f);
 				}
 				owner.m_abilityManager.SetGrab(enemyProjectiles.Length);
 				owner.m_abilityManager.m_isCasting = false;

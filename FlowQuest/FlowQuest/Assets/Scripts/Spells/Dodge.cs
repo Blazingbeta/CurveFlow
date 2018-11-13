@@ -35,7 +35,7 @@ namespace Spells
 			}
 			//Raycast to not fly through a wall
 			RaycastHit hit;
-			if(Physics.Raycast(startPos, endDir, out hit, m_maxDistance, m_wallMask))
+			if(Physics.Raycast(startPos + owner.m_projectileSpawnOffset, endDir, out hit, m_maxDistance, m_wallMask))
 			{
 				//If hit a wall, this means that we need to cut the movement short.
 				endDir = hit.point - startPos;

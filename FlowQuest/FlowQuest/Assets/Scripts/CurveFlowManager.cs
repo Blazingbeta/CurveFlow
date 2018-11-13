@@ -13,38 +13,30 @@ using System.IO;
  * 
  */
 
-public class CurveFlowManager : MonoBehaviour
+public static class CurveFlowManager
 {
-	string folderPath = "..\\..\\Profiles";
-	CurveFlowController m_controller = null;
-	private void Awake()
+	static string folderPath = "..\\..\\Profiles";
+	static CurveFlowController m_controller = null;
+	public static void Initialize(string QueryName)
 	{
 		m_controller = new CurveFlowController(CurveFlowController.GenerateSettings());
 		m_controller.InitializeLog(PrintToLog, (MessageType)7);
 		m_controller.LoadProfile(File.ReadAllText(folderPath + "\\DefaultProfile.pfl"));
-		OutputQuery query = new OutputQuery(Resources.Load<TextAsset>("QueryFiles/DefaultQuery").text);
-		Debug.Log(m_controller.Evaluate(query, 0.5f));
+		OutputQuery query = new OutputQuery(Resources.Load<TextAsset>("QueryFiles/" + QueryName).text);
 	}
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.K))
-		{
-			Debug.Log(m_controller.GetCurrentValue("CurrentHealth"));
-		}
-	}
-	public void AppendValue(string name, float amount)
+	public static void AppendValue(string name, float amount)
 	{
 		m_controller.AppendTrackedValue(name, amount);
 	}
-	public void SetValue(string name, float amount)
+	public static void SetValue(string name, float amount)
 	{
 		m_controller.SetTrackedValue(name, amount);
 	}
-	private void PrintToLog(string message, MessageType type)
+	private static void PrintToLog(string message, MessageType type)
 	{
 		Debug.Log(message);
 	}
-	private void CreateNewProfile()
+	private static void CreateNewProfile()
 	{
 		m_controller.CreateNewProfile(new TrackedValue[]
 		{

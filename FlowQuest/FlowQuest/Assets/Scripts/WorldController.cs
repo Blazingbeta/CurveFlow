@@ -19,39 +19,49 @@ public class WorldController : MonoBehaviour {
 	Dictionary<Coordinate, TileData> m_currentMap = new Dictionary<Coordinate, TileData>();
 	void Awake ()
 	{
+		CurveFlowManager.Initialize("DefaultDungeon");
 		DEBUGTEMP.Add(Resources.Load("TileSets/DDungeon/TileIIWalls") as TileData);
 		DEBUGTEMP.Add(Resources.Load("TileSets/DDungeon/Tile=Walls") as TileData);
 		DEBUGTEMP.Add(Resources.Load("TileSets/DDungeon/Tile+Corridor") as TileData);
-		BuildMap(2, new Coordinate(), Vector3Int.zero);
+		DEBUGTEMP.Add(Resources.Load("TileSets/DDungeon/TileLExit") as TileData);
+		DEBUGTEMP.Add(Resources.Load("TileSets/DDungeon/TileTExit") as TileData);
+
+		BuildMap(3, new Coordinate());
+
 		surface.BuildNavMesh();
 	}
+	void BuildMap(int recurseCount, Coordinate current)
+	{
+		TileData entrance = Resources.Load("TileSets/DDungeon/TileEntrance") as TileData;
+		m_currentMap.Add(current, entrance);
+		Instantiate(entrance.m_prefab, Vector3.zero, Quaternion.identity, surface.transform);
+
+		RecurseMap(recurseCount, current + entrance.m_doorways[0], entrance.m_doorways[0]);
+	}
 	List<TileData> DEBUGTEMP = new List<TileData>();
-	void BuildMap(int recurseCount, Coordinate current, Vector3Int direction)
+	void RecurseMap(int recurseCount, Coordinate current, Vector3Int direction)
 	{
 		if (m_currentMap.ContainsKey(current)) return;
 		TileData tile = Instantiate(DEBUGTEMP[Random.Range(0, DEBUGTEMP.Count)]);
 		m_currentMap.Add(current, tile);
 		Quaternion rot = Quaternion.identity;
-		if (!tile.AcceptsDirection(direction))
+		//Select a random valid direction to be the new doorway
+		Vector3Int oldDoor = tile.m_doorways[Random.Range(0, tile.m_doorways.Length)];
+		//Get the new rotation of the tile
+		float angle = Vector3.SignedAngle(oldDoor, direction * -1, Vector3.up);
+		rot = Quaternion.AngleAxis(angle, Vector3.up);
+		//Also change the m_doorways
+		for(int j = 0; j < tile.m_doorways.Length; j++)
 		{
-			//Select a random valid direction to be the new doorway
-			Vector3Int oldDoor = tile.m_doorways[Random.Range(0, tile.m_doorways.Length)];
-			//Get the new rotation of the tile
-			float angle = Vector3.SignedAngle(oldDoor, direction * -1, Vector3.up);
-			rot = Quaternion.AngleAxis(angle, Vector3.up);
-			//Also change the m_doorways
-			for(int j = 0; j < tile.m_doorways.Length; j++)
-			{
-				Vector3 floatVec = tile.m_doorways[j];
-				floatVec = rot * floatVec;
-				tile.m_doorways[j] = Vector3Int.RoundToInt(floatVec);
-			}
+			Vector3 floatVec = tile.m_doorways[j];
+			floatVec = rot * floatVec;
+			tile.m_doorways[j] = Vector3Int.RoundToInt(floatVec);
 		}
 		Instantiate(tile.m_prefab, Vector3.one * current, rot, surface.transform);
 		if (recurseCount == 0) return;
 		foreach(Vector3Int dir in tile.m_doorways)
 		{
-			BuildMap(recurseCount - 1, current + dir, dir);
+			RecurseMap(recurseCount - 1, current + dir, dir);
 		}
 	}
 	private struct Coordinate

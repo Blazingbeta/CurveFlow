@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] public Vector3 m_projectileSpawnOffset = Vector3.zero;
 	public AbilityManager m_abilityManager;
 	public PlayerMovement m_movement;
-	public CurveFlowManager m_curveFlow;
 
 	public int m_maxHealth;
 	[HideInInspector] public int m_currentHealth;
@@ -24,7 +23,6 @@ public class PlayerController : MonoBehaviour
 	{
 		m_abilityManager = GetComponent<AbilityManager>();
 		m_movement = GetComponent<PlayerMovement>();
-		m_curveFlow = GetComponent<CurveFlowManager>();
 		m_rb = GetComponent<Rigidbody>();
 		if(player != null)
 		{
@@ -37,7 +35,7 @@ public class PlayerController : MonoBehaviour
 		m_healthImage = GameObject.Find("HealthImage").GetComponent<Image>();
 		m_healthText = m_healthImage.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
 		m_healthText.text = m_currentHealth.ToString();
-		m_curveFlow.SetValue("CurrentHealth", (float)m_currentHealth / m_maxHealth);
+		CurveFlowManager.SetValue("CurrentHealth", (float)m_currentHealth / m_maxHealth);
 	}
 	private void Update()
 	{
@@ -51,7 +49,7 @@ public class PlayerController : MonoBehaviour
 			Die();
 		m_healthText.text = m_currentHealth.ToString();
 		m_healthImage.fillAmount = (float)m_currentHealth/m_maxHealth;
-		m_curveFlow.SetValue("CurrentHealth", (float)m_currentHealth / m_maxHealth);
+		CurveFlowManager.SetValue("CurrentHealth", (float)m_currentHealth / m_maxHealth);
 	}
 	private void Die()
 	{
@@ -64,14 +62,14 @@ public class PlayerController : MonoBehaviour
 		if (m_invincible)
 		{
 			//DodgeSkill also includes other skills that make you invincible (if they exist)
-			m_curveFlow.AppendValue("DodgeSkill", 1.0f);
+			CurveFlowManager.AppendValue("DodgeSkill", 1.0f);
 		}
 		else
 		{
 			TakeDamage(damage);
 			if (m_abilityManager.IsDodgeAvalible())
 			{
-				m_curveFlow.AppendValue("DodgeSkill", 0.0f);
+				CurveFlowManager.AppendValue("DodgeSkill", 0.0f);
 			}
 		}
 	}
@@ -103,7 +101,7 @@ public class PlayerController : MonoBehaviour
 				//If they got hit by a projectile and could have grabbed it
 				if (m_abilityManager.IsGrabAvalible())
 				{
-					m_curveFlow.AppendValue("GrabSkill", 0.0f);
+					CurveFlowManager.AppendValue("GrabSkill", 0.0f);
 				}
 			}
 			else
