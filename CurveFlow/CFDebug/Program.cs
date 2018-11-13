@@ -12,12 +12,23 @@ namespace CFDebug
 		static CurveFlow.CurveFlowController controller;
 		static void Main(string[] args)
 		{
-			//File.WriteAllText("..\\..\\..\\..\\QueryFiles\\DefaultQuery.xml", CurveFlow.OutputQuery.GetDefaultXML());
 			controller = new CurveFlow.CurveFlowController(CurveFlow.CurveFlowController.GenerateSettings());
-			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)7);
-
+			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)0);
+			/*
+			 * 
+			 * Current Issue: No matter the difficulty, curveflow outputs the same result (and it somehow has the best delta)
+			 * What I've discoverd: When difficulty deltas start getting all very small, it causes the most extreme case to be chosen every time
+			 * 
+			 */
 			LoadProfile();
-			LoadXmlQuery();
+			Random rng = new Random();
+			CurveFlow.OutputQuery query = LoadXmlQuery();
+			for (int j = 0; j < 10; j++)
+			{
+				float num = (float)rng.NextDouble();
+				//controller.Evaluate(query, num);
+				Console.WriteLine(num.ToString() + ": " + controller.Evaluate(query, num));
+			}
 		}
 		static void LoadAndPrintXML()
 		{
@@ -27,9 +38,7 @@ namespace CFDebug
 		}
 		static void TestGroupSelection()
 		{
-			string xml = File.ReadAllText("..\\..\\..\\..\\QueryFiles\\Default.qf");
-			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
-			controller.EvaluateGroupSelection(xmlLoadTest, 0.0f, 2);
+		//	CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
 		}
 		static void TestRepeatSelection()
 		{
@@ -40,11 +49,11 @@ namespace CFDebug
 			controller.Evaluate(xmlLoadTest, 0.0f);
 			controller.Evaluate(xmlLoadTest, 0.0f);
 		}
-		static void LoadXmlQuery()
+		static CurveFlow.OutputQuery LoadXmlQuery()
 		{
-			string xml = File.ReadAllText("..\\..\\..\\..\\QueryFiles\\DefaultQuery.xml");
+			string xml = File.ReadAllText("..\\..\\..\\..\\FlowQuest\\FlowQuest\\Assets\\Resources\\QueryFiles\\DefaultDungeonTiles.xml");
 			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
-			controller.Evaluate(xmlLoadTest, 0.0f);
+			return xmlLoadTest;
 		}
 		static void CreateProfile()
 		{
@@ -62,8 +71,7 @@ namespace CFDebug
 		}
 		static void LoadProfile()
 		{
-			controller.LoadProfile(File.ReadAllText("..\\..\\..\\..\\QueryFiles\\controller.xml"));
-			Console.WriteLine("Loading Profile. Parry: " + controller.GetCurrentValue("Parry"));
+			controller.LoadProfile(File.ReadAllText("..\\..\\..\\..\\Profiles\\DefaultProfile.pfl"));
 		}
 		static void WriteQueryToFile()
 		{

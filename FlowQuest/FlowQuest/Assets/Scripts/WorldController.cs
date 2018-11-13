@@ -19,12 +19,7 @@ public class WorldController : MonoBehaviour {
 	Dictionary<Coordinate, TileData> m_currentMap = new Dictionary<Coordinate, TileData>();
 	void Awake ()
 	{
-		CurveFlowManager.Initialize("DefaultDungeon");
-		DEBUGTEMP.Add(Resources.Load("TileSets/DDungeon/TileIIWalls") as TileData);
-		DEBUGTEMP.Add(Resources.Load("TileSets/DDungeon/Tile=Walls") as TileData);
-		DEBUGTEMP.Add(Resources.Load("TileSets/DDungeon/Tile+Corridor") as TileData);
-		DEBUGTEMP.Add(Resources.Load("TileSets/DDungeon/TileLExit") as TileData);
-		DEBUGTEMP.Add(Resources.Load("TileSets/DDungeon/TileTExit") as TileData);
+		CurveFlowManager.Initialize("DefaultDungeonTiles");
 
 		BuildMap(3, new Coordinate());
 
@@ -38,11 +33,10 @@ public class WorldController : MonoBehaviour {
 
 		RecurseMap(recurseCount, current + entrance.m_doorways[0], entrance.m_doorways[0]);
 	}
-	List<TileData> DEBUGTEMP = new List<TileData>();
 	void RecurseMap(int recurseCount, Coordinate current, Vector3Int direction)
 	{
 		if (m_currentMap.ContainsKey(current)) return;
-		TileData tile = Instantiate(DEBUGTEMP[Random.Range(0, DEBUGTEMP.Count)]);
+		TileData tile = Instantiate(Resources.Load("TileSets/DDungeon/" + CurveFlowManager.Query(Random.Range(0.0f, 0.25f))) as TileData);
 		m_currentMap.Add(current, tile);
 		Quaternion rot = Quaternion.identity;
 		//Select a random valid direction to be the new doorway

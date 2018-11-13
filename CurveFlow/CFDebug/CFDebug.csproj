@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CurveFlow">
-      <HintPath>..\CurveFlow\bin\Debug\CurveFlow.dll</HintPath>
+      <HintPath>..\CurveFlow\obj\Debug\CurveFlow.dll</HintPath>
     </Reference>
     <Reference Include="NCalc">
       <HintPath>..\..\ncalc\Evaluant.Calculator\bin\Release\NCalc.dll</HintPath>

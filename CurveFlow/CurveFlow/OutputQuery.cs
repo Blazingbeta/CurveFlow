@@ -131,30 +131,35 @@ namespace CurveFlow
 					continue;
 				}
 				float difficulty = m_outputList[j].CalculateDifficulty(currentValues, sb);
+				float delta = Math.Abs(intendedDifficulty - difficulty);
+				sb.Append("Delta from desired difficulty: ");
+				sb.Append(delta);
+				sb.Append('\n');
+				//This needs to mod delta, not difficulty
 				if (m_discourageRepeatSelection)
 				{
 					int position = m_previousValues.IndexOf(m_outputList[j].id);
 					//If the ID is in the previous list
-					if(position != -1)
+					if (position != -1)
 					{
 						if (m_diminishingWeight)
 						{
-							difficulty *= m_repeatSelectionWeight * 
+							position = m_previousTrackedValues - position;
+							delta += delta * m_repeatSelectionWeight *
 								//Ie if this object is 3rd in a 3 object list, 3/3 weight applied
-								(position+1) / m_previousTrackedValues;
+								(position + 1) / m_previousTrackedValues;
 						}
 						else
 						{
-							difficulty *= m_repeatSelectionWeight;
+							delta *= m_repeatSelectionWeight;
 						}
 						sb.Append("\tIn previous Selection at Index ");
 						sb.Append(position);
 						sb.Append(". Modded to ");
-						sb.Append(difficulty);
+						sb.Append(delta);
 						sb.Append("\n");
 					}
 				}
-				float delta = Math.Abs(intendedDifficulty - difficulty);
 				if(delta < currentBestDelta)
 				{
 					currentBestDelta = delta;
@@ -165,11 +170,11 @@ namespace CurveFlow
 			{
 				//Removes the value if it has already been placed into the queue
 				m_previousValues.Remove(m_outputList[currentBestIndex].id);
-				m_previousValues.Add(m_outputList[currentBestIndex].id);
+				m_previousValues.Insert(0, m_outputList[currentBestIndex].id);
 				//If the queue has exceded its count
 				if(m_previousValues.Count > m_previousTrackedValues)
 				{
-					m_previousValues.RemoveAt(0);
+					m_previousValues.RemoveAt(m_previousTrackedValues);
 				}
 			}
 			sb.Append("Query Returning ");

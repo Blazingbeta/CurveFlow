@@ -17,12 +17,13 @@ public static class CurveFlowManager
 {
 	static string folderPath = "..\\..\\Profiles";
 	static CurveFlowController m_controller = null;
+	static OutputQuery m_query = null;
 	public static void Initialize(string QueryName)
 	{
 		m_controller = new CurveFlowController(CurveFlowController.GenerateSettings());
 		m_controller.InitializeLog(PrintToLog, (MessageType)7);
 		m_controller.LoadProfile(File.ReadAllText(folderPath + "\\DefaultProfile.pfl"));
-		OutputQuery query = new OutputQuery(Resources.Load<TextAsset>("QueryFiles/" + QueryName).text);
+		m_query = new OutputQuery(Resources.Load<TextAsset>("QueryFiles/" + QueryName).text);
 	}
 	public static void AppendValue(string name, float amount)
 	{
@@ -31,6 +32,10 @@ public static class CurveFlowManager
 	public static void SetValue(string name, float amount)
 	{
 		m_controller.SetTrackedValue(name, amount);
+	}
+	public static string Query(float value)
+	{
+		return m_controller.Evaluate(m_query, value);
 	}
 	private static void PrintToLog(string message, MessageType type)
 	{
