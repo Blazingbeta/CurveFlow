@@ -25,6 +25,14 @@ public class MeleeEnemy : Enemy
 
 		m_states.State = EState.IDLE;
 
+		if(transform.parent != null)
+		{
+			for(int j = 0; j < m_wayPoints.Length; j++)
+			{
+				m_wayPoints[j] = transform.parent.TransformPoint(m_wayPoints[j]);
+			}
+		}
+
 		m_agent.SetDestination(m_wayPoints[0]);
 	}
 	void Update()
