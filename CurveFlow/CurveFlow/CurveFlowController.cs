@@ -18,15 +18,6 @@ namespace CurveFlow
     {
 		internal CFProfile m_profile;
 		internal MicroCurve m_curve;
-		public CurveFlowController(string settingsXML)
-		{
-			//Parses the settings file
-			XmlDocument doc = new XmlDocument();
-			doc.LoadXml(settingsXML);
-			//Do things on the settings node here
-
-			m_curve = new MicroCurve(doc);
-		}
 		/// <summary>
 		/// Sets up CurveFlow's logging system to a custom callback function
 		/// </summary>
@@ -36,34 +27,14 @@ namespace CurveFlow
 		{
 			CFLog.SetupLog(messageTypeMask, log);
 		}
+		public void InitializeCurve(MicroCurveExpression expression)
+		{
+			m_curve = new MicroCurve(expression);
+		}
 		/// <summary>
 		/// Creates an XML string of the default settings
 		/// </summary>
 		/// <returns>Settings in a string format</returns>
-		public static string GenerateSettings()
-		{
-			StringBuilder sb = new StringBuilder();
-			XmlWriterSettings settings = new XmlWriterSettings()
-			{
-				Indent = true,
-				IndentChars = "\t",
-				NewLineOnAttributes = true
-			};
-			using (XmlWriter writer = XmlWriter.Create(sb, settings))
-			{
-				writer.WriteStartDocument();
-				writer.WriteStartElement("Settings");
-
-				writer.WriteStartElement("MicroCurve");
-					writer.WriteElementString("Algorithm", "[x] * Sin([t])");
-					writer.WriteElementString("PrecompileExpression", "true");
-				writer.WriteEndElement();
-
-				writer.WriteEndElement();
-				writer.WriteEndDocument();
-			}
-			return sb.ToString();
-		}
 		#region Profile
 		public void CreateNewProfile(TrackedValue[] trackedValues)
 		{

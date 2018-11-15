@@ -8,6 +8,7 @@ namespace CurveFlow
 	public enum MessageType { STATUS = 1, DEBUG = 2, ERROR = 4}
 	public enum ValueType { ADDITIVE, AVERAGE, SET}
 	public delegate void LogCallback(string logMessage, MessageType type);
+	public delegate float MicroCurveExpression(float x, float t);
 	[Serializable] public class TrackedValue
 	{
 		internal readonly float m_min;

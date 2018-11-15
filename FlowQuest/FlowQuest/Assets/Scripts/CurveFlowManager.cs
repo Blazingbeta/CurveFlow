@@ -20,10 +20,15 @@ public static class CurveFlowManager
 	static OutputQuery m_query = null;
 	public static void Initialize(string QueryName)
 	{
-		m_controller = new CurveFlowController(CurveFlowController.GenerateSettings());
+		m_controller = new CurveFlowController();
 		m_controller.InitializeLog(PrintToLog, (MessageType)7);
+		m_controller.InitializeCurve(Expression);
 		m_controller.LoadProfile(File.ReadAllText(folderPath + "\\DefaultProfile.pfl"));
 		m_query = new OutputQuery(Resources.Load<TextAsset>("QueryFiles/" + QueryName).text);
+	}
+	static float Expression(float x, float t)
+	{
+		return x * (1 + Mathf.Sin(t));
 	}
 	public static void AppendValue(string name, float amount)
 	{
@@ -36,6 +41,10 @@ public static class CurveFlowManager
 	public static string Query(float value)
 	{
 		return m_controller.Evaluate(m_query, value);
+	}
+	public static string QueryOnCurve(float value, float t)
+	{
+		return m_controller.EvaluateOnCurve(m_query, value, t);
 	}
 	private static void PrintToLog(string message, MessageType type)
 	{

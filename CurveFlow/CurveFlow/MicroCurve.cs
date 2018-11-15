@@ -8,12 +8,14 @@ namespace CurveFlow
 {
 	internal class MicroCurve
 	{
-		public MicroCurve(XmlDocument settings)
+		private MicroCurveExpression m_expression;
+		public MicroCurve(MicroCurveExpression exp)
 		{
+			m_expression = exp;
 		}
 		public float EvaluateExpression(float x, float t)
 		{
-			return x;
+			return m_expression(x, t);
 		}
 	}
 }

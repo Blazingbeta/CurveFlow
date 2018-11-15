@@ -20,8 +20,8 @@ public class WorldController : MonoBehaviour {
 	void Awake ()
 	{
 		CurveFlowManager.Initialize("DefaultDungeonTiles");
-
-		BuildMap(3, new Coordinate());
+		
+		BuildMap(5, new Coordinate());
 
 		surface.BuildNavMesh();
 	}
@@ -36,7 +36,7 @@ public class WorldController : MonoBehaviour {
 	void RecurseMap(int recurseCount, Coordinate current, Vector3Int direction)
 	{
 		if (m_currentMap.ContainsKey(current)) return;
-		TileData tile = Instantiate(Resources.Load("TileSets/DDungeon/" + CurveFlowManager.Query(Random.Range(0.0f, 0.25f))) as TileData);
+		TileData tile = Instantiate(Resources.Load("TileSets/DDungeon/" + CurveFlowManager.QueryOnCurve(0.25f, Random.Range(0.0f, 2.0f))) as TileData);
 		m_currentMap.Add(current, tile);
 		Quaternion rot = Quaternion.identity;
 		//Select a random valid direction to be the new doorway
@@ -52,10 +52,16 @@ public class WorldController : MonoBehaviour {
 			tile.m_doorways[j] = Vector3Int.RoundToInt(floatVec);
 		}
 		Instantiate(tile.m_prefab, Vector3.one * current, rot, surface.transform);
-		if (recurseCount == 0) return;
-		foreach(Vector3Int dir in tile.m_doorways)
+		if (recurseCount == 0)
 		{
-			RecurseMap(recurseCount - 1, current + dir, dir);
+			//Close the doorways (how do i find out which ones to close aa
+		}
+		else
+		{
+			foreach (Vector3Int dir in tile.m_doorways)
+			{
+				RecurseMap(recurseCount - 1, current + dir, dir);
+			}
 		}
 	}
 	private struct Coordinate
