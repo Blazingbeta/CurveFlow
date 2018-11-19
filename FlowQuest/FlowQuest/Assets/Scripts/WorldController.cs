@@ -20,10 +20,15 @@ public class WorldController : MonoBehaviour {
 	void Awake ()
 	{
 		CurveFlowManager.Initialize("DefaultDungeonTiles");
+		CurveFlowManager.SetGUIValues(GameObject.Find("TrackedValuesPanel").transform);
 		
 		BuildMap(5, new Coordinate());
 
 		surface.BuildNavMesh();
+	}
+	private void OnApplicationQuit()
+	{
+		CurveFlowManager.SaveProfile();
 	}
 	void BuildMap(int recurseCount, Coordinate current)
 	{

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using CurveFlow;
 using System.IO;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 /*
  * 
@@ -15,15 +17,30 @@ using System.IO;
 
 public static class CurveFlowManager
 {
-	static string folderPath = "..\\..\\Profiles";
+	static string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + "/my games/FlowQuest";
+	static string profileName = "DefaultPlayer";
 	static CurveFlowController m_controller = null;
 	static OutputQuery m_query = null;
+	static Dictionary<string, Image> m_guiBars;
 	public static void Initialize(string QueryName)
 	{
 		m_controller = new CurveFlowController();
 		m_controller.InitializeLog(PrintToLog, (MessageType)7);
 		m_controller.InitializeCurve(Expression);
-		m_controller.LoadProfile(File.ReadAllText(folderPath + "\\DefaultProfile.pfl"));
+		if (!Directory.Exists(folderPath))
+		{
+			Directory.CreateDirectory(folderPath);
+		}
+		if (!File.Exists(folderPath + "/" + profileName + ".pfl"))
+		{
+			//Create and load a new profile if one does not already exist
+			CreateAndLoadNewProfile();
+		}
+		else
+		{
+			//If a previous profile exists, load it
+			m_controller.LoadProfile(File.ReadAllText(folderPath + "/" + profileName + ".pfl"));
+		}
 		m_query = new OutputQuery(Resources.Load<TextAsset>("QueryFiles/" + QueryName).text);
 	}
 	static float Expression(float x, float t)
@@ -33,6 +50,10 @@ public static class CurveFlowManager
 	public static void AppendValue(string name, float amount)
 	{
 		m_controller.AppendTrackedValue(name, amount);
+		if(m_guiBars != null)
+		{
+			m_guiBars[name].fillAmount = m_controller.GetCurrentValue(name);
+		}
 	}
 	public static void SetValue(string name, float amount)
 	{
@@ -50,14 +71,29 @@ public static class CurveFlowManager
 	{
 		Debug.Log(message);
 	}
-	private static void CreateNewProfile()
+	private static void CreateAndLoadNewProfile()
 	{
 		m_controller.CreateNewProfile(new TrackedValue[]
 		{
-			new TrackedValue(0f, 1f, "GrabSkill", ValueType.AVERAGE),
-			new TrackedValue(0f, 1f, "DodgeSkill", ValueType.AVERAGE),
+			new TrackedValue(0f, 1f, "GrabSkill", ValueType.AVERAGEWEIGHTED),
+			new TrackedValue(0f, 1f, "DodgeSkill", ValueType.AVERAGEWEIGHTED),
 			new TrackedValue(0f, 1f, "CurrentHealth", ValueType.SET)
 		});
-		File.WriteAllText("DefaultProfile.pfl", m_controller.SaveProfile());
+		File.WriteAllText(folderPath + "\\" + profileName + ".pfl", m_controller.SaveProfile());
+	}
+	public static void SaveProfile()
+	{
+		string xml = m_controller.SaveProfile();
+		File.WriteAllText(folderPath + "\\" + profileName + ".pfl", xml);
+	}
+	public static void SetGUIValues(Transform parent)
+	{
+		m_guiBars = new Dictionary<string, Image>();
+		for(int j = 0; j < parent.childCount; j++)
+		{
+			string name = parent.GetChild(j).name;
+			m_guiBars.Add(name, parent.GetChild(j).GetComponent<Image>());
+			m_guiBars[name].fillAmount = m_controller.GetCurrentValue(name);
+		}
 	}
 }
