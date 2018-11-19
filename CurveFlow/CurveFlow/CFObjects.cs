@@ -6,7 +6,7 @@ using System.Text;
 namespace CurveFlow
 {
 	public enum MessageType { STATUS = 1, DEBUG = 2, ERROR = 4}
-	public enum ValueType { ADDITIVE, AVERAGE, SET}
+	public enum ValueType { ADDITIVE, AVERAGE, SET, AVERAGEWEIGHTED}
 	public delegate void LogCallback(string logMessage, MessageType type);
 	public delegate float MicroCurveExpression(float x, float t);
 	[Serializable] public class TrackedValue
@@ -40,6 +40,10 @@ namespace CurveFlow
 				case ValueType.SET:
 					//Log error
 					CFLog.SendMessage("Tried to append to set only value: " + m_name, MessageType.ERROR);
+					break;
+				case ValueType.AVERAGEWEIGHTED:
+					//Use addition count as a max. Count current value as additionCount - 1 then add new value/addition count
+					m_currentValue = ((m_currentValue * (m_additionCount - 1)) + nextValue)/m_additionCount; 
 					break;
 			}
 			StringBuilder sb = new StringBuilder();

@@ -4,7 +4,7 @@ using System;
 class CurveFlowInterface
 {
 	CurveFlowController controller;
-	void Start()
+	/*void Start()
 	{
 		string controllerSettings = System.IO.File.ReadAllText("ControllerSettings.xml");
 		controller = new CurveFlowController(controllerSettings);
@@ -42,5 +42,5 @@ class CurveFlowInterface
 				new TrackedValue(0f, 1f, "Health", CurveFlow.ValueType.SET),
 				new TrackedValue(0f, float.MaxValue, "Money", CurveFlow.ValueType.ADDITIVE)
 			});
-	}
+	}*/
 }

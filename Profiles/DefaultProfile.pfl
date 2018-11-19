@@ -5,16 +5,16 @@
 			Name="GrabSkill"
 			Minimum="0"
 			Maximum="1"
-			Value=".613261"
-			Type="AVERAGE"
-			AdditionCount="0" />
+			Value="0.0"
+			Type="AVERAGEWEIGHTED"
+			AdditionCount="30" />
 		<TrackedValue
 			Name="DodgeSkill"
 			Minimum="0"
 			Maximum="1"
-			Value=".3153152"
-			Type="AVERAGE"
-			AdditionCount="0" />
+			Value="0.0"
+			Type="AVERAGEWEIGHTED"
+			AdditionCount="30" />
 		<TrackedValue
 			Name="CurrentHealth"
 			Minimum="0"

@@ -12,8 +12,8 @@ namespace CFDebug
 		static CurveFlow.CurveFlowController controller;
 		static void Main(string[] args)
 		{
-			controller = new CurveFlow.CurveFlowController(CurveFlow.CurveFlowController.GenerateSettings());
-			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)0);
+			controller = new CurveFlow.CurveFlowController();
+			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)7);
 			/*
 			 * 
 			 * Current Issue: No matter the difficulty, curveflow outputs the same result (and it somehow has the best delta)
@@ -21,14 +21,13 @@ namespace CFDebug
 			 * 
 			 */
 			LoadProfile();
-			Random rng = new Random();
-			CurveFlow.OutputQuery query = LoadXmlQuery();
-			for (int j = 0; j < 10; j++)
+			int count = 0;
+			while (controller.GetCurrentValue("GrabSkill") < 0.99f)
 			{
-				float num = (float)rng.NextDouble();
-				//controller.Evaluate(query, num);
-				Console.WriteLine(num.ToString() + ": " + controller.Evaluate(query, num));
+				controller.AppendTrackedValue("GrabSkill", 1.0f);
+				count++;
 			}
+			Console.WriteLine(count);
 		}
 		static void LoadAndPrintXML()
 		{
