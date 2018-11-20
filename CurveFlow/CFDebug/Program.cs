@@ -21,13 +21,7 @@ namespace CFDebug
 			 * 
 			 */
 			LoadProfile();
-			int count = 0;
-			while (controller.GetCurrentValue("GrabSkill") < 0.99f)
-			{
-				controller.AppendTrackedValue("GrabSkill", 1.0f);
-				count++;
-			}
-			Console.WriteLine(count);
+			controller.Evaluate(LoadXmlQuery(), 0.0f);
 		}
 		static void LoadAndPrintXML()
 		{

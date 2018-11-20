@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c12921c2a304145bd29cff142dc2d7, type: 3}
   m_Name: MagicMissle1
   m_EditorClassIdentifier: 
-  m_uiImage: {fileID: 2800000, guid: b948624b7e474564eadc80a716bee28b, type: 3}
+  m_uiImage: {fileID: 2800000, guid: ada44c0268a926d4385e7bac799747b1, type: 3}
   m_damage: 2
   m_cooldown: 0.2
   m_manaCost: 1
@@ -22,4 +22,5 @@ MonoBehaviour:
   m_cooldownImage: {fileID: 0}
   m_projectilePrefab: {fileID: 1948150760654432, guid: 7177d94f5a4d89b448ff17b525a2d45c,
     type: 2}
+  m_bulletSpeed: 6
   m_bulletSpread: 15

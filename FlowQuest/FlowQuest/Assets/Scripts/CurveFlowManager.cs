@@ -75,8 +75,8 @@ public static class CurveFlowManager
 	{
 		m_controller.CreateNewProfile(new TrackedValue[]
 		{
-			new TrackedValue(0f, 1f, "GrabSkill", ValueType.AVERAGEWEIGHTED),
-			new TrackedValue(0f, 1f, "DodgeSkill", ValueType.AVERAGEWEIGHTED),
+			new TrackedValue(0f, 1f, "GrabSkill", ValueType.AVERAGEWEIGHTED, 30),
+			new TrackedValue(0f, 1f, "DodgeSkill", ValueType.AVERAGEWEIGHTED, 30),
 			new TrackedValue(0f, 1f, "CurrentHealth", ValueType.SET)
 		});
 		File.WriteAllText(folderPath + "\\" + profileName + ".pfl", m_controller.SaveProfile());

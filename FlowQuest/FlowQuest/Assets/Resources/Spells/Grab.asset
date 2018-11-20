@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eee6eced445d344b922404ba8829809, type: 3}
   m_Name: Grab
   m_EditorClassIdentifier: 
-  m_uiImage: {fileID: 2800000, guid: 5b40a8a0e357b324cb24a63e5ab9897a, type: 3}
+  m_uiImage: {fileID: 2800000, guid: 3cf07207a73bedf4d9bfa6c24f9d3e80, type: 3}
   m_damage: 2
   m_cooldown: 3
   m_manaCost: 0

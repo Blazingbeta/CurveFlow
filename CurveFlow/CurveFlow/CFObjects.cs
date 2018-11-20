@@ -17,12 +17,13 @@ namespace CurveFlow
 		internal readonly ValueType m_type;
 		internal int m_additionCount = 0;
 		internal float m_currentValue;
-		public TrackedValue(float min, float max, string name, ValueType type)
+		public TrackedValue(float min, float max, string name, ValueType type, int additionCount = 0)
 		{
 			m_min = min;
 			m_max = max;
 			m_name = name;
 			m_type = type;
+			m_additionCount = additionCount;
 		}
 		internal void AppendValue(float nextValue)
 		{
