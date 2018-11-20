@@ -2795,7 +2795,7 @@ MonoBehaviour:
   m_moveSpeed: 3
   m_turnSpeed: 160
   m_health: 6
-  m_detectionRange: 9
+  m_detectionRange: 25
   m_attackWindupTime: 1
   m_attackRecoveryTime: 2
   m_despawnTime: 1
@@ -2808,7 +2808,7 @@ MonoBehaviour:
   - {x: -10, y: 0, z: -10}
   - {x: -10, y: 0, z: 10}
   - {x: 10, y: 0, z: 10}
-  m_reachedRange: 0.5
+  m_reachedRange: 2.89
 --- !u!114 &114490769968677536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2823,7 +2823,7 @@ MonoBehaviour:
   m_moveSpeed: 3
   m_turnSpeed: 160
   m_health: 6
-  m_detectionRange: 9
+  m_detectionRange: 25
   m_attackWindupTime: 1
   m_attackRecoveryTime: 2
   m_despawnTime: 1
@@ -2836,7 +2836,7 @@ MonoBehaviour:
   - {x: 10, y: 0, z: 10}
   - {x: 10, y: 0, z: -10}
   - {x: -10, y: 0, z: -10}
-  m_reachedRange: 0.5
+  m_reachedRange: 2.89
 --- !u!135 &135430674669712218
 SphereCollider:
   m_ObjectHideFlags: 1

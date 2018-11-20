@@ -10,7 +10,7 @@ public class MeleeEnemy : Enemy
 	[SerializeField] protected float m_attackDistance = 4f;
 	[SerializeField] protected float m_attackCloseRadius = 1f;
 	[SerializeField] protected Vector3[] m_wayPoints = null;
-	[SerializeField] protected float m_reachedRange = 0.5f;
+	[SerializeField] protected float m_reachedRange = 2.89f;
 
 	int m_currentWaypoint = 0;
 	private void Start() 

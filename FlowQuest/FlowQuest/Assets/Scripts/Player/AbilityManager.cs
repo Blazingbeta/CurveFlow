@@ -108,6 +108,12 @@ public class AbilityManager : MonoBehaviour
 		m_isHolding = true;
 		m_holdCount = count;
 		//TODO spawn visual in front of player
+		transform.Find("GrabOrbVisual").gameObject.SetActive(true);
+		Transform orb = transform.Find("GrabOrbVisual").Find("base particle");
+		Grab grab = m_spells["Grab"] as Grab;
+		float scaleMod = (grab.m_baseScale + (grab.m_scalePerHold * m_holdCount));
+		ParticleSystem.MainModule mainMod = orb.GetComponent<ParticleSystem>().main;
+		mainMod.startSize = 0.7f * scaleMod;
 	}
 	public bool IsDodgeAvalible()
 	{
@@ -137,6 +143,7 @@ public class AbilityManager : MonoBehaviour
 		m_isCasting = true;
 		Grab grab = (Grab)m_spells["Grab"];
 		Mana = Mana + grab.m_baseManaGained + (grab.m_manaPerHold * m_holdCount);
+		transform.Find("GrabOrbVisual").gameObject.SetActive(false);
 		yield return new WaitForSeconds(0.2f);
 		m_isCasting = false;
 		m_isHolding = false;
@@ -153,6 +160,7 @@ public class AbilityManager : MonoBehaviour
 		orb.transform.localScale = Vector3.one * scaleMod;
 		ParticleSystem.MainModule mainMod = orb.transform.GetChild(0).GetComponent<ParticleSystem>().main;
 		mainMod.startSize = 0.7f * scaleMod;
+		transform.Find("GrabOrbVisual").gameObject.SetActive(false);
 		yield return new WaitForSeconds(1.0f);
 		m_isCasting = false;
 		m_isHolding = false;

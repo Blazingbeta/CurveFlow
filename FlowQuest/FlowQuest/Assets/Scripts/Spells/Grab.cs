@@ -46,19 +46,36 @@ namespace Spells
 			}
 			else
 			{
-				yield return null;
 				//Spell has gotten at least one projectile, grab them and enter into the special mode for it
 				owner.m_abilityManager.m_isCasting = true;
+				float DRAWTIME = 0.6f;
 				//Disable their projectileMovement scripts and then pull all them in all fancy like
 				for (int j = 0; j < enemyProjectiles.Length; j++)
 				{
-					enemyProjectiles[j].gameObject.SetActive(false);
+					ProjectileMovement proj = enemyProjectiles[j].GetComponent<ProjectileMovement>();
+					owner.StartCoroutine(DrawInProjectile(owner, proj, DRAWTIME));
 					CurveFlowManager.AppendValue("GrabSkill", 1.0f);
 				}
+				yield return new WaitForSeconds(DRAWTIME);
 				owner.m_abilityManager.SetGrab(enemyProjectiles.Length);
 				owner.m_abilityManager.m_isCasting = false;
-
 			}
+		}
+		private IEnumerator DrawInProjectile(PlayerController owner, ProjectileMovement proj, float time)
+		{
+			proj.enabled = false;
+			proj.GetComponent<Collider>().enabled = false;
+			float timer = 0f;
+			Vector3 startPos = proj.transform.position;
+			while(timer < time)
+			{
+				float percent = timer / time;
+				proj.transform.localScale = Vector3.one * (1f-percent);
+				proj.transform.position = Vector3.Slerp(startPos, owner.transform.TransformPoint(owner.m_projectileSpawnOffset), percent);
+				timer += Time.deltaTime;
+				yield return null;
+			}
+			Destroy(proj.gameObject);
 		}
 	}
 }
