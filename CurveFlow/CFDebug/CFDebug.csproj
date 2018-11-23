@@ -32,11 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CurveFlow">
-      <HintPath>..\CurveFlow\obj\Debug\CurveFlow.dll</HintPath>
-    </Reference>
-    <Reference Include="NCalc">
-      <HintPath>..\..\ncalc\Evaluant.Calculator\bin\Release\NCalc.dll</HintPath>
+    <Reference Include="CurveFlow, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FlowQuest\FlowQuest\Assets\DLL\CurveFlow.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

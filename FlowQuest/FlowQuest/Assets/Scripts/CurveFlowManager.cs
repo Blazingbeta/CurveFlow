@@ -67,9 +67,14 @@ public static class CurveFlowManager
 	{
 		return m_controller.EvaluateOnCurve(m_query, value, t);
 	}
+	public static string LastMessage { get; set; }
 	private static void PrintToLog(string message, MessageType type)
 	{
 		Debug.Log(message);
+		if(type == MessageType.STATUS)
+		{
+			LastMessage = message;
+		}
 	}
 	private static void CreateAndLoadNewProfile()
 	{

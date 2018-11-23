@@ -13,7 +13,11 @@ using UnityEngine.AI;
  */
 public class WorldController : MonoBehaviour {
 	[SerializeField] NavMeshSurface surface;
+	[SerializeField] GameObject m_worldTextObject;
+	[SerializeField] GameObject m_worldCanvas;
 
+	private static readonly Vector3 CANVASSTARTPOS = new Vector3(0f, -40f, -3.5f);
+	private static readonly float CANVASCOORDOFFSET = 30.0f;
 	private static readonly float TILESIZE = 30f;
 
 	Dictionary<Coordinate, TileData> m_currentMap = new Dictionary<Coordinate, TileData>();
@@ -25,6 +29,13 @@ public class WorldController : MonoBehaviour {
 		BuildMap(5, new Coordinate());
 
 		surface.BuildNavMesh();
+	}
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.K))
+		{
+			m_worldCanvas.gameObject.SetActive(!m_worldCanvas.gameObject.activeInHierarchy);
+		}
 	}
 	private void OnApplicationQuit()
 	{
@@ -57,6 +68,12 @@ public class WorldController : MonoBehaviour {
 			tile.m_doorways[j] = Vector3Int.RoundToInt(floatVec);
 		}
 		Instantiate(tile.m_prefab, Vector3.one * current, rot, surface.transform);
+		//Debug Text display
+		Vector3 canvasPos = m_worldCanvas.transform.TransformPoint(CANVASSTARTPOS);
+		canvasPos.x += current.x * CANVASCOORDOFFSET;
+		canvasPos.z += current.y * CANVASCOORDOFFSET;
+		Instantiate(m_worldTextObject, canvasPos, m_worldCanvas.transform.rotation, m_worldCanvas.transform)
+			.GetComponent<TMPro.TMP_Text>().text = CurveFlowManager.LastMessage;
 		if (recurseCount == 0)
 		{
 			//Close the doorways (how do i find out which ones to close aa

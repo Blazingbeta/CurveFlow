@@ -117,7 +117,6 @@ namespace CurveFlow
 				CFLog.SendMessage("Trying to calculate single selection on group binding. Continuing...", MessageType.ERROR);
 			}
 			StringBuilder sb = new StringBuilder();
-			sb.Append("Beginning Query:\n");
 			TrackedValue[] currentValues = profile.GetAllValues();
 			float currentBestDelta = float.MaxValue;
 			int currentBestIndex = -1;
@@ -132,7 +131,7 @@ namespace CurveFlow
 				}
 				float difficulty = m_outputList[j].CalculateDifficulty(currentValues, sb);
 				float delta = Math.Abs(intendedDifficulty - difficulty);
-				sb.Append("Delta from desired difficulty: ");
+				sb.Append("Delta: ");
 				sb.Append(delta);
 				sb.Append('\n');
 				//This needs to mod delta, not difficulty
@@ -179,7 +178,7 @@ namespace CurveFlow
 			}
 			sb.Append("Query Returning ");
 			sb.Append(m_outputList[currentBestIndex].returnString);
-			sb.Append(" with difficulty delta ");
+			sb.Append(" delta: ");
 			sb.Append(currentBestDelta);
 			CFLog.SendMessage(sb.ToString(), MessageType.STATUS);
 			if (m_enableSelectionLock)
@@ -401,7 +400,6 @@ namespace CurveFlow
 			}
 			public float CalculateDifficulty(TrackedValue[] currentValues, StringBuilder sb)
 			{
-				sb.Append("Begining Difficulty Calculation on ");
 				sb.Append(returnString);
 				sb.Append(":\n");
 				float sharedValues = 0f;
@@ -434,7 +432,7 @@ namespace CurveFlow
 				sb.Append(totalDifficulty.ToString("G"));
 				sb.Append(" Average: ");
 				sb.Append(averageDifficulty.ToString("G"));
-				sb.Append('\n');
+				sb.Append(' ');
 				return averageDifficulty;
 			}
 		}
