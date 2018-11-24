@@ -11,12 +11,18 @@ namespace Spells
 		[SerializeField] float m_minDistance = 1.0f;
 		[SerializeField] float m_maxDistance = 5.0f;
 		[SerializeField] LayerMask m_wallMask;
+		ParticleSystem m_dodgeParticle = null;
 		public override void Cast(PlayerController owner)
 		{
+			if (!m_dodgeParticle)
+			{
+				m_dodgeParticle = owner.transform.Find("DodgeParticle").GetComponent<ParticleSystem>();
+			}
 			owner.StartCoroutine(DashRoutine(owner));
 		}
 		private IEnumerator DashRoutine(PlayerController owner)
 		{
+			m_dodgeParticle.Play();
 			owner.m_abilityManager.m_isCasting = true;
 			owner.m_movement.m_freezeMovement = true;
 			owner.m_invincible = true;
@@ -52,6 +58,7 @@ namespace Spells
 			owner.m_movement.m_freezeMovement = false;
 			owner.m_abilityManager.m_isCasting = false;
 			owner.m_invincible = false;
+			m_dodgeParticle.Stop();
 		}
 	}
 }

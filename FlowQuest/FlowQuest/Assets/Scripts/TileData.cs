@@ -5,6 +5,7 @@ using UnityEngine;
 public class TileData : ScriptableObject
 {
 	[SerializeField] public GameObject m_prefab;
+	[SerializeField] public EnemySpawnData[] m_enemies;
 	[SerializeField] public Vector3Int[] m_doorways;
 	public bool AcceptsDirection(Vector3Int dir)
 	{
@@ -17,4 +18,10 @@ public class TileData : ScriptableObject
 		}
 		return false;
 	}
+}
+[System.Serializable]
+public struct EnemySpawnData
+{
+	[SerializeField] public GameObject EnemyPrefab;
+	[SerializeField] public Vector3 SpawnPosition;
 }

@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
 	Transform m_transform;
 	PlayerController m_controller;
+	Animator m_anim;
 
 	float m_currentAngle = 90.0f;
 	[HideInInspector] public bool m_freezeMovement = false;
@@ -19,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		m_transform = transform;
 		m_controller = GetComponent<PlayerController>();
+		m_anim = transform.Find("Model").Find("Wizard").GetComponent<Animator>();
 	}
 	void Update ()
 	{
@@ -40,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
 		m_transform.position += moveDir * m_moveSpeed * Time.deltaTime;
 		//Y drift fix?
 		m_transform.position += Vector3.down * m_transform.position.y;
+		m_anim.SetBool("isWalking", moveDir.sqrMagnitude != 0f);
 	}
 	void UpdateLookPosition()
 	{

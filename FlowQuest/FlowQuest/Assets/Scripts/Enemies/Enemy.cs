@@ -82,7 +82,7 @@ public class Enemy : MonoBehaviour
 		if(proj != null && proj.gameObject.layer == 11)
 		{
 			TakeDamage(proj.m_damage);
-			proj.gameObject.SetActive(false);
+			proj.CollideWithObject();
 		}
 		else
 		{

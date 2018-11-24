@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Name: Tile+Corridor
   m_EditorClassIdentifier: 
   m_prefab: {fileID: 1575976037321400, guid: b680b8acd5801684898b44357a16f256, type: 2}
+  m_enemies:
+  - EnemyPrefab: {fileID: 1209899506294868, guid: 6cd151ef5ad753a4ba978d331fe7db76,
+      type: 2}
+    SpawnPosition: {x: 10, y: 0, z: 10}
+  - EnemyPrefab: {fileID: 1209899506294868, guid: 6cd151ef5ad753a4ba978d331fe7db76,
+      type: 2}
+    SpawnPosition: {x: -10, y: 0, z: -10}
   m_doorways:
   - {x: 1, y: 0, z: 0}
   - {x: -1, y: 0, z: 0}
