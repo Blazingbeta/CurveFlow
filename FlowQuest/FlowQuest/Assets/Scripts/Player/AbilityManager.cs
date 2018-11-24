@@ -33,6 +33,10 @@ public class AbilityManager : MonoBehaviour
 	private bool m_isHolding = false;
 	private int  m_holdCount = 0;
 
+	Animator m_staffAnim = null;
+	bool m_isHoldingCast = false;
+	string m_heldKey = "";
+
 	private void Awake()
 	{
 		m_controller = GetComponent<PlayerController>();
@@ -40,6 +44,7 @@ public class AbilityManager : MonoBehaviour
 		Transform canvas = GameObject.Find("Canvas").transform;
 		m_manaImage = canvas.Find("ManaImage").GetComponent<Image>();
 		m_manaText = m_manaImage.transform.GetChild(0).GetComponent<TMP_Text>();
+		m_staffAnim = transform.Find("Model").Find("Staff").GetComponent<Animator>();
 
 		//TODO remove debug
 		m_spells.Add("PrimaryFire", (Spell)Instantiate(Resources.Load("Spells/MagicMissle1")));
@@ -57,6 +62,11 @@ public class AbilityManager : MonoBehaviour
 	}
 	private void Update()
 	{
+		if(m_isHoldingCast && Input.GetButtonUp(m_heldKey))
+		{
+			//If the held key is now released
+			m_staffAnim.SetBool("isCasting", false);
+		}
 		if(m_controller.m_isDead) return;
 		if (m_isCasting) return;
 		else if (m_isHolding)
@@ -80,7 +90,7 @@ public class AbilityManager : MonoBehaviour
 				{
 					if(Mana >= spell.m_manaCost)
 					{
-						CastSpell(spell);
+						CastSpell(spell, inputName);
 						Mana -= spell.m_manaCost;
 					}
 				}
@@ -98,10 +108,24 @@ public class AbilityManager : MonoBehaviour
 			StartCoroutine(ConsumeHeldAttacks());
 		}
 	}
-	private void CastSpell(Spell spell)
+	private void CastSpell(Spell spell, string input)
 	{
 		spell.Cast(m_controller);
 		StartCoroutine(SpellCooldown(spell));
+		if (spell.m_canHold)
+		{
+			if (!m_staffAnim.GetBool("isCasting"))
+			{
+				m_isHoldingCast = true;
+				m_heldKey = input;
+				m_staffAnim.SetBool("isCasting", true);
+				m_staffAnim.SetTrigger("Cast");
+			}
+		}
+		else if(!m_staffAnim.GetBool("isCasting"))
+		{
+			m_staffAnim.SetTrigger("Cast");
+		}
 	}
 	public void SetGrab(int count)
 	{
