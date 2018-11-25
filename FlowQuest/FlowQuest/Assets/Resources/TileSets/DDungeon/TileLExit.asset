@@ -11,7 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc3290df7c4e074c91dabdab8ced6df, type: 3}
   m_Name: TileLExit
   m_EditorClassIdentifier: 
-  m_prefab: {fileID: 1217979248118206, guid: 888631c1fe658ff4493122852bbbffff, type: 2}
+  m_prefab: {fileID: 1310893904240746, guid: 888631c1fe658ff4493122852bbbffff, type: 2}
+  m_enemies:
+  - EnemyPrefab: {fileID: 1209899506294868, guid: 6cd151ef5ad753a4ba978d331fe7db76,
+      type: 2}
+    SpawnPosition: {x: 10, y: 0, z: 10}
+  - EnemyPrefab: {fileID: 1209899506294868, guid: 6cd151ef5ad753a4ba978d331fe7db76,
+      type: 2}
+    SpawnPosition: {x: -10, y: 0, z: -10}
   m_doorways:
   - {x: 0, y: 0, z: 1}
   - {x: 1, y: 0, z: 0}

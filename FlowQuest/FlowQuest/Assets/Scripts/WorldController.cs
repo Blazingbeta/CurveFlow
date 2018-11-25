@@ -67,7 +67,12 @@ public class WorldController : MonoBehaviour {
 			floatVec = rot * floatVec;
 			tile.m_doorways[j] = Vector3Int.RoundToInt(floatVec);
 		}
-		Instantiate(tile.m_prefab, Vector3.one * current, rot, surface.transform);
+		GameObject inst = Instantiate(tile.m_prefab, Vector3.one * current, rot, surface.transform);
+		//Enemy Spawning
+		for(int j = 0; j < tile.m_enemies.Length; j++)
+		{
+			Instantiate(tile.m_enemies[j].EnemyPrefab, inst.transform.TransformPoint(tile.m_enemies[j].SpawnPosition), Quaternion.identity, inst.transform);
+		}
 		//Debug Text display
 		Vector3 canvasPos = m_worldCanvas.transform.TransformPoint(CANVASSTARTPOS);
 		canvasPos.x += current.x * CANVASCOORDOFFSET;

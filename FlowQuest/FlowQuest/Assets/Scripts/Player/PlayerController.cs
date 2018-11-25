@@ -73,6 +73,13 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 	}
+	public void EnemyWhiffAttack()
+	{
+		if (m_invincible)
+		{
+			CurveFlowManager.AppendValue("DodgeSkill", 1.0f);
+		}
+	}
 	private IEnumerator DeathAnimations()
 	{
 		CanvasGroup group = GameObject.Find("DeathPanel").GetComponent<CanvasGroup>();

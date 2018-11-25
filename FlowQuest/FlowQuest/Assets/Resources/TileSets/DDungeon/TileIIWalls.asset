@@ -11,7 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc3290df7c4e074c91dabdab8ced6df, type: 3}
   m_Name: TileIIWalls
   m_EditorClassIdentifier: 
-  m_prefab: {fileID: 1430865386966056, guid: ae0a9b632a58ed840a430121c6737741, type: 2}
+  m_prefab: {fileID: 1792498204257778, guid: ae0a9b632a58ed840a430121c6737741, type: 2}
+  m_enemies:
+  - EnemyPrefab: {fileID: 1209899506294868, guid: 6cd151ef5ad753a4ba978d331fe7db76,
+      type: 2}
+    SpawnPosition: {x: 10, y: 0, z: -8}
+  - EnemyPrefab: {fileID: 1837365662385608, guid: bb3931886f7e26e4eb3df36c6b613da9,
+      type: 2}
+    SpawnPosition: {x: -6.5, y: 0, z: -10}
   m_doorways:
   - {x: 1, y: 0, z: 0}
   - {x: -1, y: 0, z: 0}

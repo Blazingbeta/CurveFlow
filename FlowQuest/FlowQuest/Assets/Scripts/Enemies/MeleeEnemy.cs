@@ -9,10 +9,11 @@ public class MeleeEnemy : Enemy
 	[SerializeField] protected float m_attackArcAngle = 15.0f;
 	[SerializeField] protected float m_attackDistance = 4f;
 	[SerializeField] protected float m_attackCloseRadius = 1f;
-	[SerializeField] protected Vector3[] m_wayPoints = null;
 	[SerializeField] protected float m_reachedRange = 2.89f;
+	[SerializeField] protected float m_wanderRadius = 3.0f;
 
-	int m_currentWaypoint = 0;
+	Vector3 m_currentWanderTarget;
+	Vector3 m_startPos;
 	private void Start() 
 	{
 		Initialize();
@@ -25,15 +26,9 @@ public class MeleeEnemy : Enemy
 
 		m_states.State = EState.IDLE;
 
-		if(transform.parent != null)
-		{
-			for(int j = 0; j < m_wayPoints.Length; j++)
-			{
-				m_wayPoints[j] = transform.parent.TransformPoint(m_wayPoints[j]);
-			}
-		}
+		m_startPos = transform.position;
 
-		m_agent.SetDestination(m_wayPoints[0]);
+		SetRandomWander();
 	}
 	void Update()
 	{
@@ -46,11 +41,9 @@ public class MeleeEnemy : Enemy
 		//FacePosition(m_wayPoints[m_currentWaypoint]);
 		//transform.position = Vector3.MoveTowards(transform.position, m_wayPoints[m_currentWaypoint], 
 			//m_moveSpeed*Time.deltaTime);
-		if((transform.position - m_wayPoints[m_currentWaypoint]).sqrMagnitude < .3f)
+		if((transform.position - (m_currentWanderTarget + m_startPos)).sqrMagnitude < .3f)
 		{
-			m_currentWaypoint++;
-			m_currentWaypoint %= m_wayPoints.Length;
-			m_agent.SetDestination(m_wayPoints[m_currentWaypoint]);
+			SetRandomWander();
 		}
 		//Check if player is found
 		if((transform.position - m_playerTransform.position).sqrMagnitude < m_detectionRange)
@@ -97,19 +90,20 @@ public class MeleeEnemy : Enemy
 		}
 		else
 		{
-			m_agent.SetDestination(m_wayPoints[m_currentWaypoint]);
 			m_states.State = EState.IDLE;
+			SetRandomWander();
 		}
+	}
+	protected void SetRandomWander()
+	{
+		Vector3 newTarget = Random.onUnitSphere * m_wanderRadius;
+		newTarget.y = 0;
+		m_agent.SetDestination(m_startPos + newTarget);
 	}
 	protected bool Attack()
 	{
 		m_anim.SetTrigger("Attack");
 		Vector3 toPlayer = (m_playerTransform.position - transform.position);
-		/*float debugLength = Mathf.Sqrt(m_attackDistance);
-		Debug.DrawLine(transform.position, transform.position + (transform.forward * debugLength), Color.green, 3.0f);
-		Debug.DrawLine(transform.position, transform.position + (transform.forward * Mathf.Sqrt(m_attackCloseRadius)), Color.red, 3.0f);
-		Debug.DrawLine(transform.position, transform.position + (Quaternion.AngleAxis(m_currentAngle + m_attackArcAngle, Vector3.up) * Vector3.forward * debugLength), Color.green, 3.0f);
-		Debug.DrawLine(transform.position, transform.position + (Quaternion.AngleAxis(m_currentAngle - m_attackArcAngle, Vector3.up) * Vector3.forward * debugLength), Color.green, 3.0f);*/
 		float toPlayerAngle = Mathf.Atan2(toPlayer.x, toPlayer.z) * Mathf.Rad2Deg;
 		if(toPlayer.sqrMagnitude < m_attackCloseRadius || (toPlayer.sqrMagnitude < m_attackDistance && Mathf.Abs(toPlayerAngle - m_currentAngle) < m_attackArcAngle))
 		{
@@ -120,6 +114,7 @@ public class MeleeEnemy : Enemy
 		else
 		{
 			//Whiff animation
+			PlayerController.player.EnemyWhiffAttack();
 			return false;
 		}
 	}
