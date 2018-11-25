@@ -7,6 +7,8 @@ public class TileData : ScriptableObject
 	[SerializeField] public GameObject m_prefab;
 	[SerializeField] public EnemySpawnData[] m_enemies;
 	[SerializeField] public Vector3Int[] m_doorways;
+	[HideInInspector] public GameObject m_instancedPrefab;
+	[HideInInspector] public Transform m_exitDoors;
 	public bool AcceptsDirection(Vector3Int dir)
 	{
 		for(int j = 0; j < m_doorways.Length; j++)

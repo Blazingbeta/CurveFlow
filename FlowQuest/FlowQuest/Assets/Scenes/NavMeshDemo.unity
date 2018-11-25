@@ -16340,6 +16340,8 @@ MonoBehaviour:
   surface: {fileID: 1674452763}
   m_worldTextObject: {fileID: 1231577068}
   m_worldCanvas: {fileID: 730018330}
+  m_blankSquare: {fileID: 1882432132006314, guid: bf9d0fed551857a42ab8120b555b5630,
+    type: 2}
 --- !u!114 &1674452763
 MonoBehaviour:
   m_ObjectHideFlags: 0

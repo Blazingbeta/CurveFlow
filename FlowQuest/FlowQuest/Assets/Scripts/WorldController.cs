@@ -15,6 +15,7 @@ public class WorldController : MonoBehaviour {
 	[SerializeField] NavMeshSurface surface;
 	[SerializeField] GameObject m_worldTextObject;
 	[SerializeField] GameObject m_worldCanvas;
+	[SerializeField] GameObject m_blankSquare;
 
 	private static readonly Vector3 CANVASSTARTPOS = new Vector3(0f, -40f, -3.5f);
 	private static readonly float CANVASCOORDOFFSET = 30.0f;
@@ -36,6 +37,19 @@ public class WorldController : MonoBehaviour {
 		{
 			m_worldCanvas.gameObject.SetActive(!m_worldCanvas.gameObject.activeInHierarchy);
 		}
+		if (Input.GetKeyDown(KeyCode.L))
+		{
+			SetBlockingDoors();
+		}
+	}
+	bool m_isBlocking = false;
+	private void SetBlockingDoors()
+	{
+		m_isBlocking = !m_isBlocking;
+		foreach(TileData tile in m_currentMap.Values)
+		{
+			tile.m_exitDoors.gameObject.SetActive(m_isBlocking);
+		}
 	}
 	private void OnApplicationQuit()
 	{
@@ -45,9 +59,36 @@ public class WorldController : MonoBehaviour {
 	{
 		TileData entrance = Resources.Load("TileSets/DDungeon/TileEntrance") as TileData;
 		m_currentMap.Add(current, entrance);
-		Instantiate(entrance.m_prefab, Vector3.zero, Quaternion.identity, surface.transform);
+		entrance.m_instancedPrefab = Instantiate(entrance.m_prefab, Vector3.zero, Quaternion.identity, surface.transform);
+		entrance.m_exitDoors = entrance.m_instancedPrefab.transform.GetChild(2);
 
 		RecurseMap(recurseCount, current + entrance.m_doorways[0], entrance.m_doorways[0]);
+
+		//Place Exit Blockers
+		foreach (Coordinate space in m_currentMap.Keys)
+		{
+			foreach(Vector3Int dir in m_currentMap[space].m_doorways)
+			{
+				if(!m_currentMap.ContainsKey(space + dir))
+				{
+					SpawnBlocker(dir, m_currentMap[space]);
+				}
+			}
+		}
+	}
+	void SpawnBlocker(Vector3Int dir, TileData parent)
+	{
+		Vector3 scale;
+		if(dir.x == 0)
+		{
+			scale = new Vector3(10, 2, 2);
+		}
+		else
+		{
+			scale = new Vector3(2, 2, 10);
+		}
+		Vector3 pos = parent.m_instancedPrefab.transform.position + (new Vector3(dir.x*14f, 1, dir.z*14f));
+		Instantiate(m_blankSquare, pos, Quaternion.identity, parent.m_instancedPrefab.transform).transform.localScale = scale;
 	}
 	void RecurseMap(int recurseCount, Coordinate current, Vector3Int direction)
 	{
@@ -68,10 +109,13 @@ public class WorldController : MonoBehaviour {
 			tile.m_doorways[j] = Vector3Int.RoundToInt(floatVec);
 		}
 		GameObject inst = Instantiate(tile.m_prefab, Vector3.one * current, rot, surface.transform);
+		tile.m_instancedPrefab = inst;
+		tile.m_exitDoors = inst.transform.GetChild(2);
+		Transform enemyHolder = inst.transform.GetChild(1);
 		//Enemy Spawning
 		for(int j = 0; j < tile.m_enemies.Length; j++)
 		{
-			Instantiate(tile.m_enemies[j].EnemyPrefab, inst.transform.TransformPoint(tile.m_enemies[j].SpawnPosition), Quaternion.identity, inst.transform);
+			Instantiate(tile.m_enemies[j].EnemyPrefab, inst.transform.TransformPoint(tile.m_enemies[j].SpawnPosition), Quaternion.identity, enemyHolder);
 		}
 		//Debug Text display
 		Vector3 canvasPos = m_worldCanvas.transform.TransformPoint(CANVASSTARTPOS);
