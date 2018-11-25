@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc3290df7c4e074c91dabdab8ced6df, type: 3}
+  m_Name: TileSquareMediumMixed
+  m_EditorClassIdentifier: 
+  m_prefab: {fileID: 1203275628786080, guid: 1bd3bdf9f1ded23449a483d52492ce7f, type: 2}
+  m_enemies:
+  - EnemyPrefab: {fileID: 1850497567462906, guid: a62897f5e007beb48a862698e2e7dcdc,
+      type: 2}
+    SpawnPosition: {x: 10, y: 0, z: 10}
+  - EnemyPrefab: {fileID: 1837365662385608, guid: bb3931886f7e26e4eb3df36c6b613da9,
+      type: 2}
+    SpawnPosition: {x: 0, y: 0, z: -8}
+  - EnemyPrefab: {fileID: 1209899506294868, guid: 6cd151ef5ad753a4ba978d331fe7db76,
+      type: 2}
+    SpawnPosition: {x: -10, y: 0, z: 10}
+  m_doorways:
+  - {x: 1, y: 0, z: 0}
+  - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 0, z: -1}
+  m_instancedPrefab: {fileID: 0}
+  m_exitDoors: {fileID: 0}

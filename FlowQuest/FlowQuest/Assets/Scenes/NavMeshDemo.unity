@@ -16342,7 +16342,7 @@ MonoBehaviour:
   m_worldCanvas: {fileID: 730018330}
   m_blankSquare: {fileID: 1882432132006314, guid: bf9d0fed551857a42ab8120b555b5630,
     type: 2}
-  m_currentStage: DefaultDungeon
+  m_currentStage: DD2
 --- !u!114 &1674452763
 MonoBehaviour:
   m_ObjectHideFlags: 0

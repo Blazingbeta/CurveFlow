@@ -11,9 +11,10 @@ public class MeleeEnemy : Enemy
 	[SerializeField] protected float m_attackCloseRadius = 1f;
 	[SerializeField] protected float m_reachedRange = 2.89f;
 	[SerializeField] protected float m_wanderRadius = 3.0f;
+	[SerializeField] protected float m_wanderTime = 1.0f;
 
-	Vector3 m_currentWanderTarget;
 	Vector3 m_startPos;
+	float m_timer = 0.0f;
 	private void Start() 
 	{
 		Initialize();
@@ -37,15 +38,12 @@ public class MeleeEnemy : Enemy
 	}
 	protected EState SearchForPlayer()
 	{
-
-		//FacePosition(m_wayPoints[m_currentWaypoint]);
-		//transform.position = Vector3.MoveTowards(transform.position, m_wayPoints[m_currentWaypoint], 
-			//m_moveSpeed*Time.deltaTime);
-		if((transform.position - (m_currentWanderTarget + m_startPos)).sqrMagnitude < .3f)
+		m_timer += Time.deltaTime;
+		if(m_timer > m_wanderTime)
 		{
+			m_wanderTime = 0;
 			SetRandomWander();
 		}
-		//Check if player is found
 		if((transform.position - m_playerTransform.position).sqrMagnitude < m_detectionRange)
 		{
 			return EState.MOVING;
@@ -99,7 +97,6 @@ public class MeleeEnemy : Enemy
 		Vector3 newTarget = Random.onUnitSphere * m_wanderRadius;
 		newTarget.y = 0;
 		m_agent.SetDestination(m_startPos + newTarget);
-		m_currentWanderTarget = m_startPos + newTarget;
 	}
 	protected bool Attack()
 	{

@@ -9,22 +9,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1bc3290df7c4e074c91dabdab8ced6df, type: 3}
-  m_Name: Tile..HardRanged
+  m_Name: TileLowWallHardMixed
   m_EditorClassIdentifier: 
-  m_prefab: {fileID: 1658737204321330, guid: 0864252929f5b9948a720ec512095828, type: 2}
+  m_prefab: {fileID: 1451390716401752, guid: 4fa74c90baf9b0f49b3deb1af4c3d3d9, type: 2}
   m_enemies:
-  - EnemyPrefab: {fileID: 1072861123673372, guid: f39c8b301b7bdde49a1521682851f102,
-      type: 2}
-    SpawnPosition: {x: 6.8, y: 0, z: 0.5}
-  - EnemyPrefab: {fileID: 1072861123673372, guid: f39c8b301b7bdde49a1521682851f102,
-      type: 2}
-    SpawnPosition: {x: -8.8, y: 0, z: -9.5}
-  - EnemyPrefab: {fileID: 1996124957110400, guid: bd9b4a950b71b9c4792e6b04dde54298,
+  - EnemyPrefab: {fileID: 1167360998656280, guid: 4143700d5901f4747b5a1230e086a5cb,
       type: 2}
     SpawnPosition: {x: 0, y: 0, z: 0}
-  - EnemyPrefab: {fileID: 1850497567462906, guid: a62897f5e007beb48a862698e2e7dcdc,
+  - EnemyPrefab: {fileID: 1072861123673372, guid: f39c8b301b7bdde49a1521682851f102,
       type: 2}
-    SpawnPosition: {x: 0, y: 0, z: 5}
+    SpawnPosition: {x: 5, y: 0, z: 0}
+  - EnemyPrefab: {fileID: 1072861123673372, guid: f39c8b301b7bdde49a1521682851f102,
+      type: 2}
+    SpawnPosition: {x: -5, y: 0, z: 0}
+  - EnemyPrefab: {fileID: 1167360998656280, guid: 4143700d5901f4747b5a1230e086a5cb,
+      type: 2}
+    SpawnPosition: {x: 0, y: 0, z: 10}
   m_doorways:
   - {x: 1, y: 0, z: 0}
   - {x: -1, y: 0, z: 0}
