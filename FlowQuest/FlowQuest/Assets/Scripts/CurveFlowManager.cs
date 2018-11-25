@@ -52,7 +52,7 @@ public static class CurveFlowManager
 		m_controller.AppendTrackedValue(name, amount);
 		if(m_guiBars != null)
 		{
-			m_guiBars[name].fillAmount = m_controller.GetCurrentValue(name);
+			m_guiBars[name].StartCoroutine(WorldController.i.TrackedValueDing(m_guiBars[name], m_controller.GetCurrentValue(name)));
 		}
 	}
 	public static void SetValue(string name, float amount)

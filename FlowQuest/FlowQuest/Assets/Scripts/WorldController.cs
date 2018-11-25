@@ -12,22 +12,30 @@ using UnityEngine.AI;
  * 
  */
 public class WorldController : MonoBehaviour {
+	public static WorldController i;
+
 	[SerializeField] NavMeshSurface surface;
 	[SerializeField] GameObject m_worldTextObject;
 	[SerializeField] GameObject m_worldCanvas;
 	[SerializeField] GameObject m_blankSquare;
+	[SerializeField] string m_currentStage = "DefaultDungeon";
 
 	private static readonly Vector3 CANVASSTARTPOS = new Vector3(0f, -40f, -3.5f);
 	private static readonly float CANVASCOORDOFFSET = 30.0f;
 	private static readonly float TILESIZE = 30f;
 
 	Dictionary<Coordinate, TileData> m_currentMap = new Dictionary<Coordinate, TileData>();
+
+	private int m_currentEnemyCount = 0;
+	private int m_remainingRooms = 0;
 	void Awake ()
 	{
-		CurveFlowManager.Initialize("DefaultDungeonTiles");
+		i = this;
+		CurveFlowManager.Initialize(m_currentStage + "Tiles");
 		CurveFlowManager.SetGUIValues(GameObject.Find("TrackedValuesPanel").transform);
 		
-		BuildMap(5, new Coordinate());
+		BuildMap(3, new Coordinate());
+		m_remainingRooms = m_currentMap.Keys.Count-1;
 
 		surface.BuildNavMesh();
 	}
@@ -37,18 +45,34 @@ public class WorldController : MonoBehaviour {
 		{
 			m_worldCanvas.gameObject.SetActive(!m_worldCanvas.gameObject.activeInHierarchy);
 		}
-		if (Input.GetKeyDown(KeyCode.L))
+	}
+	public void StartCombat(Transform tile)
+	{
+		SetBlockingDoors(true);
+		m_currentEnemyCount = tile.GetChild(1).childCount;
+	}
+	public void EnemyKilled()
+	{
+		m_currentEnemyCount--;
+		if(m_currentEnemyCount == 0)
 		{
-			SetBlockingDoors();
+			EndCombat();
 		}
 	}
-	bool m_isBlocking = false;
-	private void SetBlockingDoors()
+	public void EndCombat()
 	{
-		m_isBlocking = !m_isBlocking;
+		SetBlockingDoors(false);
+		m_remainingRooms--;
+		if(m_remainingRooms == 0)
+		{
+			Debug.Log("Floor Cleared!");
+		}
+	}
+	private void SetBlockingDoors(bool isBlocking)
+	{
 		foreach(TileData tile in m_currentMap.Values)
 		{
-			tile.m_exitDoors.gameObject.SetActive(m_isBlocking);
+			tile.m_exitDoors.gameObject.SetActive(isBlocking);
 		}
 	}
 	private void OnApplicationQuit()
@@ -57,7 +81,7 @@ public class WorldController : MonoBehaviour {
 	}
 	void BuildMap(int recurseCount, Coordinate current)
 	{
-		TileData entrance = Resources.Load("TileSets/DDungeon/TileEntrance") as TileData;
+		TileData entrance = Resources.Load("TileSets/" + m_currentStage + "/TileEntrance") as TileData;
 		m_currentMap.Add(current, entrance);
 		entrance.m_instancedPrefab = Instantiate(entrance.m_prefab, Vector3.zero, Quaternion.identity, surface.transform);
 		entrance.m_exitDoors = entrance.m_instancedPrefab.transform.GetChild(2);
@@ -93,7 +117,7 @@ public class WorldController : MonoBehaviour {
 	void RecurseMap(int recurseCount, Coordinate current, Vector3Int direction)
 	{
 		if (m_currentMap.ContainsKey(current)) return;
-		TileData tile = Instantiate(Resources.Load("TileSets/DDungeon/" + CurveFlowManager.QueryOnCurve(0.25f, Random.Range(0.0f, 2.0f))) as TileData);
+		TileData tile = Instantiate(Resources.Load("TileSets/" + m_currentStage +  '/' + CurveFlowManager.QueryOnCurve(0.25f, Random.Range(0.0f, 2.0f))) as TileData);
 		m_currentMap.Add(current, tile);
 		Quaternion rot = Quaternion.identity;
 		//Select a random valid direction to be the new doorway
@@ -134,6 +158,25 @@ public class WorldController : MonoBehaviour {
 				RecurseMap(recurseCount - 1, current + dir, dir);
 			}
 		}
+	}
+	//this should absolutely not be in here
+	public IEnumerator TrackedValueDing(UnityEngine.UI.Image bar, float newValue)
+	{
+		float oldValue = bar.fillAmount;
+		float DINGTIME = 0.4f;
+		float timer = 0.0f;
+		Color baseColor = bar.color;
+		Color dingColor = (newValue < oldValue) ? Color.gray : Color.white;
+		while(timer < DINGTIME)
+		{
+			timer += Time.deltaTime;
+			bar.fillAmount = Mathf.Lerp(oldValue, newValue, timer / DINGTIME);
+			bar.color = Color.Lerp(dingColor, baseColor, timer / DINGTIME);
+			yield return null;
+		}
+		bar.color = baseColor;
+		bar.fillAmount = newValue;
+		yield return null;
 	}
 	private struct Coordinate
 	{

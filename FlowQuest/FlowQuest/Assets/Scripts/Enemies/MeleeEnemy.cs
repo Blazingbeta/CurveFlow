@@ -99,6 +99,7 @@ public class MeleeEnemy : Enemy
 		Vector3 newTarget = Random.onUnitSphere * m_wanderRadius;
 		newTarget.y = 0;
 		m_agent.SetDestination(m_startPos + newTarget);
+		m_currentWanderTarget = m_startPos + newTarget;
 	}
 	protected bool Attack()
 	{

@@ -24,13 +24,13 @@ public class PlayerController : MonoBehaviour
 		m_abilityManager = GetComponent<AbilityManager>();
 		m_movement = GetComponent<PlayerMovement>();
 		m_rb = GetComponent<Rigidbody>();
-		if(player != null)
+		if (player != null)
 		{
 			Debug.Log("Static Playercontroller already exists. Proceeding.");
 		}
 		player = this;
 	}
-	private void Start() 
+	private void Start()
 	{
 		m_healthImage = GameObject.Find("HealthImage").GetComponent<Image>();
 		m_healthText = m_healthImage.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
@@ -43,12 +43,12 @@ public class PlayerController : MonoBehaviour
 	}
 	private void TakeDamage(int damage)
 	{
-		if(m_isDead) return;
+		if (m_isDead) return;
 		m_currentHealth -= damage;
-		if(m_currentHealth <= 0)
+		if (m_currentHealth <= 0)
 			Die();
 		m_healthText.text = m_currentHealth.ToString();
-		m_healthImage.fillAmount = (float)m_currentHealth/m_maxHealth;
+		m_healthImage.fillAmount = (float)m_currentHealth / m_maxHealth;
 		CurveFlowManager.SetValue("CurrentHealth", (float)m_currentHealth / m_maxHealth);
 	}
 	private void Die()
@@ -75,7 +75,8 @@ public class PlayerController : MonoBehaviour
 	}
 	public void EnemyWhiffAttack()
 	{
-		if (m_invincible)
+		//if currently invincble or if the dodge is on cooldown (in this case, assumed player already dodged)
+		if (m_invincible || !m_abilityManager.IsDodgeAvalible())
 		{
 			CurveFlowManager.AppendValue("DodgeSkill", 1.0f);
 		}
@@ -88,33 +89,43 @@ public class PlayerController : MonoBehaviour
 		//MAGIC NUMBER: time to fade in the death menu
 		float MENUFADEINTIME = 1.2f;
 		float timer = 0.0f;
-		while(timer < MENUFADEINTIME)
+		while (timer < MENUFADEINTIME)
 		{
 			timer += Time.deltaTime;
-			group.alpha = timer/MENUFADEINTIME;
+			group.alpha = timer / MENUFADEINTIME;
 			yield return null;
 		}
 		group.alpha = 1;
 	}
-	private void OnTriggerEnter(Collider other) 
+	private void OnTriggerEnter(Collider other)
 	{
-		if (!m_invincible)
-		{ 
-		ProjectileMovement proj = other.gameObject.GetComponent<ProjectileMovement>();
-			if (proj != null && proj.gameObject.layer == 12)
+		//enemy projectile
+		if (other.gameObject.layer == 12)
+		{
+			if (!m_invincible)
 			{
-				TakeDamage(proj.m_damage);
-				proj.gameObject.SetActive(false);
-				//If they got hit by a projectile and could have grabbed it
-				if (m_abilityManager.IsGrabAvalible())
+				ProjectileMovement proj = other.gameObject.GetComponent<ProjectileMovement>();
+				if (proj != null && proj.gameObject.layer == 12)
 				{
-					CurveFlowManager.AppendValue("GrabSkill", 0.0f);
+					TakeDamage(proj.m_damage);
+					proj.gameObject.SetActive(false);
+					//If they got hit by a projectile and could have grabbed it
+					if (m_abilityManager.IsGrabAvalible())
+					{
+						CurveFlowManager.AppendValue("GrabSkill", 0.0f);
+					}
+				}
+				else
+				{
+					Debug.Log("Hit by unkown object: " + other.gameObject.name);
 				}
 			}
-			else
-			{
-				Debug.Log("Hit by unkown object: " + other.gameObject.name);
-			}
+		}
+		//room trigger
+		else if(other.gameObject.layer == 16)
+		{
+			other.gameObject.SetActive(false);
+			WorldController.i.StartCombat(other.transform.parent);
 		}
 	}
 }

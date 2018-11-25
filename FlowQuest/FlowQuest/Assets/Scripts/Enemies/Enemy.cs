@@ -91,19 +91,23 @@ public class Enemy : MonoBehaviour
 	}
 	protected virtual void TakeDamage(int damage)
 	{
-		m_health -= damage;
-		if (m_health <= 0)
+		if (!m_isDead)
 		{
-			m_anim.SetTrigger("Die");
-			m_isDead = true;
-			enabled = false;
-			StartCoroutine(Despawn());
-			m_agent.isStopped = true;
-			//gameObject.SetActive(false);
-		}
-		else
-		{
-			m_anim.SetTrigger("Hit");
+			m_health -= damage;
+			if (m_health <= 0)
+			{
+				m_anim.SetTrigger("Die");
+				m_isDead = true;
+				enabled = false;
+				StartCoroutine(Despawn());
+				m_agent.isStopped = true;
+				WorldController.i.EnemyKilled();
+				//gameObject.SetActive(false);
+			}
+			else
+			{
+				m_anim.SetTrigger("Hit");
+			}
 		}
 	}
 	protected IEnumerator Despawn()
