@@ -21,7 +21,7 @@ public static class CurveFlowManager
 	static string profileName = "DefaultPlayer";
 	static CurveFlowController m_controller = null;
 	static OutputQuery m_query = null;
-	static Dictionary<string, Image> m_guiBars;
+	static Dictionary<string, ValueDisplayManager> m_guiBars;
 	public static void Initialize(string QueryName)
 	{
 		m_controller = new CurveFlowController();
@@ -52,7 +52,7 @@ public static class CurveFlowManager
 		m_controller.AppendTrackedValue(name, amount);
 		if(m_guiBars != null)
 		{
-			m_guiBars[name].StartCoroutine(WorldController.i.TrackedValueDing(m_guiBars[name], m_controller.GetCurrentValue(name)));
+			m_guiBars[name].SetNewFillAmount(m_controller.GetCurrentValue(name));
 		}
 	}
 	public static void SetValue(string name, float amount)
@@ -93,12 +93,12 @@ public static class CurveFlowManager
 	}
 	public static void SetGUIValues(Transform parent)
 	{
-		m_guiBars = new Dictionary<string, Image>();
+		m_guiBars = new Dictionary<string, ValueDisplayManager>();
 		for(int j = 0; j < parent.childCount; j++)
 		{
 			string name = parent.GetChild(j).name;
-			m_guiBars.Add(name, parent.GetChild(j).GetComponent<Image>());
-			m_guiBars[name].fillAmount = m_controller.GetCurrentValue(name);
+			m_guiBars.Add(name, parent.GetChild(j).GetComponent<ValueDisplayManager>());
+			m_guiBars[name].SetNewFillAmount(m_controller.GetCurrentValue(name));
 		}
 	}
 }

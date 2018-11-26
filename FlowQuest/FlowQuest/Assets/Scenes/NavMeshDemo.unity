@@ -5231,6 +5231,7 @@ GameObject:
   - component: {fileID: 582002952}
   - component: {fileID: 582002954}
   - component: {fileID: 582002953}
+  - component: {fileID: 582002955}
   m_Layer: 5
   m_Name: DodgeSkill
   m_TagString: Untagged
@@ -5291,6 +5292,19 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 582002951}
   m_CullTransparentMesh: 0
+--- !u!114 &582002955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 582002951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 877db56c9d45c9445820ea68ed74f33f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_image: {fileID: 0}
+  m_dingTime: 0.4
 --- !u!1 &660327345
 GameObject:
   m_ObjectHideFlags: 0
@@ -6226,6 +6240,7 @@ GameObject:
   - component: {fileID: 1098119618}
   - component: {fileID: 1098119620}
   - component: {fileID: 1098119619}
+  - component: {fileID: 1098119621}
   m_Layer: 5
   m_Name: GrabSkill
   m_TagString: Untagged
@@ -6286,6 +6301,19 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1098119617}
   m_CullTransparentMesh: 0
+--- !u!114 &1098119621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1098119617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 877db56c9d45c9445820ea68ed74f33f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_image: {fileID: 0}
+  m_dingTime: 0.4
 --- !u!1 &1128773735
 GameObject:
   m_ObjectHideFlags: 0
