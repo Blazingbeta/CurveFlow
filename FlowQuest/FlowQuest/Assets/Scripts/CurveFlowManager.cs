@@ -43,6 +43,10 @@ public static class CurveFlowManager
 		}
 		m_query = new OutputQuery(Resources.Load<TextAsset>("QueryFiles/" + QueryName).text);
 	}
+	public static void LoadQuery(string QueryName)
+	{
+		m_query = new OutputQuery(Resources.Load<TextAsset>("QueryFiles/" + QueryName).text);
+	}
 	static float Expression(float x, float t)
 	{
 		return x * (1 + Mathf.Sin(t));
@@ -66,6 +70,10 @@ public static class CurveFlowManager
 	public static string QueryOnCurve(float value, float t)
 	{
 		return m_controller.EvaluateOnCurve(m_query, value, t);
+	}
+	public static string[] GroupQuery(float value, int count)
+	{
+		return m_controller.EvaluateGroupSelection(m_query, value, count);
 	}
 	public static string LastMessage { get; set; }
 	private static void PrintToLog(string message, MessageType type)

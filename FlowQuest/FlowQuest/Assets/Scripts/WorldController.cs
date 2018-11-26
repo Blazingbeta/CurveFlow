@@ -34,7 +34,7 @@ public class WorldController : MonoBehaviour {
 		CurveFlowManager.Initialize(m_currentStage + "Tiles");
 		CurveFlowManager.SetGUIValues(GameObject.Find("TrackedValuesPanel").transform);
 		
-		BuildMap(3, new Coordinate());
+		BuildMap(0, new Coordinate());
 		m_remainingRooms = m_currentMap.Keys.Count-1;
 
 		surface.BuildNavMesh();
@@ -72,7 +72,31 @@ public class WorldController : MonoBehaviour {
 		if(m_remainingRooms == 0)
 		{
 			Debug.Log("Floor Cleared!");
+			SetupBossFight();
 		}
+	}
+	public void SetupBossFight()
+	{
+		for(int j = 0; j < surface.transform.childCount; j++)
+		{
+			surface.transform.GetChild(j).gameObject.SetActive(false);
+		}
+		PlayerController.player.transform.position = Vector3.zero;
+
+		CurveFlowManager.LoadQuery(m_currentStage + "Bosses");
+		TileData tile = Instantiate(Resources.Load("TileSets/" + m_currentStage + '/' + CurveFlowManager.Query(0.0f)) as TileData);
+		Instantiate(tile.m_prefab, Vector3.zero, Quaternion.identity).transform.GetChild(1).GetChild(0).GetComponent<Enemy>().PlayerEnterRoom(PlayerController.player.transform);
+
+		surface.BuildNavMesh();
+
+		//Boss is already spawned, enemies in the tile are actual spawnpoints to be used by group selection
+		/*CurveFlowManager.LoadQuery(m_currentStage + "BossMinions");
+		string[] minions = CurveFlowManager.GroupQuery(0.0f, tile.m_enemies.Length);
+		for(int j = 0; j < minions.Length; j++)
+		{
+			Enemy enem = Instantiate(Resources.Load("Enemies/" + minions[j]) as GameObject, tile.m_enemies[j].SpawnPosition, Quaternion.identity).GetComponent<Enemy>();
+			enem.PlayerEnterRoom(PlayerController.player.transform);
+		}*/
 	}
 	private void SetBlockingDoors(bool isBlocking)
 	{
@@ -164,25 +188,6 @@ public class WorldController : MonoBehaviour {
 				RecurseMap(recurseCount - 1, current + dir, dir);
 			}
 		}
-	}
-	//this should absolutely not be in here
-	public IEnumerator TrackedValueDing(UnityEngine.UI.Image bar, float newValue)
-	{
-		float oldValue = bar.fillAmount;
-		float DINGTIME = 0.4f;
-		float timer = 0.0f;
-		Color baseColor = bar.color;
-		Color dingColor = (newValue < oldValue) ? Color.gray : Color.white;
-		while(timer < DINGTIME)
-		{
-			timer += Time.deltaTime;
-			bar.fillAmount = Mathf.Lerp(oldValue, newValue, timer / DINGTIME);
-			bar.color = Color.Lerp(dingColor, baseColor, timer / DINGTIME);
-			yield return null;
-		}
-		bar.color = baseColor;
-		bar.fillAmount = newValue;
-		yield return null;
 	}
 	private struct Coordinate
 	{
