@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
 	Transform m_transform;
 	PlayerController m_controller;
-	Animator m_anim;
+	public Animator m_anim;
 
 	float m_currentAngle = 90.0f;
 	[HideInInspector] public bool m_freezeMovement = false;

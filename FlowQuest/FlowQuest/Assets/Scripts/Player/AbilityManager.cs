@@ -33,7 +33,7 @@ public class AbilityManager : MonoBehaviour
 	private bool m_isHolding = false;
 	private int  m_holdCount = 0;
 
-	Animator m_staffAnim = null;
+	public Animator m_staffAnim = null;
 	bool m_isHoldingCast = false;
 	string m_heldKey = "";
 

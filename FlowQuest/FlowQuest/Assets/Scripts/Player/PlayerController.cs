@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
 	{
 		m_currentHealth = 0;
 		m_isDead = true;
+		m_abilityManager.m_staffAnim.SetTrigger("isDead");
+		m_movement.m_anim.SetTrigger("isDead");
 		StartCoroutine(DeathAnimations());
 	}
 	public void TakeMeleeAttack(int damage)

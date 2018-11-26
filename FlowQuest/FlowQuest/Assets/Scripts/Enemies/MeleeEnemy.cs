@@ -9,6 +9,7 @@ public class MeleeEnemy : Enemy
 	[SerializeField] protected float m_attackArcAngle = 15.0f;
 	[SerializeField] protected float m_attackDistance = 4f;
 	[SerializeField] protected float m_attackCloseRadius = 1f;
+	[SerializeField] protected float m_attackAnimDelay = 0.4f;
 	[SerializeField] protected float m_reachedRange = 2.89f;
 	[SerializeField] protected float m_wanderRadius = 3.0f;
 	[SerializeField] protected float m_wanderTime = 1.0f;
@@ -76,6 +77,8 @@ public class MeleeEnemy : Enemy
 			timer -= Time.deltaTime;
 			FacePosition(m_playerTransform.position);
 		}
+		m_anim.SetTrigger("Attack");
+		yield return new WaitForSeconds(m_attackAnimDelay);
 		Attack();
 		//Attacl Recovery
 		m_states.State = EState.RECOVERY;
@@ -100,7 +103,6 @@ public class MeleeEnemy : Enemy
 	}
 	protected bool Attack()
 	{
-		m_anim.SetTrigger("Attack");
 		Vector3 toPlayer = (m_playerTransform.position - transform.position);
 		float toPlayerAngle = Mathf.Atan2(toPlayer.x, toPlayer.z) * Mathf.Rad2Deg;
 		if(toPlayer.sqrMagnitude < m_attackCloseRadius || (toPlayer.sqrMagnitude < m_attackDistance && Mathf.Abs(toPlayerAngle - m_currentAngle) < m_attackArcAngle))
