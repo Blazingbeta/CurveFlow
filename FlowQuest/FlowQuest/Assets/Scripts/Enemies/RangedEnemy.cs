@@ -22,6 +22,9 @@ public class RangedEnemy : Enemy
 		m_states[EState.RECOVERY] = DoNothing; //Attack Recovery
 
 		m_states.State = EState.IDLE;
+
+		m_currentAngle = Random.Range(0f, 360f);
+		transform.rotation = Quaternion.AngleAxis(m_currentAngle, Vector3.up);
 	}
 	private void Update()
 	{
@@ -29,7 +32,7 @@ public class RangedEnemy : Enemy
 	}
 	private EState WaitForPlayer()
 	{
-		if ((transform.position - m_playerTransform.position).sqrMagnitude < m_detectionRange)
+		if (m_playerTransform)
 		{
 			//Start coroutine
 			StartCoroutine(RangedAttack());

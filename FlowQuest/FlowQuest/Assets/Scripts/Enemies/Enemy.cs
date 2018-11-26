@@ -25,7 +25,6 @@ public class Enemy : MonoBehaviour
 
 	protected void Initialize()
 	{
-		m_playerTransform = PlayerController.player.transform;
 		m_anim = transform.GetChild(0).GetComponent<Animator>();
 		m_agent = GetComponent<NavMeshAgent>();
 		m_agent.speed = m_moveSpeed;
@@ -43,6 +42,10 @@ public class Enemy : MonoBehaviour
 		m_states[EState.PREPARING] = DoNothing;
 		m_states[EState.ATTACKING] = DoNothing;
 		m_states[EState.RECOVERY] = DoNothing;
+	}
+	public void PlayerEnterRoom(Transform player)
+	{
+		m_playerTransform = player;
 	}
 	void Update() 
 	{

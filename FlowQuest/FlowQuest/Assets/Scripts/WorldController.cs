@@ -49,7 +49,13 @@ public class WorldController : MonoBehaviour {
 	public void StartCombat(Transform tile)
 	{
 		SetBlockingDoors(true);
-		m_currentEnemyCount = tile.GetChild(1).childCount;
+		Enemy[] enems = tile.GetChild(1).GetComponentsInChildren<Enemy>();
+		m_currentEnemyCount = enems.Length;
+		Transform playerTransform = PlayerController.player.transform;
+		for(int j = 0; j < enems.Length; j++)
+		{
+			enems[j].PlayerEnterRoom(playerTransform);
+		}
 	}
 	public void EnemyKilled()
 	{

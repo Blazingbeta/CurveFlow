@@ -44,7 +44,7 @@ public class MeleeEnemy : Enemy
 			m_wanderTime = 0;
 			SetRandomWander();
 		}
-		if((transform.position - m_playerTransform.position).sqrMagnitude < m_detectionRange)
+		if(m_playerTransform)
 		{
 			return EState.MOVING;
 		}
