@@ -101,6 +101,7 @@ public class PlayerController : MonoBehaviour
 	}
 	private void OnTriggerEnter(Collider other)
 	{
+		if (m_isDead) return;
 		//enemy projectile
 		if (other.gameObject.layer == 12)
 		{

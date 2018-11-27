@@ -45,6 +45,7 @@ public static class CurveFlowManager
 	}
 	public static void LoadQuery(string QueryName)
 	{
+		Debug.Log(QueryName);
 		m_query = new OutputQuery(Resources.Load<TextAsset>("QueryFiles/" + QueryName).text);
 	}
 	static float Expression(float x, float t)

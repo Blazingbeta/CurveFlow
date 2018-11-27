@@ -33,11 +33,12 @@ public class WorldController : MonoBehaviour {
 		i = this;
 		CurveFlowManager.Initialize(m_currentStage + "Tiles");
 		CurveFlowManager.SetGUIValues(GameObject.Find("TrackedValuesPanel").transform);
-		
-		BuildMap(0, new Coordinate());
+
+		/*BuildMap(0, new Coordinate());
 		m_remainingRooms = m_currentMap.Keys.Count-1;
 
-		surface.BuildNavMesh();
+		surface.BuildNavMesh();*/
+		SetupBossFight();
 	}
 	private void Update()
 	{
@@ -90,13 +91,14 @@ public class WorldController : MonoBehaviour {
 		surface.BuildNavMesh();
 
 		//Boss is already spawned, enemies in the tile are actual spawnpoints to be used by group selection
-		/*CurveFlowManager.LoadQuery(m_currentStage + "BossMinions");
+		CurveFlowManager.LoadQuery(m_currentStage + "BossMinions");
 		string[] minions = CurveFlowManager.GroupQuery(0.0f, tile.m_enemies.Length);
 		for(int j = 0; j < minions.Length; j++)
 		{
+			Debug.Log(j + ": " + minions[j]);
 			Enemy enem = Instantiate(Resources.Load("Enemies/" + minions[j]) as GameObject, tile.m_enemies[j].SpawnPosition, Quaternion.identity).GetComponent<Enemy>();
 			enem.PlayerEnterRoom(PlayerController.player.transform);
-		}*/
+		}
 	}
 	private void SetBlockingDoors(bool isBlocking)
 	{

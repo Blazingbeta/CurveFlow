@@ -44,7 +44,7 @@ namespace CFDebug
 		}
 		static CurveFlow.OutputQuery LoadXmlQuery()
 		{
-			string xml = File.ReadAllText("..\\..\\..\\..\\FlowQuest\\FlowQuest\\Assets\\Resources\\QueryFiles\\DefaultDungeonTiles.xml");
+			string xml = File.ReadAllText("..\\..\\..\\..\\FlowQuest\\FlowQuest\\Assets\\Resources\\QueryFiles\\DD2BossMinions.xml");
 			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
 			return xmlLoadTest;
 		}

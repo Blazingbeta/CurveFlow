@@ -54,7 +54,6 @@ namespace CurveFlow
 			m_isGroupBinding = groupNodes.Attributes["Enabled"].InnerText == "True";
 			if (m_isGroupBinding)
 			{
-				string stackingType = groupNodes["StackingType"].InnerText;
 				m_allowGroupDuplicates = bool.Parse(groupNodes["AllowDuplicates"].InnerText);
 			}
 
