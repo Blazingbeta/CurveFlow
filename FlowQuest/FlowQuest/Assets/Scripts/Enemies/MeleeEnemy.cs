@@ -42,7 +42,7 @@ public class MeleeEnemy : Enemy
 		m_timer += Time.deltaTime;
 		if(m_timer > m_wanderTime)
 		{
-			m_wanderTime = 0;
+			m_timer = 0;
 			SetRandomWander();
 		}
 		if(m_playerTransform)
