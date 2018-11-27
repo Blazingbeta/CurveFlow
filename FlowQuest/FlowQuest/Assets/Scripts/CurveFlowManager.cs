@@ -18,7 +18,6 @@ using UnityEngine.UI;
 public static class CurveFlowManager
 {
 	static string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + "/my games/FlowQuest";
-	static string profileName = "DefaultPlayer";
 	static CurveFlowController m_controller = null;
 	static OutputQuery m_query = null;
 	static Dictionary<string, ValueDisplayManager> m_guiBars;
@@ -31,7 +30,7 @@ public static class CurveFlowManager
 		{
 			Directory.CreateDirectory(folderPath);
 		}
-		if (!File.Exists(folderPath + "/" + profileName + ".pfl"))
+		if (!File.Exists(folderPath + "/" + WorldController.ProfileName + ".pfl"))
 		{
 			//Create and load a new profile if one does not already exist
 			CreateAndLoadNewProfile();
@@ -39,7 +38,7 @@ public static class CurveFlowManager
 		else
 		{
 			//If a previous profile exists, load it
-			m_controller.LoadProfile(File.ReadAllText(folderPath + "/" + profileName + ".pfl"));
+			m_controller.LoadProfile(File.ReadAllText(folderPath + "/" + WorldController.ProfileName + ".pfl"));
 		}
 		m_query = new OutputQuery(Resources.Load<TextAsset>("QueryFiles/" + QueryName).text);
 	}
@@ -93,12 +92,12 @@ public static class CurveFlowManager
 			new TrackedValue(0f, 1f, "DodgeSkill", ValueType.AVERAGEWEIGHTED, 30),
 			new TrackedValue(0f, 1f, "CurrentHealth", ValueType.SET)
 		});
-		File.WriteAllText(folderPath + "\\" + profileName + ".pfl", m_controller.SaveProfile());
+		File.WriteAllText(folderPath + "\\" + WorldController.ProfileName + ".pfl", m_controller.SaveProfile());
 	}
 	public static void SaveProfile()
 	{
 		string xml = m_controller.SaveProfile();
-		File.WriteAllText(folderPath + "\\" + profileName + ".pfl", xml);
+		File.WriteAllText(folderPath + "\\" + WorldController.ProfileName + ".pfl", xml);
 	}
 	public static void SetGUIValues(Transform parent)
 	{

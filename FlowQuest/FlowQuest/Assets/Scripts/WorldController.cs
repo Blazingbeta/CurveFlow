@@ -14,11 +14,14 @@ using UnityEngine.AI;
 public class WorldController : MonoBehaviour {
 	public static WorldController i;
 
+	public static string ProfileName = "DefaultPlayer";
+	public static string DungeonName = "DD2";
+	public static int RecurseCount = 2;
+
 	[SerializeField] NavMeshSurface surface;
 	[SerializeField] GameObject m_worldTextObject;
 	[SerializeField] GameObject m_worldCanvas;
 	[SerializeField] GameObject m_blankSquare;
-	[SerializeField] string m_currentStage = "DefaultDungeon";
 
 	private static readonly Vector3 CANVASSTARTPOS = new Vector3(0f, -40f, -3.5f);
 	private static readonly float CANVASCOORDOFFSET = 30.0f;
@@ -31,14 +34,13 @@ public class WorldController : MonoBehaviour {
 	void Awake ()
 	{
 		i = this;
-		CurveFlowManager.Initialize(m_currentStage + "Tiles");
+		CurveFlowManager.Initialize(DungeonName + "Tiles");
 		CurveFlowManager.SetGUIValues(GameObject.Find("TrackedValuesPanel").transform);
 
-		/*BuildMap(0, new Coordinate());
+		BuildMap(RecurseCount, new Coordinate());
 		m_remainingRooms = m_currentMap.Keys.Count-1;
 
-		surface.BuildNavMesh();*/
-		SetupBossFight();
+		surface.BuildNavMesh();
 	}
 	private void Update()
 	{
@@ -84,14 +86,14 @@ public class WorldController : MonoBehaviour {
 		}
 		PlayerController.player.transform.position = Vector3.zero;
 
-		CurveFlowManager.LoadQuery(m_currentStage + "Bosses");
-		TileData tile = Instantiate(Resources.Load("TileSets/" + m_currentStage + '/' + CurveFlowManager.Query(0.0f)) as TileData);
+		CurveFlowManager.LoadQuery(DungeonName + "Bosses");
+		TileData tile = Instantiate(Resources.Load("TileSets/" + DungeonName + '/' + CurveFlowManager.Query(0.0f)) as TileData);
 		Instantiate(tile.m_prefab, Vector3.zero, Quaternion.identity).transform.GetChild(1).GetChild(0).GetComponent<Enemy>().PlayerEnterRoom(PlayerController.player.transform);
 
 		surface.BuildNavMesh();
 
 		//Boss is already spawned, enemies in the tile are actual spawnpoints to be used by group selection
-		CurveFlowManager.LoadQuery(m_currentStage + "BossMinions");
+		CurveFlowManager.LoadQuery(DungeonName + "BossMinions");
 		string[] minions = CurveFlowManager.GroupQuery(0.0f, tile.m_enemies.Length);
 		for(int j = 0; j < minions.Length; j++)
 		{
@@ -113,7 +115,7 @@ public class WorldController : MonoBehaviour {
 	}
 	void BuildMap(int recurseCount, Coordinate current)
 	{
-		TileData entrance = Resources.Load("TileSets/" + m_currentStage + "/TileEntrance") as TileData;
+		TileData entrance = Resources.Load("TileSets/" + DungeonName + "/TileEntrance") as TileData;
 		m_currentMap.Add(current, entrance);
 		entrance.m_instancedPrefab = Instantiate(entrance.m_prefab, Vector3.zero, Quaternion.identity, surface.transform);
 		entrance.m_exitDoors = entrance.m_instancedPrefab.transform.GetChild(2);
@@ -149,7 +151,7 @@ public class WorldController : MonoBehaviour {
 	void RecurseMap(int recurseCount, Coordinate current, Vector3Int direction)
 	{
 		if (m_currentMap.ContainsKey(current)) return;
-		TileData tile = Instantiate(Resources.Load("TileSets/" + m_currentStage +  '/' + CurveFlowManager.QueryOnCurve(0.25f, Random.Range(0.0f, 2.0f))) as TileData);
+		TileData tile = Instantiate(Resources.Load("TileSets/" + DungeonName +  '/' + CurveFlowManager.QueryOnCurve(0.25f, Random.Range(0.0f, 2.0f))) as TileData);
 		m_currentMap.Add(current, tile);
 		Quaternion rot = Quaternion.identity;
 		//Select a random valid direction to be the new doorway

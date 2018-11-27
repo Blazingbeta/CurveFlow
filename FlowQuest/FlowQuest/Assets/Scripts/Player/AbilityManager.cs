@@ -43,7 +43,7 @@ public class AbilityManager : MonoBehaviour
 		m_spells = new Dictionary<string, Spell>();
 		Transform canvas = GameObject.Find("Canvas").transform;
 		m_manaImage = canvas.Find("ManaImage").GetComponent<Image>();
-		m_manaText = m_manaImage.transform.GetChild(0).GetComponent<TMP_Text>();
+		m_manaText = m_manaImage.transform.GetChild(1).GetComponent<TMP_Text>();
 		m_staffAnim = transform.Find("Model").Find("Staff").GetComponent<Animator>();
 
 		//TODO remove debug

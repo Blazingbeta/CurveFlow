@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 	private void Start()
 	{
 		m_healthImage = GameObject.Find("HealthImage").GetComponent<Image>();
-		m_healthText = m_healthImage.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+		m_healthText = m_healthImage.transform.GetChild(1).GetComponent<TMPro.TMP_Text>();
 		m_healthText.text = m_currentHealth.ToString();
 		CurveFlowManager.SetValue("CurrentHealth", (float)m_currentHealth / m_maxHealth);
 	}
