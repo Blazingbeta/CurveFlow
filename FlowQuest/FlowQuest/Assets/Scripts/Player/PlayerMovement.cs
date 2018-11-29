@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
 	}
 	void Update ()
 	{
-		if(m_controller.m_isDead) return;
+		if(m_controller.m_isDead || CameraController.currentCam.DebugViewEnable) return;
 		UpdateLookPosition();
 		UpdateMovement();
 	}
