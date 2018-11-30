@@ -10,6 +10,7 @@ public class SceneLoader : MonoBehaviour
 	[SerializeField] TMP_InputField dungeonName;
 	[SerializeField] TMP_InputField profileName;
 	[SerializeField] TMP_InputField recurseCount;
+	[SerializeField] UnityEngine.UI.Toggle debugFileToggle;
 	// Use this for initialization
 	void Start()
 	{
@@ -22,6 +23,7 @@ public class SceneLoader : MonoBehaviour
 		WorldController.DungeonName = dungeonName.text;
 		WorldController.ProfileName = profileName.text;
 		WorldController.RecurseCount = int.Parse(recurseCount.text);
+		CurveFlowManager.m_writeDebugFile = debugFileToggle.isOn;
 		StartCoroutine(FadeIntoScene(sceneID, 1.25f));
 	}
 	IEnumerator FadeIntoScene(int sceneID, float fadeDuration)

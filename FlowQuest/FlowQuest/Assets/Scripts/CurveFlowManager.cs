@@ -3,6 +3,7 @@ using CurveFlow;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Text;
 
 /*
  * 
@@ -17,10 +18,12 @@ using UnityEngine.UI;
 
 public static class CurveFlowManager
 {
+	public static bool m_writeDebugFile;
 	static string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + "/my games/FlowQuest";
 	static CurveFlowController m_controller = null;
 	static OutputQuery m_query = null;
 	static Dictionary<string, ValueDisplayManager> m_guiBars;
+	static Dictionary<string, List<float>> m_valuesOverTime = new Dictionary<string, List<float>>();
 	public static void Initialize(string QueryName)
 	{
 		m_controller = new CurveFlowController();
@@ -40,6 +43,11 @@ public static class CurveFlowManager
 			//If a previous profile exists, load it
 			m_controller.LoadProfile(File.ReadAllText(folderPath + "/" + WorldController.ProfileName + ".pfl"));
 		}
+		if (m_writeDebugFile)
+		{
+			m_valuesOverTime.Add("GrabSkill", new List<float>() { m_controller.GetCurrentValue("GrabSkill") });
+			m_valuesOverTime.Add("DodgeSkill", new List<float>() { m_controller.GetCurrentValue("DodgeSkill") });
+		}
 		m_query = new OutputQuery(Resources.Load<TextAsset>("QueryFiles/" + QueryName).text);
 	}
 	public static void LoadQuery(string QueryName)
@@ -58,6 +66,7 @@ public static class CurveFlowManager
 		{
 			m_guiBars[name].SetNewFillAmount(m_controller.GetCurrentValue(name));
 		}
+		m_valuesOverTime[name].Add(m_controller.GetCurrentValue(name));
 	}
 	public static void SetValue(string name, float amount)
 	{
@@ -108,5 +117,24 @@ public static class CurveFlowManager
 			m_guiBars.Add(name, parent.GetChild(j).GetComponent<ValueDisplayManager>());
 			m_guiBars[name].SetNewFillAmount(m_controller.GetCurrentValue(name));
 		}
+	}
+	public static void WriteValuesOverTime()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.Append("GrabSkill\n");
+		m_valuesOverTime["GrabSkill"].ForEach(f =>
+			{
+				sb.Append(f.ToString("G"));
+				sb.Append('\n');
+			}
+		);
+		sb.Append("DodgeSkill\n");
+		m_valuesOverTime["DodgeSkill"].ForEach(f =>
+		{
+			sb.Append(f.ToString("G"));
+			sb.Append('\n');
+		}
+		);
+		File.WriteAllText(folderPath + "\\" + WorldController.ProfileName + "OverTime.csv", sb.ToString());
 	}
 }

@@ -113,6 +113,10 @@ public class WorldController : MonoBehaviour {
 	private void OnApplicationQuit()
 	{
 		CurveFlowManager.SaveProfile();
+		if (CurveFlowManager.m_writeDebugFile)
+		{
+			CurveFlowManager.WriteValuesOverTime();
+		}
 	}
 	void BuildMap(int recurseCount, Coordinate current)
 	{
