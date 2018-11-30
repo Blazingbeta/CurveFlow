@@ -47,6 +47,7 @@ public class WorldController : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.K))
 		{
 			m_worldCanvas.gameObject.SetActive(!m_worldCanvas.gameObject.activeInHierarchy);
+			CameraController.currentCam.DebugViewEnable = m_worldCanvas.gameObject.activeInHierarchy;
 		}
 	}
 	public void StartCombat(Transform tile)
@@ -176,11 +177,14 @@ public class WorldController : MonoBehaviour {
 			Instantiate(tile.m_enemies[j].EnemyPrefab, inst.transform.TransformPoint(tile.m_enemies[j].SpawnPosition), Quaternion.identity, enemyHolder);
 		}
 		//Debug Text display
-		Vector3 canvasPos = m_worldCanvas.transform.TransformPoint(CANVASSTARTPOS);
+		Vector3 canvasPos = CANVASSTARTPOS;//m_worldCanvas.transform.TransformPoint(CANVASSTARTPOS);
 		canvasPos.x += current.x * CANVASCOORDOFFSET;
-		canvasPos.z += current.y * CANVASCOORDOFFSET;
-		Instantiate(m_worldTextObject, canvasPos, m_worldCanvas.transform.rotation, m_worldCanvas.transform)
-			.GetComponent<TMPro.TMP_Text>().text = CurveFlowManager.LastMessage;
+		canvasPos.y += current.y * CANVASCOORDOFFSET;
+		canvasPos.y += 40f;
+		GameObject worldText = Instantiate(m_worldTextObject, Vector3.up * 3, m_worldCanvas.transform.rotation, m_worldCanvas.transform);
+		worldText.GetComponent<RectTransform>().anchoredPosition = canvasPos;
+		worldText.transform.GetChild(0).GetComponent<TMPro.TMP_Text>().text = CurveFlowManager.LastMessage;
+
 		if (recurseCount == 0)
 		{
 			//Close the doorways (how do i find out which ones to close aa

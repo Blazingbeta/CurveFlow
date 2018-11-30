@@ -67,7 +67,7 @@ public class AbilityManager : MonoBehaviour
 			//If the held key is now released
 			m_staffAnim.SetBool("isCasting", false);
 		}
-		if(m_controller.m_isDead) return;
+		if (m_controller.m_isDead || CameraController.currentCam.DebugViewEnable) return;
 		if (m_isCasting) return;
 		else if (m_isHolding)
 		{
@@ -175,6 +175,7 @@ public class AbilityManager : MonoBehaviour
 	private IEnumerator ThrowHeldAttacks()
 	{
 		m_isCasting = true;
+		m_staffAnim.SetTrigger("Cast");
 		ProjectileMovement orb = Instantiate(m_grabOrb, transform.position + (transform.rotation 
 			* m_controller.m_projectileSpawnOffset), transform.rotation).GetComponent<ProjectileMovement>();
 		Grab grab = (Grab)m_spells["Grab"];
