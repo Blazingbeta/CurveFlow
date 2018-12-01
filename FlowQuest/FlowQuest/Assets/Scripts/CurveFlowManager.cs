@@ -45,8 +45,8 @@ public static class CurveFlowManager
 		}
 		if (m_writeDebugFile)
 		{
-			m_valuesOverTime.Add("GrabSkill", new List<float>() { m_controller.GetCurrentValue("GrabSkill") });
-			m_valuesOverTime.Add("DodgeSkill", new List<float>() { m_controller.GetCurrentValue("DodgeSkill") });
+			m_valuesOverTime.Add("GrabSkill", new List<float>());
+			m_valuesOverTime.Add("DodgeSkill", new List<float>());
 		}
 		m_query = new OutputQuery(Resources.Load<TextAsset>("QueryFiles/" + QueryName).text);
 	}
@@ -120,21 +120,23 @@ public static class CurveFlowManager
 	}
 	public static void WriteValuesOverTime()
 	{
+		WriteValueToFile("GrabSkill");
+		WriteValueToFile("DodgeSkill");
+	}
+	static void WriteValueToFile(string value)
+	{
 		StringBuilder sb = new StringBuilder();
-		sb.Append("GrabSkill\n");
-		m_valuesOverTime["GrabSkill"].ForEach(f =>
-			{
-				sb.Append(f.ToString("G"));
-				sb.Append('\n');
-			}
-		);
-		sb.Append("DodgeSkill\n");
-		m_valuesOverTime["DodgeSkill"].ForEach(f =>
+		string path = folderPath + "\\" + WorldController.ProfileName + value + ".csv";
+		if (File.Exists(path))
+		{
+			sb.Append(File.ReadAllText(path));
+		}
+		m_valuesOverTime[value].ForEach(f =>
 		{
 			sb.Append(f.ToString("G"));
 			sb.Append('\n');
 		}
 		);
-		File.WriteAllText(folderPath + "\\" + WorldController.ProfileName + "OverTime.csv", sb.ToString());
+		File.WriteAllText(path, sb.ToString());
 	}
 }

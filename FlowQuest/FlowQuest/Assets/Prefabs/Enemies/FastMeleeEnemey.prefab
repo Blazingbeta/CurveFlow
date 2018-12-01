@@ -803,9 +803,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a315277ff6c82434d944b76fb2555839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moveSpeed: 5
+  m_moveSpeed: 8
   m_turnSpeed: 240
-  m_health: 4
+  m_health: 8
   m_detectionRange: 64
   m_attackWindupTime: 0.6
   m_attackRecoveryTime: 2
@@ -814,8 +814,10 @@ MonoBehaviour:
   m_attackArcAngle: 25
   m_attackDistance: 7
   m_attackCloseRadius: 1.5
+  m_attackAnimDelay: 0.4
   m_reachedRange: 2.89
   m_wanderRadius: 3
+  m_wanderTime: 1
 --- !u!135 &135093447957031890
 SphereCollider:
   m_ObjectHideFlags: 1
