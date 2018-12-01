@@ -15,6 +15,7 @@ Some of the smaller objects created by CurveFlow
 - float_ min , the lowest possible value this object can reach
 - float_ max , the highest possible value this object can reach
 - string_ name , the name of the skill to be tracked
+- int additionCount = 0, lets you define the base addition count for AVERAGE or AVERAGEWEIGHTED value types
 - :ref:`ValueType<class_objects_value_type>` , the method used to append new values into this object
 
 .. _class_objects_logcallback:
@@ -36,6 +37,7 @@ to :ref:`Controller.InitializeLog<class_controller_initialize_log>`
 - ADDITIVE: New values are added/subtracted to the total
 - AVERAGE: New values are averaged based on previous numbers entered.
 - SET: New values can only be set using :ref:`Controller.SetTrackedValue<class_controller_set_tracked_value>`
+- AVERAGEWEIGHTED: New values are added to an average that is always additionCount size
 
 .. _class_objects_messagetype:
 

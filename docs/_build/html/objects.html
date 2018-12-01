@@ -164,6 +164,7 @@
 <li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> min , the lowest possible value this object can reach</li>
 <li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> max , the highest possible value this object can reach</li>
 <li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> name , the name of the skill to be tracked</li>
+<li>int additionCount = 0, lets you define the base addition count for AVERAGE or AVERAGEWEIGHTED value types</li>
 <li><a class="reference internal" href="#class-objects-value-type"><span class="std std-ref">ValueType</span></a> , the method used to append new values into this object</li>
 </ul>
 </div>
@@ -182,6 +183,7 @@ to <a class="reference internal" href="controller.html#class-controller-initiali
 <li>ADDITIVE: New values are added/subtracted to the total</li>
 <li>AVERAGE: New values are averaged based on previous numbers entered.</li>
 <li>SET: New values can only be set using <a class="reference internal" href="controller.html#class-controller-set-tracked-value"><span class="std std-ref">Controller.SetTrackedValue</span></a></li>
+<li>AVERAGEWEIGHTED: New values are added to an average that is always additionCount size</li>
 </ul>
 </div>
 <div class="section" id="messagetype">

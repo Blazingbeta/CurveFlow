@@ -160,7 +160,7 @@
 <p>Welcome to CurveFlow!</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Some things are still unfinished</p>
+<p class="last">Be careful, errors in your input are not always caught.</p>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
@@ -168,18 +168,12 @@
 <ul class="simple">
 <li>Unity: Simply drag the DLL into the project explorer and it should be usable by default</li>
 <li>Godot: Only compatible with a Mono project. Open the project and add the CurveFlow DLL as a reference in the project settings.</li>
-<li>Unreal: ???</li>
 </ul>
 </div>
 <div class="section" id="initial-setup">
 <h2>Initial Setup<a class="headerlink" href="#initial-setup" title="Permalink to this headline">¶</a></h2>
 <p>To get started, first you will want to probably create a seperate object for storing Curve Flow related things, as you will need to persist the data yourself.</p>
-<p>To create the controller, you will need to give it an XML file in the form of a string. This settings file is fairly small, currently only containing the settings for
-the internal curve which handles difficulty flow. You can get the default settings file by calling the static function <a class="reference internal" href="controller.html#class-controller-settings"><span class="std std-ref">CurveFlowController.GenerateSettings()</span></a></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">System</span><span class="o">.</span><span class="n">IO</span><span class="o">.</span><span class="n">File</span><span class="o">.</span><span class="n">WriteAllText</span><span class="p">(</span><span class="s2">&quot;ControllerSettings.xml&quot;</span><span class="p">,</span> <span class="n">CurveFlowController</span><span class="o">.</span><span class="n">GenerateSettings</span><span class="p">());</span>
-</pre></div>
-</div>
-<p>Persist that string however works for your engine, and then pass it into the controller to create it.</p>
+<p>Make sure you don’t create any more than one controller, some things might become unstable if you do.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">using</span> <span class="n">CurveFlow</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">CurveFlowInterface</span>
@@ -187,8 +181,7 @@ the internal curve which handles difficulty flow. You can get the default settin
         <span class="n">CurveFlowController</span> <span class="n">controller</span><span class="p">;</span>
         <span class="n">void</span> <span class="n">Start</span><span class="p">()</span>
         <span class="p">{</span>
-                <span class="n">string</span> <span class="n">controllerSettings</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="n">IO</span><span class="o">.</span><span class="n">File</span><span class="o">.</span><span class="n">ReadAllText</span><span class="p">(</span><span class="s2">&quot;ControllerSettings.xml&quot;</span><span class="p">);</span>
-                <span class="n">controller</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CurveFlowController</span><span class="p">(</span><span class="n">controllerSettings</span><span class="p">);</span>
+                <span class="n">controller</span> <span class="o">=</span> <span class="n">new</span> <span class="n">CurveFlowController</span><span class="p">();</span>
         <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -226,6 +219,8 @@ See <a class="reference internal" href="objects.html#class-objects-value-type"><
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>If you want to persist a profile through multiple loads, you can save them by getting the save data string with <a class="reference internal" href="controller.html#class-controller-save-profile"><span class="std std-ref">Controller.SaveProfile</span></a>
+and passing it into <a class="reference internal" href="controller.html#class-controller-load-profile"><span class="std std-ref">Controller.LoadProfile</span></a> later</p>
 </div>
 <div class="section" id="your-first-query">
 <h2>Your First Query<a class="headerlink" href="#your-first-query" title="Permalink to this headline">¶</a></h2>
@@ -236,66 +231,47 @@ See <a class="reference internal" href="objects.html#class-objects-value-type"><
 <p>For specific setup information, see <a class="reference internal" href="outputquery.html#class-output-query-xml-tutorial"><span class="std std-ref">OutputQuery XML</span></a> .</p>
 <p>If you are just following along, use the following XML</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
-&lt;Query&gt;
+&lt;Query
+        Name=&quot;TestQuery&quot;&gt;
         &lt;Settings&gt;
-                &lt;RepeatSelection&gt;
-                        &lt;DiscourageRepeatSelection&gt;true&lt;/DiscourageRepeatSelection&gt;
-                        &lt;RepeatSelectionWeight&gt;5.0&lt;/RepeatSelectionWeight&gt;
-                        &lt;PreviousValuesTracked&gt;3&lt;/PreviousValuesTracked&gt;
-                        &lt;DiminishingWeight&gt;true&lt;/DiminishingWeight&gt;
+                &lt;RepeatSelection
+                        Enabled=&quot;False&quot;&gt;
+                        &lt;RepeatSelectionWeight&gt;4.0&lt;/RepeatSelectionWeight&gt;
+                        &lt;PreviousValuesTracked&gt;4&lt;/PreviousValuesTracked&gt;
+                        &lt;DiminishingWeight&gt;True&lt;/DiminishingWeight&gt;
                 &lt;/RepeatSelection&gt;
-                &lt;GroupBinding&gt;
-                        &lt;IsGroupSelection&gt;false&lt;/IsGroupSelection&gt;
+                &lt;GroupBinding
+                        Enabled=&quot;False&quot;&gt;
+                        &lt;AllowDuplicates&gt;False&lt;/AllowDuplicates&gt;
+                        &lt;GroupRepeatMultiplier&gt;2.0&lt;/GroupRepeatMultiplier&gt;
                 &lt;/GroupBinding&gt;
+                &lt;SelectionLock
+                        Enabled=&quot;False&quot; /&gt;
         &lt;/Settings&gt;
         &lt;Output&gt;
-                &lt;Name&gt;ParryChallenge&lt;/Name&gt;
+                &lt;Name&gt;Output1&lt;/Name&gt;
                 &lt;Skill&gt;
-                        &lt;Name&gt;Parry&lt;/Name&gt;
-                        &lt;Value&gt;0.95&lt;/Value&gt;
-                        &lt;Weight&gt;2.3&lt;/Weight&gt;
+                        &lt;Name&gt;GrabSkill&lt;/Name&gt;
+                        &lt;Value&gt;0.8&lt;/Value&gt;
+                        &lt;Weight&gt;1.0&lt;/Weight&gt;
                 &lt;/Skill&gt;
                 &lt;Skill&gt;
-                        &lt;Name&gt;Dodge&lt;/Name&gt;
-                        &lt;Value&gt;0.075&lt;/Value&gt;
-                        &lt;Weight&gt;1.2&lt;/Weight&gt;
+                        &lt;Name&gt;DodgeSkill&lt;/Name&gt;
+                        &lt;Value&gt;0.3&lt;/Value&gt;
+                        &lt;Weight&gt;1.0&lt;/Weight&gt;
                 &lt;/Skill&gt;
         &lt;/Output&gt;
         &lt;Output&gt;
-                &lt;Name&gt;DodgeChallenge&lt;/Name&gt;
+                &lt;Name&gt;Output2&lt;/Name&gt;
                 &lt;Skill&gt;
-                        &lt;Name&gt;Parry&lt;/Name&gt;
-                        &lt;Value&gt;0.152&lt;/Value&gt;
-                        &lt;Weight&gt;2.3&lt;/Weight&gt;
+                        &lt;Name&gt;DodgeSkill&lt;/Name&gt;
+                        &lt;Value&gt;0.8&lt;/Value&gt;
+                        &lt;Weight&gt;1.0&lt;/Weight&gt;
                 &lt;/Skill&gt;
                 &lt;Skill&gt;
-                        &lt;Name&gt;Dodge&lt;/Name&gt;
-                        &lt;Value&gt;0.9124&lt;/Value&gt;
-                        &lt;Weight&gt;1.2&lt;/Weight&gt;
-                &lt;/Skill&gt;
-        &lt;/Output&gt;
-        &lt;Name&gt;ParryChallenge2&lt;/Name&gt;
-                &lt;Skill&gt;
-                        &lt;Name&gt;Parry&lt;/Name&gt;
-                        &lt;Value&gt;0.975&lt;/Value&gt;
-                        &lt;Weight&gt;2.3&lt;/Weight&gt;
-                &lt;/Skill&gt;
-                &lt;Skill&gt;
-                        &lt;Name&gt;Dodge&lt;/Name&gt;
-                        &lt;Value&gt;0.075&lt;/Value&gt;
-                        &lt;Weight&gt;1.2&lt;/Weight&gt;
-                &lt;/Skill&gt;
-        &lt;/Output&gt;
-        &lt;Name&gt;ParryChallenge3&lt;/Name&gt;
-                &lt;Skill&gt;
-                        &lt;Name&gt;Parry&lt;/Name&gt;
-                        &lt;Value&gt;0.99&lt;/Value&gt;
-                        &lt;Weight&gt;2.3&lt;/Weight&gt;
-                &lt;/Skill&gt;
-                &lt;Skill&gt;
-                        &lt;Name&gt;Dodge&lt;/Name&gt;
-                        &lt;Value&gt;0.075&lt;/Value&gt;
-                        &lt;Weight&gt;1.2&lt;/Weight&gt;
+                        &lt;Name&gt;GrabSkill&lt;/Name&gt;
+                        &lt;Value&gt;0.2&lt;/Value&gt;
+                        &lt;Weight&gt;1.0&lt;/Weight&gt;
                 &lt;/Skill&gt;
         &lt;/Output&gt;
 &lt;/Query&gt;
@@ -316,7 +292,7 @@ along with the desired challenge, which is the change in difficulty from the pla
 <div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
 <p>If you haven’t already, now is the time to hook up the specific values you want to track.
-See <a class="reference internal" href="controller.html#class-controller-settings"><span class="std std-ref">Controller Settings</span></a> and <a class="reference internal" href="outputquery.html#class-output-query-xml-tutorial"><span class="std std-ref">Query Settings</span></a> for more information on how to customize CurveFlow to do what you need.</p>
+See <span class="xref std std-ref">Controller Settings</span> and <a class="reference internal" href="outputquery.html#class-output-query-xml-tutorial"><span class="std std-ref">Query Settings</span></a> for more information on how to customize CurveFlow to do what you need.</p>
 </div>
 </div>
 

@@ -4,7 +4,7 @@ Getting Started
 Welcome to CurveFlow! 
 
 .. note::
-   Some things are still unfinished
+   Be careful, errors in your input are not always caught.
 
 Installation
 ^^^^^^^^^^^^
@@ -14,18 +14,11 @@ Installation is entirely engine specific. Here is the process in some major game
 
 - Godot: Only compatible with a Mono project. Open the project and add the CurveFlow DLL as a reference in the project settings.
 
-- Unreal: ???
-
 Initial Setup
 ^^^^^^^^^^^^^
 To get started, first you will want to probably create a seperate object for storing Curve Flow related things, as you will need to persist the data yourself.
 
-To create the controller, you will need to give it an XML file in the form of a string. This settings file is fairly small, currently only containing the settings for
-the internal curve which handles difficulty flow. You can get the default settings file by calling the static function :ref:`CurveFlowController.GenerateSettings()<class_controller_settings>` ::
-	
-	System.IO.File.WriteAllText("ControllerSettings.xml", CurveFlowController.GenerateSettings());
-
-Persist that string however works for your engine, and then pass it into the controller to create it. ::
+Make sure you don't create any more than one controller, some things might become unstable if you do. ::
 
 	using CurveFlow;
 
@@ -34,8 +27,7 @@ Persist that string however works for your engine, and then pass it into the con
 		CurveFlowController controller;
 		void Start()
 		{
-			string controllerSettings = System.IO.File.ReadAllText("ControllerSettings.xml");
-			controller = new CurveFlowController(controllerSettings);
+			controller = new CurveFlowController();
 		}
 	}
 
@@ -73,7 +65,10 @@ See :ref:`Value Type<class_objects_value_type>` for the specifics of each type. 
 		new TrackedValue(0f, float.MaxValue, "Money", CurveFlow.ValueType.ADDITIVE)
 	});
 	}
-
+	
+If you want to persist a profile through multiple loads, you can save them by getting the save data string with :ref:`Controller.SaveProfile<class_controller_save_profile>`
+and passing it into :ref:`Controller.LoadProfile<class_controller_load_profile>` later
+	
 Your First Query
 ^^^^^^^^^^^^^^^^
 
@@ -86,66 +81,47 @@ For specific setup information, see :ref:`OutputQuery XML<class_output_query_xml
 If you are just following along, use the following XML ::
 
 	<?xml version="1.0" encoding="utf-16"?>
-	<Query>
+	<Query
+		Name="TestQuery">
 		<Settings>
-			<RepeatSelection>
-				<DiscourageRepeatSelection>true</DiscourageRepeatSelection>
-				<RepeatSelectionWeight>5.0</RepeatSelectionWeight>
-				<PreviousValuesTracked>3</PreviousValuesTracked>
-				<DiminishingWeight>true</DiminishingWeight>
+			<RepeatSelection
+				Enabled="False">
+				<RepeatSelectionWeight>4.0</RepeatSelectionWeight>
+				<PreviousValuesTracked>4</PreviousValuesTracked>
+				<DiminishingWeight>True</DiminishingWeight>
 			</RepeatSelection>
-			<GroupBinding>
-				<IsGroupSelection>false</IsGroupSelection>
+			<GroupBinding
+				Enabled="False">
+				<AllowDuplicates>False</AllowDuplicates>
+				<GroupRepeatMultiplier>2.0</GroupRepeatMultiplier>
 			</GroupBinding>
+			<SelectionLock
+				Enabled="False" />
 		</Settings>
 		<Output>
-			<Name>ParryChallenge</Name>
+			<Name>Output1</Name>
 			<Skill>
-				<Name>Parry</Name>
-				<Value>0.95</Value>
-				<Weight>2.3</Weight>
+				<Name>GrabSkill</Name>
+				<Value>0.8</Value>
+				<Weight>1.0</Weight>
 			</Skill>
 			<Skill>
-				<Name>Dodge</Name>
-				<Value>0.075</Value>
-				<Weight>1.2</Weight>
+				<Name>DodgeSkill</Name>
+				<Value>0.3</Value>
+				<Weight>1.0</Weight>
 			</Skill>
 		</Output>
 		<Output>
-			<Name>DodgeChallenge</Name>
+			<Name>Output2</Name>
 			<Skill>
-				<Name>Parry</Name>
-				<Value>0.152</Value>
-				<Weight>2.3</Weight>
+				<Name>DodgeSkill</Name>
+				<Value>0.8</Value>
+				<Weight>1.0</Weight>
 			</Skill>
 			<Skill>
-				<Name>Dodge</Name>
-				<Value>0.9124</Value>
-				<Weight>1.2</Weight>
-			</Skill>
-		</Output>
-		<Name>ParryChallenge2</Name>
-			<Skill>
-				<Name>Parry</Name>
-				<Value>0.975</Value>
-				<Weight>2.3</Weight>
-			</Skill>
-			<Skill>
-				<Name>Dodge</Name>
-				<Value>0.075</Value>
-				<Weight>1.2</Weight>
-			</Skill>
-		</Output>
-		<Name>ParryChallenge3</Name>
-			<Skill>
-				<Name>Parry</Name>
-				<Value>0.99</Value>
-				<Weight>2.3</Weight>
-			</Skill>
-			<Skill>
-				<Name>Dodge</Name>
-				<Value>0.075</Value>
-				<Weight>1.2</Weight>
+				<Name>GrabSkill</Name>
+				<Value>0.2</Value>
+				<Weight>1.0</Weight>
 			</Skill>
 		</Output>
 	</Query>

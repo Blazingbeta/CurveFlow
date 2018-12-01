@@ -6,7 +6,7 @@ Curve Flow Controller
 The main controller that drives CurveFlow. All of the processing is handled through this object.
 
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ctor       | :ref:`CurveflowController<class_controller_constructor>` **(** string_ settingsXML **)**                                                                                               |
+| ctor       | :ref:`CurveflowController<class_controller_constructor>` **(** **)**                                                                                                                   |
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | void       | :ref:`InitializeLog<class_controller_initialize_log>` **(** :ref:`LogCallback<class_objects_logcallback>` log, :ref:`MessageType<class_objects_messagetype>` typeMask **)**            |
 +------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -105,36 +105,20 @@ The Desired Challenge will be modified by the :ref:`Micro Curve<class_micro_curv
 
 .. _class_controller_eval_group:
 
-- string_[] **EvaluateGroupSelection** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, int_ count **)**
+- string_ [] **EvaluateGroupSelection** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, int_ count **)**
 
 Evaluates the inserted :ref:`Output Query<class_output_query>` on the current :ref:`Profile<class_controller_create_profile>` and returns an array of size *count* which contains the estimated best group output.
 
 .. _class_controller_eval_group_on_curve:
 
-- string_[] **EvaluateGroupSelection** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, int_ count, float_ time **)**
+- string_ [] **EvaluateGroupSelection** **(** :ref:`OutputQuery<class_output_query>` query, float_ desiredChallenge, int_ count, float_ time **)**
 
 Evaluates the inserted :ref:`Output Query<class_output_query>` on the current :ref:`Profile<class_controller_create_profile>` and returns an array of size *count* which contains the estimated best group output.
 
 The Desired Challenge will be modified by the :ref:`Micro Curve<class_micro_curve>` before being used to calculate an output.
 
-.. _class_controller_settings:
-
-Master Settings
----------------
-
-The main settings file here contains all of the information that isn't tied to a specific query.
-It currently just contains the :ref:`Micro Curve Settings<class_micro_curve_settings>` but will eventually have the profile as well. ::
-
-	<?xml version="1.0" encoding="utf-16"?>
-	<Settings>
-		<MicroCurve>
-			<Algorithm>[x] * Sin([t])</Algorithm>
-			<PrecompileExpression>true</PrecompileExpression>
-		</MicroCurve>
-	</Settings>
-
 .. _class_controller_profile:
-	
+
 Profile Settings
 ----------------
 

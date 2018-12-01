@@ -82,7 +82,6 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Curve Flow Controller</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#master-settings">Master Settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#profile-settings">Profile Settings</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#profile">Profile</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#lockedvalues">LockedValues</a></li>
@@ -167,7 +166,7 @@
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td>ctor</td>
-<td><a class="reference internal" href="#class-controller-constructor"><span class="std std-ref">CurveflowController</span></a> <strong>(</strong> <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> settingsXML <strong>)</strong></td>
+<td><a class="reference internal" href="#class-controller-constructor"><span class="std std-ref">CurveflowController</span></a> <strong>(</strong> <strong>)</strong></td>
 </tr>
 <tr class="row-even"><td>void</td>
 <td><a class="reference internal" href="#class-controller-initialize-log"><span class="std std-ref">InitializeLog</span></a> <strong>(</strong> <a class="reference internal" href="objects.html#class-objects-logcallback"><span class="std std-ref">LogCallback</span></a> log, <a class="reference internal" href="objects.html#class-objects-messagetype"><span class="std std-ref">MessageType</span></a> typeMask <strong>)</strong></td>
@@ -247,28 +246,14 @@
 <p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the current <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns the string name of the estimated best output.</p>
 <p>The Desired Challenge will be modified by the <a class="reference internal" href="microcurve.html#class-micro-curve"><span class="std std-ref">Micro Curve</span></a> before being used to calculate an output.</p>
 <ul class="simple" id="class-controller-eval-group">
-<li>string_[] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count <strong>)</strong></li>
+<li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> [] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count <strong>)</strong></li>
 </ul>
 <p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the current <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns an array of size <em>count</em> which contains the estimated best group output.</p>
 <ul class="simple" id="class-controller-eval-group-on-curve">
-<li>string_[] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></li>
+<li><a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/">string</a> [] <strong>EvaluateGroupSelection</strong> <strong>(</strong> <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">OutputQuery</span></a> query, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> desiredChallenge, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/int">int</a> count, <a class="reference external" href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/float">float</a> time <strong>)</strong></li>
 </ul>
 <p>Evaluates the inserted <a class="reference internal" href="outputquery.html#class-output-query"><span class="std std-ref">Output Query</span></a> on the current <a class="reference internal" href="#class-controller-create-profile"><span class="std std-ref">Profile</span></a> and returns an array of size <em>count</em> which contains the estimated best group output.</p>
 <p>The Desired Challenge will be modified by the <a class="reference internal" href="microcurve.html#class-micro-curve"><span class="std std-ref">Micro Curve</span></a> before being used to calculate an output.</p>
-<div class="section" id="master-settings">
-<span id="class-controller-settings"></span><h2>Master Settings<a class="headerlink" href="#master-settings" title="Permalink to this headline">¶</a></h2>
-<p>The main settings file here contains all of the information that isn’t tied to a specific query.
-It currently just contains the <a class="reference internal" href="microcurve.html#class-micro-curve-settings"><span class="std std-ref">Micro Curve Settings</span></a> but will eventually have the profile as well.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
-&lt;Settings&gt;
-        &lt;MicroCurve&gt;
-                &lt;Algorithm&gt;[x] * Sin([t])&lt;/Algorithm&gt;
-                &lt;PrecompileExpression&gt;true&lt;/PrecompileExpression&gt;
-        &lt;/MicroCurve&gt;
-&lt;/Settings&gt;
-</pre></div>
-</div>
-</div>
 <div class="section" id="profile-settings">
 <span id="class-controller-profile"></span><h2>Profile Settings<a class="headerlink" href="#profile-settings" title="Permalink to this headline">¶</a></h2>
 <p>The Profile XML defines the values being tracked, their current values, and any outputs locked through the <a class="reference internal" href="outputquery.html#class-output-query-selectionlock"><span class="std std-ref">selection lock</span></a>.</p>
