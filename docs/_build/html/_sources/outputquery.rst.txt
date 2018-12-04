@@ -3,7 +3,7 @@
 Output Query
 ===============
 
-Description
+Loads and manages the outputs of a single query. Each OutputQuery represents a single group of outputs
 
 +---------+------------------------------------------------------------------------------------+
 | ctor    | :ref:`OutputQuery<class_output_query_constructor>` **(** string_ settingsXML **)** |
