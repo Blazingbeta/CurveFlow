@@ -66,7 +66,8 @@ public static class CurveFlowManager
 		{
 			m_guiBars[name].SetNewFillAmount(m_controller.GetCurrentValue(name));
 		}
-		m_valuesOverTime[name].Add(m_controller.GetCurrentValue(name));
+		if(m_writeDebugFile)
+			m_valuesOverTime[name].Add(m_controller.GetCurrentValue(name));
 	}
 	public static void SetValue(string name, float amount)
 	{

@@ -36,11 +36,13 @@ public class WorldController : MonoBehaviour {
 		i = this;
 		CurveFlowManager.Initialize(DungeonName + "Tiles");
 		CurveFlowManager.SetGUIValues(GameObject.Find("TrackedValuesPanel").transform);
-
+		System.Diagnostics.Stopwatch buildTimer = System.Diagnostics.Stopwatch.StartNew();
 		BuildMap(RecurseCount, new Coordinate());
 		m_remainingRooms = m_currentMap.Keys.Count-1;
 
 		surface.BuildNavMesh();
+		buildTimer.Stop();
+		Debug.Log("Generated " + surface.transform.childCount + " tiles in " + buildTimer.ElapsedMilliseconds);
 	}
 	private void Update()
 	{

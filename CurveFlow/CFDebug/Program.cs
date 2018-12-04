@@ -13,7 +13,7 @@ namespace CFDebug
 		static void Main(string[] args)
 		{
 			controller = new CurveFlow.CurveFlowController();
-			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)7);
+			controller.InitializeLog(PrintToLog, (CurveFlow.MessageType)0);
 			/*
 			 * 
 			 * Current Issue: No matter the difficulty, curveflow outputs the same result (and it somehow has the best delta)
@@ -21,7 +21,15 @@ namespace CFDebug
 			 * 
 			 */
 			LoadProfile();
-			controller.Evaluate(LoadXmlQuery(), 0.0f);
+			Console.WriteLine("Start");
+			System.Diagnostics.Stopwatch buildTimer = System.Diagnostics.Stopwatch.StartNew();
+			CurveFlow.OutputQuery query = LoadXmlQuery();
+			for(int j = 0; j < 386; j++)
+			{
+				controller.Evaluate(query, (float)j / 386);
+			}
+			buildTimer.Stop();
+			Console.WriteLine(buildTimer.ElapsedMilliseconds);
 		}
 		static void LoadAndPrintXML()
 		{
@@ -44,7 +52,7 @@ namespace CFDebug
 		}
 		static CurveFlow.OutputQuery LoadXmlQuery()
 		{
-			string xml = File.ReadAllText("..\\..\\..\\..\\FlowQuest\\FlowQuest\\Assets\\Resources\\QueryFiles\\DD2BossMinions.xml");
+			string xml = File.ReadAllText("..\\..\\..\\..\\FlowQuest\\FlowQuest\\Assets\\Resources\\QueryFiles\\DD2Tiles.xml");
 			CurveFlow.OutputQuery xmlLoadTest = new CurveFlow.OutputQuery(xml);
 			return xmlLoadTest;
 		}

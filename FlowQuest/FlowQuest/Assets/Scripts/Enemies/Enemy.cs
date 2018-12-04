@@ -76,7 +76,6 @@ public class Enemy : MonoBehaviour
 		float timeToReach = (m_playerTransform.position - transform.position).magnitude / projectileSpeed;
 		//get players position at that time
 		Vector3 pos = m_playerTransform.position + (PlayerController.player.m_movement.m_velocity * timeToReach);
-		Debug.DrawLine(transform.position, pos, Color.blue);
 		return pos;
 	}
 	private void OnTriggerEnter(Collider other) 

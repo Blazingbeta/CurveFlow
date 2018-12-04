@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
 	public static CameraController currentCam;
 
 	[SerializeField] LayerMask m_floorMask;
+	[SerializeField] bool m_doMouseOffset = true;
 
 	//Smooth Follow Stuff
 	[SerializeField] Transform m_followTarget;
@@ -58,7 +59,7 @@ public class CameraController : MonoBehaviour
 		m_centerScreen.x = Screen.width / 2.0f;
 		m_centerScreen.y = Screen.height / 2.0f;
 	}
-	private void Update()
+	private void LateUpdate()
 	{
 		if (m_debugViewEnable)
 		{
@@ -87,11 +88,17 @@ public class CameraController : MonoBehaviour
 			Vector3 targetPos = m_followTarget.position + m_offset;
 			m_followPosition = Vector3.SmoothDamp(m_followPosition, targetPos, ref m_velocity, m_smoothTime);
 
-			Vector2 offsetDir = (((Vector2)Input.mousePosition - m_centerScreen) / m_centerScreen);
-			offsetDir *= m_maxOffset;
-			Vector3 mouseOffsetVec = new Vector3(offsetDir.x, 0, offsetDir.y);
-
-			transform.position = m_followPosition + mouseOffsetVec;
+			if (m_doMouseOffset)
+			{
+				Vector2 offsetDir = (((Vector2)Input.mousePosition - m_centerScreen) / m_centerScreen);
+				offsetDir *= m_maxOffset;
+				Vector3 mouseOffsetVec = new Vector3(offsetDir.x, 0, offsetDir.y);
+				transform.position = m_followPosition + mouseOffsetVec;
+			}
+			else
+			{
+				transform.position = m_followPosition;
+			}
 		}
 	}
 	public Vector3 GetLookPosition()
